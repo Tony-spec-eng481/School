@@ -1,0 +1,84 @@
+/* TeacherLiveClasses.css */
+.tlc-top {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.tlc-stat {
+  background: white;
+  border-radius: 0.875rem;
+  padding: 1.25rem;
+  text-align: center;
+  box-shadow: var(--teacher-shadow-sm);
+  border: 1px solid var(--teacher-border);
+}
+.tlc-stat svg { margin: 0 auto 0.5rem; color: var(--teacher-primary); display: block; }
+.tlc-stat p { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--teacher-text-muted); }
+.tlc-stat strong { font-size: 1.75rem; font-weight: 800; color: var(--teacher-text-primary); display: block; margin: 0.25rem 0; }
+
+/* Session cards */
+.tlc-sessions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+.tlc-session-card {
+  background: white;
+  border-radius: 1.25rem;
+  box-shadow: var(--teacher-shadow-md);
+  border: 1px solid var(--teacher-border);
+  overflow: hidden;
+  transition: all 0.25s;
+}
+.tlc-session-card:hover { transform: translateY(-3px); box-shadow: var(--teacher-shadow-lg); }
+
+.tlc-session-top {
+  background: linear-gradient(135deg, var(--teacher-primary), var(--teacher-primary-dark));
+  padding: 1.25rem;
+  color: white;
+  position: relative;
+}
+.tlc-live-badge {
+  position: absolute;
+  top: 0.875rem;
+  right: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #ef4444;
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.tlc-live-dot { width: 6px; height: 6px; border-radius: 50%; background: white; animation: teacher-pulse 1s infinite; }
+.tlc-session-course { font-size: 0.75rem; opacity: 0.8; margin-bottom: 0.25rem; }
+.tlc-session-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+.tlc-session-time { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; opacity: 0.9; }
+
+.tlc-session-body { padding: 1.25rem; }
+.tlc-session-info { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+.tlc-info-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--teacher-text-secondary); }
+.tlc-session-actions { display: flex; gap: 0.625rem; }
+
+/* Past session list */
+.tlc-past-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.875rem 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.15s;
+}
+.tlc-past-row:hover { background: #f8fffe; }
+.tlc-past-row:last-child { border-bottom: none; }
+.tlc-past-icon { width: 2.25rem; height: 2.25rem; border-radius: 0.5rem; background: #e2e8f0; display: flex; align-items: center; justify-content: center; color: var(--teacher-text-muted); flex-shrink: 0; }
+.tlc-past-info { flex: 1; }
+.tlc-past-title { font-size: 0.875rem; font-weight: 600; color: var(--teacher-text-primary); }
+.tlc-past-meta  { font-size: 0.75rem; color: var(--teacher-text-muted); margin-top: 0.1rem; }
+
+@media (max-width: 700px) { .tlc-top { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .tlc-sessions-grid { grid-template-columns: 1fr; } }

@@ -1,0 +1,55 @@
+/* TeacherAnnouncements.css */
+.tan-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+/* Notification Feed */
+.tan-notif-list { display: flex; flex-direction: column; gap: 0; }
+.tan-notif-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+.tan-notif-item:last-child { border-bottom: none; }
+.tan-notif-item:hover { background: var(--teacher-primary-bg); }
+.tan-notif-item.unread { background: #f0fdf4; }
+
+.tan-notif-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.tan-icon-admin { background: #ede9fe; color: #7c3aed; }
+.tan-icon-system { background: #dbeafe; color: #2563eb; }
+.tan-icon-course { background: #d1fae5; color: #059669; }
+
+.tan-notif-body { flex: 1; min-width: 0; }
+.tan-notif-title { font-size: 0.875rem; font-weight: 600; color: var(--teacher-text-primary); margin-bottom: 0.2rem; }
+.tan-notif-text { font-size: 0.8rem; color: var(--teacher-text-secondary); line-height: 1.4; }
+.tan-notif-meta { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.35rem; }
+.tan-notif-time { font-size: 0.7rem; color: var(--teacher-text-muted); }
+.tan-unread-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teacher-primary); }
+
+/* Announcement post */
+.tan-ann-list { display: flex; flex-direction: column; gap: 0.75rem; max-height: 400px; overflow-y: auto; }
+.tan-ann-card {
+  border: 1.5px solid var(--teacher-border);
+  border-radius: 0.875rem;
+  padding: 1rem;
+  background: white;
+  transition: all 0.2s;
+}
+.tan-ann-card:hover { border-color: var(--teacher-primary); }
+.tan-ann-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
+.tan-ann-title { font-size: 0.9rem; font-weight: 700; color: var(--teacher-text-primary); }
+.tan-ann-content { font-size: 0.8rem; color: var(--teacher-text-secondary); line-height: 1.5; }
+.tan-ann-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 0.75rem; }
+.tan-ann-date { font-size: 0.7rem; color: var(--teacher-text-muted); display: flex; align-items: center; gap: 0.25rem; }
+
+@media (max-width: 800px) { .tan-layout { grid-template-columns: 1fr; } }

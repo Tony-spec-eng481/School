@@ -1,0 +1,61 @@
+/* Password field container */
+.form-group-custom.relative {
+    position: relative;
+}
+
+/* Password input field */
+.form-group-custom .auth-input.pr-10 {
+    padding-right: 2.5rem; /* 40px - space for the eye icon */
+}
+
+/* Eye button styling */
+.form-group-custom .absolute {
+    position: absolute;
+    right: 0.75rem; /* 12px from right */
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(222, 9, 9, 0.7);
+    transition: color 0.2s ease;
+    z-index: 10;
+}
+
+/* Eye button hover effect */
+.form-group-custom .absolute:hover {
+    color: rgb(213, 8, 8);
+}
+
+/* Eye button focus state for accessibility */
+.form-group-custom .absolute:focus {
+    outline: none;
+    color: rgb(222, 5, 5);
+}
+
+/* Optional: If you want to add a subtle background on hover */
+.form-group-custom .absolute:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+/* Optional: Adjust icon size if needed */
+.form-group-custom .absolute svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* Optional: Style for when the button is active/clicked */
+.form-group-custom .absolute:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* Optional: Ensure input text doesn't go under the icon */
+.form-group-custom input[type="password"].pr-10,
+.form-group-custom input[type="text"].pr-10 {
+    padding-right: 2.5rem;
+}

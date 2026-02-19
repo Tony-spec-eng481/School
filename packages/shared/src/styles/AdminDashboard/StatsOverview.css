@@ -1,0 +1,348 @@
+/* StatsOverview.css */
+:root {
+  --stat-blue: #3b82f6;
+  --stat-blue-light: #dbeafe;
+  --stat-purple: #8b5cf6;
+  --stat-purple-light: #ede9fe;
+  --stat-green: #10b981;
+  --stat-green-light: #d1fae5;
+  --stat-orange: #f59e0b;
+  --stat-orange-light: #fed7aa;
+  --stat-red: #ef4444;
+  --stat-red-light: #fee2e2;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --border-color: #e2e8f0;
+  --card-bg: #ffffff;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+/* Stats Grid Container */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+/* Loading Skeleton */
+.stats-loading {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.skeleton-card {
+  height: 120px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  border-radius: 0.75rem;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Stat Card */
+.stat-card {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--stat-blue), var(--stat-purple));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+
+.stat-card:hover::before {
+  opacity: 1;
+}
+
+/* Icon Container */
+.stat-icon {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover .stat-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.icon-blue {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--stat-blue);
+}
+
+.icon-purple {
+  background: rgba(139, 92, 246, 0.1);
+  color: var(--stat-purple);
+}
+
+.icon-green {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--stat-green);
+}
+
+.icon-orange {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--stat-orange);
+}
+
+.icon-red {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--stat-red);
+}
+
+.stat-icon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover .stat-icon svg {
+  transform: scale(1.1);
+}
+
+/* Stat Content */
+.stat-content {
+  flex: 1;
+}
+
+.stat-title {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+  transition: color 0.3s ease;
+}
+
+.stat-card:hover .stat-value {
+  color: var(--stat-blue);
+}
+
+/* Stat Badge (Optional for additional info) */
+.stat-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.badge-blue {
+  background: var(--stat-blue-light);
+  color: var(--stat-blue);
+}
+
+.badge-purple {
+  background: var(--stat-purple-light);
+  color: var(--stat-purple);
+}
+
+.badge-green {
+  background: var(--stat-green-light);
+  color: var(--stat-green);
+}
+
+.badge-orange {
+  background: var(--stat-orange-light);
+  color: var(--stat-orange);
+}
+
+/* Trend Indicator */
+.stat-trend {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.trend-up {
+  color: var(--stat-green);
+}
+
+.trend-down {
+  color: var(--stat-red);
+}
+
+.trend-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Responsive Breakpoints */
+@media (min-width: 640px) {
+  .stats-grid,
+  .stats-loading {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .stats-grid,
+  .stats-loading {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .stats-grid {
+    gap: 2rem;
+  }
+  
+  .stat-card {
+    padding: 2rem;
+  }
+  
+  .stat-value {
+    font-size: 2.25rem;
+  }
+}
+
+/* Dark Mode Support (Optional) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --card-bg: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
+  }
+  
+  .stat-card {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+  }
+  
+  .stat-title {
+    color: #94a3b8;
+  }
+  
+  .stat-value {
+    color: #f1f5f9;
+  }
+}
+
+/* Animation Classes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stat-card {
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Hover Effects for Better UX */
+.stat-card {
+  cursor: pointer;
+  position: relative;
+}
+
+.stat-card:active {
+  transform: scale(0.98);
+}
+
+/* Tooltip Styles (if needed) */
+.stat-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.stat-tooltip .tooltip-text {
+  visibility: hidden;
+  width: 120px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.stat-tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Print Styles */
+@media print {
+  .stat-card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+    break-inside: avoid;
+  }
+  
+  .stat-card:hover {
+    transform: none;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .stat-card,
+  .stat-card::before,
+  .stat-icon svg {
+    animation: none;
+    transition: none;
+  }
+}
