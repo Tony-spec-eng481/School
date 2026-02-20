@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { axiosInstance as api } from '@elearning/shared';
-// import toast from 'react-hot-toast';
+import { axiosInstance as api } from '@elearning/shared';
+import toast from 'react-hot-toast';
 import { AuthLayout } from '@elearning/shared';
 
 // const TeacherRegister = () => {
@@ -134,7 +134,7 @@ const TeacherRegister = () => {
     <AuthLayout
       mode="register"
       role="teacher"
-      onToggleMode={() => navigate("/auth/teacher/login")}
+      onToggleMode={() => navigate("/auth/login")}
     >
       <div className="teacher-info-section text-center p-6 bg-white shadow-md rounded-md">
         <h2 className="text-2xl font-semibold mb-4">Teacher Registration</h2>

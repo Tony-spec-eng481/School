@@ -337,7 +337,7 @@ const About = () => {
             </p>
             <div className="cta-buttons">
               <Link
-                to="/auth/student/register"
+                to="/auth/register"
                 className="btn btn-primary btn-lg"
               >
                 Get Started Now

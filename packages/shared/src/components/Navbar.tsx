@@ -6,24 +6,18 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Handle scroll effect
+  // Scroll effect
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close menu when clicking outside
+  // Close when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (isOpen && !(event.target as HTMLElement).closest(".navbar")) {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (isOpen && target && !target.closest(".navbar")) {
         setIsOpen(false);
       }
     };
@@ -32,42 +26,29 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
-  // Close menu when window is resized to desktop
+  // Close on resize
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 768 && isOpen) {
-        setIsOpen(false);
-      }
+      if (window.innerWidth > 768) setIsOpen(false);
     };
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [isOpen]);
+  }, []);
 
-  // Prevent body scroll when menu is open
+  // Prevent body scroll
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-
-    return () => {
-      document.body.style.overflow = "unset";
-    };
+    document.body.style.overflow = isOpen ? "hidden" : "unset";
+    return () => { document.body.style.overflow = "unset"; };
   }, [isOpen]);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const closeMenu = () => {
-    setIsOpen(false);
-  };
+  const toggleMenu = () => setIsOpen(!isOpen);
+  const closeMenu = () => setIsOpen(false);
 
   return (
     <nav className={`navbar ${isScrolled ? "navbar-scrolled" : ""}`}>
       <div className="navbar-container">
+        {/* Logo */}
         <Link to="/" className="navbar-logo" onClick={closeMenu}>
           <span className="logo-text">
             <span className="logo-tre">Tre</span>spics
@@ -75,91 +56,52 @@ const Navbar = () => {
           <span className="logo-dot">.</span>
         </Link>
 
-        {/* Hamburger Button */}
+        {/* Hamburger */}
         <button
           className={`hamburger ${isOpen ? "hamburger-active" : ""}`}
           onClick={toggleMenu}
           aria-label="Toggle menu"
-          aria-expanded={isOpen}
         >
-          <span className="hamburger-line hamburger-line-1"></span>
-          <span className="hamburger-line hamburger-line-2"></span>
-          <span className="hamburger-line hamburger-line-3"></span>
+          <span className="hamburger-line"></span>
+          <span className="hamburger-line"></span>
+          <span className="hamburger-line"></span>
         </button>
 
-        {/* Navigation Menu */}
+        {/* Menu */}
         <div className={`nav-menu ${isOpen ? "nav-menu-active" : ""}`}>
-          <div className="nav-menu-header">
-            <Link to="/" className="navbar-logo" onClick={closeMenu}>
-              <span className="logo-text">
-                <span className="logo-tre">Tre</span>spics
-              </span>
-            </Link>
-            <button
-              className="close-menu"
-              onClick={closeMenu}
-              aria-label="Close menu"
-            >
-              <span className="close-line close-line-1"></span>
-              <span className="close-line close-line-2"></span>
-            </button>
-          </div>
-
           <div className="nav-links">
             <Link to="/" className="nav-link" onClick={closeMenu}>
-              <span className="nav-link-icon">🏠</span>
               Home
             </Link>
             <Link to="/about" className="nav-link" onClick={closeMenu}>
-              <span className="nav-link-icon">📖</span>
               About
             </Link>
             <Link to="/courses" className="nav-link" onClick={closeMenu}>
-              <span className="nav-link-icon">📖</span>
               Courses
             </Link>
             <Link to="/contact" className="nav-link" onClick={closeMenu}>
-              <span className="nav-link-icon">📞</span>
               Contact
             </Link>
 
             <div className="nav-divider"></div>
 
+            {/* AUTH ROUTES — handled inside each app */}
             <div className="nav-buttons">
               <Link
-                to="/auth/student/login"
+                to="/auth/login"
                 className="nav-btn nav-btn-outline"
                 onClick={closeMenu}
               >
-                <span className="btn-icon">🔑</span>
-                Student Login
+                Login
               </Link>
+
               <Link
-                to="/auth/student/register"
+                to="/auth/register"
                 className="nav-btn nav-btn-primary"
                 onClick={closeMenu}
               >
-                <span className="btn-icon">✨</span>
-                Student Register
+                Register
               </Link>
-            </div>
-          </div>
-
-          <div className="nav-footer">
-            <p>Follow us on social media</p>
-            <div className="social-links">
-              <a href="#" className="social-link">
-                📘
-              </a>
-              <a href="#" className="social-link">
-                🐦
-              </a>
-              <a href="#" className="social-link">
-                📷
-              </a>
-              <a href="#" className="social-link">
-                🎥
-              </a>
             </div>
           </div>
         </div>
@@ -168,7 +110,7 @@ const Navbar = () => {
         <div
           className={`nav-overlay ${isOpen ? "nav-overlay-active" : ""}`}
           onClick={closeMenu}
-        ></div>
+        />
       </div>
     </nav>
   );

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { axiosInstance as api } from '@elearning/shared';
 import "@elearning/shared/styles/pages/Homepage.css";
 
-const Home = () => {
+const Home = () => {   
   const [courses, setCourses] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -45,7 +45,7 @@ const Home = () => {
           </p>
           <div className="hero-buttons animate-slide-up delay-2">
             <Link
-              to="/auth/student/register"
+              to="/auth/register"
               className="btn btn-primary btn-lg"
             >
               Start Learning Today
@@ -105,7 +105,7 @@ const Home = () => {
                 Access a wide range of courses tailored to your grade and
                 syllabus, with regular updates.
               </p>
-              <Link to="/student/courses" className="feature-link">
+              <Link to="/dashboard/courses" className="feature-link">
                 Explore Courses <span>→</span>
               </Link>
             </div>
@@ -147,7 +147,7 @@ const Home = () => {
                 Monitor your performance with detailed analytics and
                 personalized study recommendations.
               </p>
-              <Link to="/progress" className="feature-link">
+              <Link to="/dashboard/progress" className="feature-link">
                 Track Progress <span>→</span>
               </Link>
             </div>
@@ -213,7 +213,7 @@ const Home = () => {
           </div>
 
           <div className="section-footer">
-            <Link to="/student/courses" className="btn btn-primary">
+            <Link to="/dashboard/courses" className="btn btn-primary">
               Browse All Courses
               <span className="btn-icon">→</span>
             </Link>
@@ -308,7 +308,7 @@ const Home = () => {
             </p>
             <div className="cta-buttons">
               <Link
-                to="/auth/student/register"
+                to="/auth/register"
                 className="btn btn-primary btn-lg"
               >
                 Get Started Now

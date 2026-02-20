@@ -20,3 +20,4 @@ export { default as VideoPlayer } from './components/VideoPlayer';
 // Styles
 import './styles/auth/style.css';
 import './App.css';
+  

@@ -41,7 +41,7 @@ const StudentRegister = () => {
         courseCode: formData.courseCode
       });
       toast.success('Registration successful! Please check your email to verify.');
-      navigate('/auth/student/login');
+      navigate('/auth/login');
     } catch (error: any) {
       toast.error(error.response?.data?.error || 'Registration failed');
     } finally {
@@ -50,7 +50,7 @@ const StudentRegister = () => {
   };
 
   return (
-    <AuthLayout mode="register" role="student" onToggleMode={() => navigate('/auth/student/login')}>
+    <AuthLayout mode="register" role="student" onToggleMode={() => navigate('/auth/login')}>
       <form onSubmit={handleSubmit} className="auth-form">
         <div className="form-group-custom">
           <input

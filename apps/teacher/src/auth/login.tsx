@@ -30,7 +30,7 @@ const TeacherLogin = () => {
 
       login(accessToken, user);
       toast.success('Welcome back, Teacher!');
-      navigate('/teacher/dashboard');
+      navigate('/dashboard');
     } catch (error: any) {
       toast.error(error.response?.data?.error || 'Login failed');
     } finally {
@@ -42,7 +42,7 @@ const TeacherLogin = () => {
     <AuthLayout
       mode="login"
       role="teacher"
-      onToggleMode={() => navigate("/auth/teacher/register")}
+      onToggleMode={() => navigate("/auth/register")}
     >
       <form onSubmit={handleSubmit} className="auth-form">
         <div className="form-group-custom">

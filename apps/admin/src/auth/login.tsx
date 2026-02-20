@@ -29,7 +29,7 @@ const AdminLogin = () => {
   
         login(accessToken, user);
         toast.success('Welcome Back, Admin!');
-        navigate('/admin/dashboard');
+        navigate('/dashboard');
       } catch (error: any) {
         toast.error(error.response?.data?.error || 'Login failed');
       } finally {
@@ -38,7 +38,7 @@ const AdminLogin = () => {
     };
   
     return (
-      <AuthLayout mode="login" role="admin" onToggleMode={() => navigate('/auth/admin/register')}>
+      <AuthLayout mode="login" role="admin" onToggleMode={() => navigate('/auth/register')}>
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group-custom">
             <input

@@ -37,12 +37,12 @@ const TeacherHome = () => {
           </p>
 
           <div className="teacher-hero-buttons">
-            <Link to="/auth/teacher/login" className="btn btn-primary btn-lg">
+            <Link to="/auth/login" className="btn btn-primary btn-lg">
               Teacher Login
               <span className="btn-icon">→</span>
             </Link>
             <Link
-              to="/auth/teacher/register"
+              to="/auth/register"
               className="btn btn-outline-light btn-lg"
             >
               Register as Teacher
@@ -428,7 +428,7 @@ const TeacherHome = () => {
             </p>
             <div className="cta-buttons">
               <Link
-                to="/auth/teacher/register"
+                to="/auth/register"
                 className="btn btn-primary btn-lg"
               >
                 Become a Teacher Today
