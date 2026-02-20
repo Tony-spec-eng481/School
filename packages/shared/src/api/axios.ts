@@ -1,9 +1,10 @@
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:5000";
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api', // Adjust if backend is on different port/host
+  baseURL: `${API_URL}/api`, // Uses local in dev, Render in production
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
