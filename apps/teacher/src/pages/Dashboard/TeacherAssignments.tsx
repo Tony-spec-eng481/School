@@ -37,63 +37,95 @@ const DEMO_QUESTIONS: QuizQuestion[] = [
 
 const TeacherAssignments = () => {
   const [tab, setTab] = useState<TabId>("list");
-  const [assignments, setAssignments] = useState(DEMO_ASSIGNMENTS);
-  const [submissions, setSubmissions] = useState<Submission[]>(DEMO_SUBMISSIONS);
+  const [assignments, setAssignments] = useState<any[]>([]);
+  const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [questions, setQuestions] = useState<QuizQuestion[]>(DEMO_QUESTIONS);
   const [scores, setScores] = useState<Record<string, string>>({});
-  const [selectedAssignment, setSelectedAssignment] = useState(DEMO_ASSIGNMENTS[0]);
+  const [selectedAssignment, setSelectedAssignment] = useState<any>(null);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [newAssign, setNewAssign] = useState({ title: "", type: "assignment", course: "Crop Science 101", due: "" });
+  const [newAssign, setNewAssign] = useState({ 
+    title: "", type: "assignment", unit_id: "", due_date: "", description: "" 
+  });
+  const [assignFile, setAssignFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(true);
+  const [creating, setCreating] = useState(false);
+  const [units, setUnits] = useState<{id: string, title: string}[]>([]);
+
+  const fetchInitialData = async () => {
+    try {
+      const [assignRes, unitsRes] = await Promise.all([
+        api.get("/lecturer/assignments"),
+        api.get("/lecturer/units")
+      ]);
+      setAssignments(assignRes.data || []);
+      if (assignRes.data?.length) {
+        setSelectedAssignment(assignRes.data[0]);
+      }
+      setUnits(unitsRes.data || []);
+      if (unitsRes.data?.length) {
+        setNewAssign(prev => ({ ...prev, unit_id: unitsRes.data[0].id }));
+      }
+    } catch (err) {
+      console.error("fetchInitialData error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchAssignments = async () => {
-      try {
-        const res = await api.get("/teacher/assignments");
-        if (res.data?.length) {
-          setAssignments(res.data);
-          setSelectedAssignment(res.data[0]);
-        }
-      } catch (err) {
-        console.error("fetchAssignments error:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAssignments();
+    fetchInitialData();
   }, []);
+
+  useEffect(() => {
+    if (tab === "grading" && selectedAssignment) {
+      const fetchSubmissions = async () => {
+        try {
+          const res = await api.get(`/api/lecturer/submissions?unitId=${selectedAssignment.unit_id}`);
+          setSubmissions(res.data);
+        } catch {
+          setSubmissions(DEMO_SUBMISSIONS);
+        }
+      };
+      fetchSubmissions();
+    }
+  }, [tab, selectedAssignment]);
 
   const pending = submissions.filter(s => s.status === "pending").length;
   const late     = submissions.filter(s => s.status === "late").length;
-  const avg      = Math.round(submissions.filter(s => s.score !== null).reduce((a, s) => a + (s.score ?? 0), 0) / submissions.filter(s => s.score !== null).length);
+  const avg      = submissions.length > 0 
+    ? Math.round(submissions.filter(s => s.score !== null).reduce((a, s) => a + (s.score ?? 0), 0) / (submissions.filter(s => s.score !== null).length || 1))
+    : 0;
 
   const handleGrade = async (id: string) => {
     const val = parseInt(scores[id] ?? "0", 10);
     if (isNaN(val) || val < 0 || val > 100) { toast.error("Score must be 0–100"); return; }
     
     try {
-      await api.patch(`/teacher/assignments/${selectedAssignment.id}/grade/${id}`, { score: val });
+      await api.patch(`/lecturer/assignments/${selectedAssignment.id}/grade/${id}`, { score: val });
       setSubmissions(prev => prev.map(s => s.id === id ? { ...s, score: val, status: "graded" } : s));
       toast.success("Score saved");
     } catch {
-      // optimistic fallback
-      setSubmissions(prev => prev.map(s => s.id === id ? { ...s, score: val, status: "graded" } : s));
-      toast.success("Score saved");
+      toast.error("Failed to save score");
     }
   };
 
   const handleCreateAssignment = async () => {
     if (!newAssign.title) { toast.error("Title required"); return; }
+    setCreating(true);
     try {
-      const res = await api.post("/teacher/assignments", newAssign);
-      setAssignments(prev => [...prev, res.data]);
-      toast.success("Assignment created");
-    } catch {
-      // optimistic fallback
-      setAssignments(prev => [...prev, { id: `a${Date.now()}`, ...newAssign, type: newAssign.type as "assignment" | "quiz", submissions: 0, total: 30, avg: 0, late: 0 }]);
-      toast.success("Assignment created");
+      // In a real scenario, we'd upload the file first.
+      await api.post("/lecturer/assignments", {
+        ...newAssign,
+        file_url: assignFile ? `File: ${assignFile.name}` : null
+      });
+      toast.success("Assignment created!");
+      setShowAddModal(false);
+      fetchInitialData();
+    } catch (err) {
+      toast.error("Failed to create assignment");
+    } finally {
+      setCreating(false);
     }
-    setShowAddModal(false);
   };
 
   const addQuestion = () => {
@@ -150,7 +182,7 @@ const TeacherAssignments = () => {
                 </div>
                 <div className="ta-assignment-info">
                   <div className="ta-assignment-title">{a.title}</div>
-                  <div className="ta-assignment-meta">{a.course} · Due: {a.due} · {a.late} late</div>
+                  <div className="ta-assignment-meta">{a.units?.title} · Due: {a.due_date ? new Date(a.due_date).toLocaleDateString() : 'N/A'}</div>
                 </div>
                 <div className="ta-assignment-stats">
                   <span className="td-badge td-badge-blue">{a.submissions}/{a.total} submitted</span>
@@ -210,8 +242,8 @@ const TeacherAssignments = () => {
           <div className="tg-panel-header">
             <ClipboardList size={20} color="var(--teacher-primary)" />
             <div>
-              <div style={{ fontWeight: 700, fontSize: "0.9rem" }}>{selectedAssignment.title}</div>
-              <div style={{ fontSize: "0.75rem", color: "var(--teacher-text-muted)" }}>{selectedAssignment.course}</div>
+              <div style={{ fontWeight: 700, fontSize: "0.9rem" }}>{selectedAssignment?.title}</div>
+              <div style={{ fontSize: "0.75rem", color: "var(--teacher-text-muted)" }}>{selectedAssignment?.units?.title}</div>
             </div>
           </div>
           {submissions.map(s => (
@@ -255,27 +287,55 @@ const TeacherAssignments = () => {
             <div className="td-modal-body">
               <div className="td-form-group">
                 <label className="td-label">Title *</label>
-                <input className="td-input" placeholder="Assignment title" value={newAssign.title}
+                <input className="td-input" placeholder="e.g. End of Unit Project" value={newAssign.title}
                   onChange={e => setNewAssign({ ...newAssign, title: e.target.value })} />
+              </div>
+              <div className="td-form-group">
+                <label className="td-label">Unit *</label>
+                <select className="td-select" value={newAssign.unit_id} onChange={e => setNewAssign({ ...newAssign, unit_id: e.target.value })}>
+                  {units.map(u => <option key={u.id} value={u.id}>{u.title}</option>)}
+                </select>
               </div>
               <div className="td-form-row">
                 <div className="td-form-group">
                   <label className="td-label">Type</label>
                   <select className="td-select" value={newAssign.type} onChange={e => setNewAssign({ ...newAssign, type: e.target.value })}>
-                    <option value="assignment">Assignment</option>
-                    <option value="quiz">Quiz</option>
+                    <option value="assignment">Written Assignment</option>
+                    <option value="quiz">Interactive Quiz</option>
                   </select>
                 </div>
                 <div className="td-form-group">
                   <label className="td-label">Due Date</label>
-                  <input type="date" className="td-input" value={newAssign.due}
-                    onChange={e => setNewAssign({ ...newAssign, due: e.target.value })} />
+                  <input type="date" className="td-input" value={newAssign.due_date}
+                    onChange={e => setNewAssign({ ...newAssign, due_date: e.target.value })} />
+                </div>
+              </div>
+              <div className="td-form-group">
+                <label className="td-label">Instructions / Questions</label>
+                <textarea 
+                  className="td-textarea" 
+                  rows={4} 
+                  placeholder="Type your questions or instructions here..."
+                  value={newAssign.description}
+                  onChange={e => setNewAssign({ ...newAssign, description: e.target.value })}
+                />
+              </div>
+              <div className="td-form-group">
+                <label className="td-label">Attachment (PDF/Doc)</label>
+                <div className="ta-file-upload">
+                  <input type="file" id="assign-file" hidden accept=".pdf,.doc,.docx" 
+                    onChange={e => setAssignFile(e.target.files?.[0] || null)} />
+                  <label htmlFor="assign-file" className="td-btn td-btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', width: 'fit-content' }}>
+                    <Plus size={14} /> {assignFile ? assignFile.name : 'Select File'}
+                  </label>
                 </div>
               </div>
             </div>
             <div className="td-modal-footer">
-              <button className="td-btn td-btn-outline" onClick={() => setShowAddModal(false)}>Cancel</button>
-              <button className="td-btn td-btn-primary" onClick={handleCreateAssignment}>Create</button>
+              <button className="td-btn td-btn-outline" onClick={() => setShowAddModal(false)} disabled={creating}>Cancel</button>
+              <button className="td-btn td-btn-primary" onClick={handleCreateAssignment} disabled={creating}>
+                {creating ? 'Sending...' : 'Create & Send'}
+              </button>
             </div>
           </div>
         </div>

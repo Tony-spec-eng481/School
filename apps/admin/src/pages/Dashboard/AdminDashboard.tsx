@@ -16,13 +16,13 @@ import { useAuth } from '@elearning/shared';
 import StatsOverview from "./StatsOverview";
 import UserManagement from "./UserManagement";
 import CourseManagement from "./CourseManagement";
-import AnalyticsDashboard from "./AnalyticsDashboard";
+// import AnalyticsDashboard from "./AnalyticsDashboard";
 import SupportCenter from "./SupportCenter";
 import SystemSettings from "./SystemSettings";
 import ContentManagement from "./ContentManagement";
-import TeacherManagement from "./TeacherManagement";
 import StudentManagement from "./StudentManagement";
 import Announcements from "./Announcements";
+import Departments from "./Departments";
 import "@elearning/shared/styles/AdminDashboard/AdminDashboard.css"; // Import the CSS file
 
 const AdminDashboard = () => {
@@ -33,9 +33,10 @@ const AdminDashboard = () => {
   const menuItems = [
     { id: "overview", label: "Dashboard", icon: <LayoutDashboard size={20} /> },
     { id: "users", label: "User Management", icon: <Users size={20} /> },
+    { id: "departments", label: "Departments Management",icon: <BookOpen />},
     { id: "courses", label: "Course Management", icon: <BookOpen size={20} /> },
     { id: "content", label: "Content Approvals", icon: <Shield size={20} /> },
-    { id: "analytics", label: "Analytics", icon: <TrendingUp size={20} /> },
+    // { id: "analytics", label: "Analytics", icon: <TrendingUp size={20} /> },
     { id: "announcements", label: "Announcements", icon: <Bell size={20} /> },
     { id: "support", label: "Support & Help", icon: <HelpCircle size={20} /> },
     { id: "settings", label: "System Config", icon: <Settings size={20} /> },
@@ -121,7 +122,7 @@ const AdminDashboard = () => {
             {activeTab === "overview" && (
               <>
                 <StatsOverview />
-                <UserManagement />
+                {/* <UserManagement /> */}
               </>
             )}
 
@@ -129,7 +130,6 @@ const AdminDashboard = () => {
               <div className="space-y-8">
                 <UserManagement />
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  <TeacherManagement />
                   <StudentManagement />
                 </div>
               </div>
@@ -137,9 +137,11 @@ const AdminDashboard = () => {
 
             {activeTab === "courses" && <CourseManagement />}
 
+            {activeTab === "departments" && <Departments />}
+
             {activeTab === "content" && <ContentManagement />}
 
-            {activeTab === "analytics" && <AnalyticsDashboard />}
+            {/* {activeTab === "analytics" && <AnalyticsDashboard />} */}
 
             {activeTab === "announcements" && <Announcements />}
 

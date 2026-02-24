@@ -131,7 +131,7 @@ const AnalyticsDashboard = () => {
             </div>
           </div>
         </div>
-
+  
         {/* Chart Card */}
         <div className="chart-card">
           <div className="chart-header">

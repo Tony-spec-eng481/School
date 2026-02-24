@@ -25,6 +25,7 @@ import Certificates from './pages/Dashboard/StudentDashboard/Certificates';
 import Settings from './pages/Dashboard/StudentDashboard/Settings';
 
 import LiveClassRoom from './pages/LiveClass/LiveClassRoom';
+import CourseList from './pages/Courses/CourseList';
 
 const Unauthorized = () => <div className="text-2xl font-bold text-red-600 p-8 container">Unauthorized Access</div>;
 
@@ -38,6 +39,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/courses" element={<CourseList />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
 
           {/* Authentication Routes */}

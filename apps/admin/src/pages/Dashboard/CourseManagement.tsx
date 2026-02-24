@@ -16,9 +16,8 @@ interface Course {
   title: string;
   short_code: string;
   description: string;
-  teacher_id: string;
+  department_id: string;
   created_at: string;
-  lessons_count?: number;
 }
 
 const CourseManagement = () => {
@@ -30,15 +29,9 @@ const CourseManagement = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await api.get("/courses");
-      // Add mock lessons count for demo (replace with actual data from API)
-      const coursesWithStats = response.data.map((course: Course) => ({
-        ...course,
-        lessons_count: Math.floor(Math.random() * 20) + 5, // Mock data
-      }));
-      setCourses(coursesWithStats);
-    } catch (error) {
-      console.error("Error fetching courses:", error);
+      const res = await api.get("/courses");
+      setCourses(res.data);
+    } catch {
       toast.error("Failed to load courses");
     } finally {
       setLoading(false);
@@ -95,21 +88,21 @@ const CourseManagement = () => {
       <div className="course-header">
         <div className="course-title-section">
           <h2>Course Management</h2>
-          <p>Manage your system's educational content</p>
+          <p>Manage your system's educational course</p>
+        </div>
+
+        <div className="search-wrapper">
+          <Search className="search-icon" />
+          <input
+            type="text"
+            placeholder="Search courses by title, code, or description..."
+            className="search-input"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
 
         <div className="action-bar">
-          <div className="search-wrapper">
-            <Search className="search-icon" />
-            <input
-              type="text"
-              placeholder="Search courses by title, code, or description..."
-              className="search-input"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-
           <button className="add-course-btn" onClick={handleAddCourse}>
             <Plus size={18} />
             <span>New Course</span>
@@ -138,11 +131,26 @@ const CourseManagement = () => {
           </div>
         ) : (
           filteredCourses.map((course) => (
-            <CourseCard 
-              key={course.id} 
-              course={course} 
-              viewMode="admin"
-            />
+            <div key={course.id} className="course-card-wrapper">
+              <CourseCard key={course.id} course={course} viewMode="admin" />
+              {/* Local Edit/Delete buttons */}
+              <div className="local-card-actions">
+                <button
+                  className="edit-btn"
+                  style={{ color: "white" }}
+                  onClick={() => handleEdit(course.id)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="delete-btn"
+                  style={{ color: "white" }}
+                  onClick={() => handleDelete(course.id)}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
           ))
         )}
       </div>

@@ -14,11 +14,12 @@ import TeacherAnnouncements from "./TeacherAnnouncements";
 import TeacherAnalytics from "./TeacherAnalytics";
 import TeacherCalendar from "./TeacherCalendar";
 import TeacherProfile from "./TeacherProfile";
+import ManageCourse from "./ManageCourse";
 import "@elearning/shared/styles/TeacherDashboard/TeacherDashboard.css";
 
 const menuItems = [
   { id: "overview",  label: "Dashboard",          icon: <LayoutDashboard size={20} />, section: "MAIN" },
-  { id: "courses",   label: "My Courses",          icon: <BookOpen size={20} />,        section: "MAIN" },
+  { id: "units",     label: "My Units",            icon: <BookOpen size={20} />,        section: "MAIN" },
   { id: "content",   label: "Content Management",  icon: <Video size={20} />,           section: "MAIN" },
   { id: "students",  label: "Student Management",  icon: <Users size={20} />,           section: "MAIN" },
   { id: "assignments", label: "Assignments",       icon: <ClipboardList size={20} />,   section: "TEACH" },
@@ -37,7 +38,7 @@ const SECTION_LABELS: Record<string, string> = {
 
 const TabTitle: Record<string, string> = {
   overview: "Dashboard Overview",
-  courses: "My Courses",
+  units: "My Units",
   content: "Content Management",
   students: "Student Management",
   assignments: "Assignments & Assessments",
@@ -53,6 +54,12 @@ const TeacherDashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [notifCount, setNotifCount] = useState(0);
+  const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
+
+  const handleManageUnit = (id: string) => {
+    setSelectedUnitId(id);
+    setActiveTab("manage-unit");
+  };
 
   useEffect(() => {
     // Mobile: collapse sidebar by default
@@ -72,7 +79,7 @@ const TeacherDashboard = () => {
               <div className="teacher-brand-icon">
                 <GraduationCap size={16} />
               </div>
-              <span>TEACHER</span>
+              <span>LECTURER</span>
             </div>
           )}
           <button
@@ -149,7 +156,7 @@ const TeacherDashboard = () => {
             <div className="teacher-profile-chip">
               <div className="teacher-profile-info">
                 <p className="teacher-profile-name">{user?.name}</p>
-                <p className="teacher-profile-role">Teacher</p>
+                <p className="teacher-profile-role">Lecturer</p>
               </div>
               <div className="teacher-avatar">{user?.name?.[0]?.toUpperCase() ?? "T"}</div>
             </div>
@@ -159,7 +166,10 @@ const TeacherDashboard = () => {
         {/* Content */}
         <div className="teacher-content-area" key={activeTab}>
           {activeTab === "overview"      && <TeacherOverview />}
-          {activeTab === "courses"       && <TeacherCourses />}
+          {activeTab === "units"         && <TeacherCourses onManage={handleManageUnit} />}
+          {activeTab === "manage-unit"   && selectedUnitId && (
+            <ManageCourse courseId={selectedUnitId} onBack={() => setActiveTab("units")} />
+          )}
           {activeTab === "content"       && <TeacherContentManagement />}
           {activeTab === "students"      && <TeacherStudents />}
           {activeTab === "assignments"   && <TeacherAssignments />}

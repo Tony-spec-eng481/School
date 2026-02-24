@@ -9,30 +9,29 @@ import toast from "react-hot-toast";
 import "@elearning/shared/styles/TeacherDashboard/TeacherOverview.css";
 
 interface TeacherStats {
-  totalCourses: number;
-  totalStudents: number;
-  publishedLessons: number;
-  pendingSubmissions: number;
-  liveClassesToday: number;
-  avgRating: number;
+  totalUnits: number;
+  totalPrograms: number;
+  upcomingClasses: any[];
+  recentSubmissions: any[];
 }
 
 const defaultStats: TeacherStats = {
-  totalCourses: 0, totalStudents: 0, publishedLessons: 0,
-  pendingSubmissions: 0, liveClassesToday: 0, avgRating: 0,
+  totalUnits: 0,
+  totalPrograms: 0,
+  upcomingClasses: [],
+  recentSubmissions: [],
 };
 
 const ACTIVITY_FEED = [
   { dot: "green",  title: "New student enrolled in Crop Science 101", time: "2 min ago" },
   { dot: "blue",   title: "Assignment submitted: Soil Analysis Quiz", time: "15 min ago" },
   { dot: "orange", title: "Live class scheduled for tomorrow 10:00 AM", time: "1 hr ago" },
-  { dot: "red",    title: "Content pending admin approval: Lesson 4", time: "3 hrs ago" },
+  { dot: "red",    title: "Content pending admin approval: Topic 4", time: "3 hrs ago" },
   { dot: "green",  title: "5 students completed Irrigation Module", time: "Yesterday" },
 ];
 
 const QUICK_ACTIONS = [
-  { icon: <Plus size={18} />, label: "Create New Course", sub: "Start a new learning journey" },
-  { icon: <FileText size={18} />, label: "Add Lesson", sub: "Expand existing course content" },
+  { icon: <FileText size={18} />, label: "Add Topic", sub: "Expand existing unit content" },
   { icon: <Radio size={18} />, label: "Schedule Live Class", sub: "Set up a live session" },
   { icon: <ClipboardList size={18} />, label: "Create Assignment", sub: "Quiz or written task" },
 ];
@@ -45,7 +44,7 @@ const TeacherOverview = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await api.get("/teacher/stats");
+        const res = await api.get("/lecturer/overview");
         setStats(res.data);
       } catch {
         // Use defaults silently
@@ -57,12 +56,10 @@ const TeacherOverview = () => {
   }, []);
 
   const statCards = [
-    { icon: <BookOpen size={22} />, cls: "to-icon-green",  label: "Total Courses",       val: stats.totalCourses },
-    { icon: <Users size={22} />,    cls: "to-icon-blue",   label: "Total Students",      val: stats.totalStudents },
-    { icon: <FileText size={22} />, cls: "to-icon-purple", label: "Published Lessons",   val: stats.publishedLessons },
-    { icon: <ClipboardList size={22} />, cls: "to-icon-orange", label: "Pending Submissions", val: stats.pendingSubmissions },
-    { icon: <Radio size={22} />,    cls: "to-icon-teal",   label: "Live Classes Today",  val: stats.liveClassesToday },
-    { icon: <Star size={22} />,     cls: "to-icon-red",    label: "Avg Rating",          val: stats.avgRating.toFixed(1) },
+    { icon: <BookOpen size={22} />, cls: "to-icon-green",  label: "Total Units",       val: stats.totalUnits },
+    { icon: <Users size={22} />,    cls: "to-icon-blue",   label: "Total Programs",    val: stats.totalPrograms },
+    { icon: <Radio size={22} />,    cls: "to-icon-teal",   label: "Live Classes",      val: stats.upcomingClasses.length },
+    { icon: <ClipboardList size={22} />, cls: "to-icon-orange", label: "Recent Submissions", val: stats.recentSubmissions.length },
   ];
 
   return (

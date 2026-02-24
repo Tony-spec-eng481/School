@@ -20,60 +20,54 @@ const ProgressBar = ({ value }: { value: number }) => (
     </div>
     <span className="ts-progress-label">{value}%</span>
   </div>
-);
+);   
 
 const TeacherStudents = () => {
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [selectedCourse, setSelectedCourse] = useState<string>("");
+  const [units, setUnits] = useState<any[]>([]);
+  const [selectedUnitId, setSelectedUnitId] = useState<string>("");
   const [students, setStudents] = useState<Student[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Fetch teacher's courses for the tab bar
+  // Fetch teacher's units for the tab bar
   useEffect(() => {
-    const fetchCourses = async () => {
+    const fetchUnits = async () => {
       try {
-        const res = await api.get("/teacher/courses");
-        const list: Course[] = res.data;
-        setCourses(list);
-        if (list.length) setSelectedCourse(list[0].id);
+        const res = await api.get("/lecturer/units");
+        setUnits(res.data);
+        if (res.data?.length) setSelectedUnitId(res.data[0].id);
       } catch {
-        // fallback demo courses
         const demo = [
-          { id: "1", title: "Crop Science 101" },
+          { id: "1", title: "Crop Production" },
           { id: "2", title: "Soil Health & Nutrition" },
-          { id: "3", title: "Irrigation Systems" },
         ];
-        setCourses(demo);
-        setSelectedCourse(demo[0].id);
+        setUnits(demo);
+        setSelectedUnitId(demo[0].id);
       }
     };
-    fetchCourses();
+    fetchUnits();
   }, []);
 
-  // Fetch students whenever selected course changes
+  // Fetch students whenever selected unit changes
   useEffect(() => {
-    if (!selectedCourse) return;
+    if (!selectedUnitId) return;
     const fetchStudents = async () => {
       setLoading(true);
       try {
-        const res = await api.get(`/teacher/courses/${selectedCourse}/students`);
+        const res = await api.get(`/lecturer/units/${selectedUnitId}/students`);
         setStudents(res.data);
       } catch {
         // demo fallback
         setStudents([
           { id: "s1", name: "Alice Mwangi", email: "alice@example.com", progress: 78, completion: 65, last_activity: "2 hrs ago", enrolled_at: "Jan 10, 2026" },
           { id: "s2", name: "Brian Otieno", email: "otieno@example.com", progress: 52, completion: 40, last_activity: "1 day ago", enrolled_at: "Jan 15, 2026" },
-          { id: "s3", name: "Carol Njoroge", email: "carol@example.com", progress: 91, completion: 88, last_activity: "30 min ago", enrolled_at: "Jan 5, 2026" },
-          { id: "s4", name: "David Kamau", email: "david@example.com", progress: 20, completion: 12, last_activity: "5 days ago", enrolled_at: "Feb 1, 2026" },
-          { id: "s5", name: "Eva Wanjiru", email: "eva@example.com", progress: 64, completion: 55, last_activity: "3 hrs ago", enrolled_at: "Jan 20, 2026" },
         ]);
       } finally {
         setLoading(false);
       }
     };
     fetchStudents();
-  }, [selectedCourse]);
+  }, [selectedUnitId]);
 
   const filtered = students.filter(s =>
     s.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -101,15 +95,15 @@ const TeacherStudents = () => {
         <div className="ts-summary-card"><p>Active Today</p><strong>{students.filter(s => s.last_activity.includes("min") || s.last_activity.includes("hr")).length}</strong></div>
       </div>
 
-      {/* Course Tabs */}
+      {/* Unit Tabs */}
       <div className="ts-course-bar">
-        {courses.map(c => (
+        {units.map(u => (
           <button
-            key={c.id}
-            className={`ts-course-tab ${selectedCourse === c.id ? "active" : ""}`}
-            onClick={() => setSelectedCourse(c.id)}
+            key={u.id}
+            className={`ts-course-tab ${selectedUnitId === u.id ? "active" : ""}`}
+            onClick={() => setSelectedUnitId(u.id)}
           >
-            {c.title}
+            {u.title}
           </button>
         ))}
       </div>

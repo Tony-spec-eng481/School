@@ -6,8 +6,8 @@ import { AuthProvider, ProtectedRoute } from '@elearning/shared';
 // Pages
 import AdminLogin from './auth/login';
 import AdminRegister from './auth/register';
-import AdminDashboard from './pages/Dashboard/AdminDashboard/AdminDashboard';
-import TeacherReport from './pages/Dashboard/AdminDashboard/TeacherReport';
+import AdminDashboard from './pages/Dashboard/AdminDashboard';
+import TeacherReport from './pages/Dashboard/TeacherReport';
 
 function App() { 
   return (

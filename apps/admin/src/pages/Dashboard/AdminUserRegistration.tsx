@@ -21,8 +21,7 @@ const AdminUserRegistration = ({ onClose, onSuccess }: Props) => {
     name: "",
     email: "",
     password: "",
-    role: "teacher" as "teacher" | "admin",
-    department: "",
+    role: "admin",
   });
   const [loading, setLoading] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState<
@@ -214,40 +213,13 @@ const AdminUserRegistration = ({ onClose, onSuccess }: Props) => {
             </div>
           </div>
 
-          {formData.role === "teacher" && (
-            <div className="form-group">
-              <label className="form-label">Department / Course Category</label>
-              <div className="input-wrapper">
-                <input
-                  type="text"
-                  required
-                  className="form-input"
-                  placeholder="e.g. Science, Mathematics"
-                  value={formData.department}
-                  onChange={(e) =>
-                    setFormData({ ...formData, department: e.target.value })
-                  }
-                  style={{ color: "white" }}
-                />
-              </div>
-            </div>
-          )}
-
           <div className="form-group">
             <label className="form-label">Role</label>
             <div className="role-grid">
               <button
                 type="button"
-                onClick={() => setFormData({ ...formData, role: "teacher" })}
-                className={`role-button ${formData.role === "teacher" ? "selected" : ""}`}
-              >
-                <User className="role-icon" size={24} />
-                <span className="role-label">Teacher</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setFormData({ ...formData, role: "admin" })}
-                className={`role-button ${formData.role === "admin" ? "selected" : ""}`}
+                className="role-button selected"
+                disabled
               >
                 <Shield className="role-icon" size={24} />
                 <span className="role-label">Admin</span>

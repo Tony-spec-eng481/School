@@ -17,7 +17,7 @@ const Home = () => {
         setCourses(response.data.slice(0, 3)); // Only show top 3 on home
       } catch (error) {
         console.error("Error fetching courses:", error);
-      } finally {
+      } finally {  
         setIsLoading(false);
       }
     };
@@ -184,7 +184,7 @@ const Home = () => {
       </section>
 
       {/* Popular Courses Section */}
-      <section className="courses-section">
+      {/* <section className="courses-section">
         <div className="container">
           <div className="section-header">
             <span className="section-badge">Popular Courses</span>
@@ -219,7 +219,7 @@ const Home = () => {
             </Link>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Testimonials Section */}
       <section className="testimonials-section">

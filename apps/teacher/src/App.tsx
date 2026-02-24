@@ -7,10 +7,10 @@ import { AuthProvider, ProtectedRoute } from '@elearning/shared';
 import TeacherHome from './teacher-home';
 import TeacherLogin from './auth/login';
 import TeacherRegister from './auth/register';
-import TeacherDashboard from './pages/Dashboard/TeacherDashboard/TeacherDashboard';
+import TeacherDashboard from './pages/Dashboard/TeacherDashboard';
 
 function App() { 
-  return (
+  return (  
     <AuthProvider>
       <Router>
         <Toaster position="top-right" />

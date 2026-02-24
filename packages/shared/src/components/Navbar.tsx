@@ -60,7 +60,7 @@ const Navbar = () => {
         <button
           className={`hamburger ${isOpen ? "hamburger-active" : ""}`}
           onClick={toggleMenu}
-          aria-label="Toggle menu"
+          aria-label="Toggle menu"   
         >
           <span className="hamburger-line"></span>
           <span className="hamburger-line"></span>
@@ -76,7 +76,7 @@ const Navbar = () => {
             <Link to="/about" className="nav-link" onClick={closeMenu}>
               About
             </Link>
-            <Link to="/courses" className="nav-link" onClick={closeMenu}>
+            <Link to="/courses" className="nav-link" onClick={closeMenu}>     
               Courses
             </Link>
             <Link to="/contact" className="nav-link" onClick={closeMenu}>

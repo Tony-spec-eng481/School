@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { axiosInstance as api } from '@elearning/shared';
+import { axiosInstance as api } from "@elearning/shared";
 import toast from "react-hot-toast";
 import {
   Check,
@@ -11,6 +11,7 @@ import {
   UserPlus,
 } from "lucide-react";
 import AdminUserRegistration from "./AdminUserRegistration";
+import { useNavigate } from "react-router-dom";
 import "@elearning/shared/styles/AdminDashboard/UserManagement.css";
 
 interface UserData {
@@ -25,7 +26,7 @@ interface UserData {
   admin_details?: { admin_id: string };
   created_at: string;
 }
-  
+
 const UserManagement = () => {
   const [users, setUsers] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -34,6 +35,7 @@ const UserManagement = () => {
   >("all");
   const [showRegisterModal, setShowRegisterModal] = useState(false);
 
+  const navigate = useNavigate();
   const fetchUsers = async () => {
     setLoading(true);
     try {
@@ -76,6 +78,17 @@ const UserManagement = () => {
       setUsers(users.filter((u) => u.id !== id));
     } catch (error) {
       toast.error("Failed to remove user");
+    }
+  };
+
+  const handleViewReport = (user: { id: string; role: string }) => {
+    if (user.role === "teacher") {
+      navigate(`/reports/teacher/${user.id}`);
+    } else if (user.role === "student") {
+      navigate(`/reports/student/${user.id}`);
+    } else {
+      // optional: handle other roles or show a message
+      console.warn("No report available for this role");
     }
   };
 
@@ -124,7 +137,7 @@ const UserManagement = () => {
             </button>
           ))}
         </div>
-        <button 
+        <button
           onClick={() => setShowRegisterModal(true)}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition flex items-center gap-2"
         >
@@ -170,16 +183,24 @@ const UserManagement = () => {
                         <User size={18} />
                       </div>
                       <div className="user-details">
-                        <span className="user-name">{user.name}</span>
-                        <span className="user-email">{user.email}</span>
+                        <span className="user-name" style={{ color: "white" }}>
+                          {user.name}
+                        </span>
+                        <span className="user-email" style={{ color: "white" }}>
+                          {user.email}
+                        </span>
                       </div>
                     </div>
                   </td>
                   <td>
-                    <span className="user-id">{getCustomId(user)}</span>
+                    <span className="user-id" style={{ color: "white" }}>
+                      {getCustomId(user)}
+                    </span>
                   </td>
                   <td>
-                    <span className="text-xs font-mono text-gray-500">{user.id}</span>
+                    <span className="text-xs font-mono text-gray-500">
+                      {user.id}
+                    </span>
                   </td>
                   <td>
                     <span className={`role-badge ${getRoleClass(user.role)}`}>
@@ -200,7 +221,7 @@ const UserManagement = () => {
                     )}
                   </td>
                   <td>
-                    <span className="user-date">
+                    <span className="user-date" style={{ color: "white" }}>
                       {new Date(user.created_at).toLocaleDateString("en-US", {
                         year: "numeric",
                         month: "short",
@@ -230,6 +251,18 @@ const UserManagement = () => {
                       )}
                     </div>
                   </td>
+                  <td>
+                    <div className="view-report">
+                      {(user.role === "teacher" || user.role === "student") && (
+                        <button
+                          onClick={() => handleViewReport(user)}
+                          className="report-button"
+                        >
+                          View Report
+                        </button>
+                      )}
+                    </div>
+                  </td>
                 </tr>
               ))
             )}
@@ -238,7 +271,7 @@ const UserManagement = () => {
       </div>
 
       {showRegisterModal && (
-        <AdminUserRegistration 
+        <AdminUserRegistration
           onClose={() => setShowRegisterModal(false)}
           onSuccess={fetchUsers}
         />

@@ -9,7 +9,8 @@ import "@elearning/shared/styles/TeacherDashboard/TeacherLiveClasses.css";
 interface Session {
   id: string; title: string; course: string; date: string; time: string;
   duration: string; attendees: number; maxStudents: number;
-  isLive: boolean; recordingUrl?: string;
+  isLive: boolean; recordingUrl?: string; liveUrl?: string; status?: string;
+  units?: { title: string };
 }
 
 const DEMO_SESSIONS: Session[] = [
@@ -18,30 +19,38 @@ const DEMO_SESSIONS: Session[] = [
   { id: "3", title: "Irrigation Design Review", course: "Irrigation Systems", date: "Feb 25, 2026", time: "11:00 AM", duration: "45 min", attendees: 0, maxStudents: 19, isLive: false },
 ];
 
-const PAST_SESSIONS = [
+const PAST_SESSIONS: any[] = [
   { title: "Introduction Live Lecture", course: "Crop Science 101", date: "Feb 10, 2026", attendees: 42, recordingUrl: "#" },
   { title: "Fertiliser Application Demo", course: "Soil Health", date: "Feb 7, 2026", attendees: 29, recordingUrl: "#" },
   { title: "Water Flow Calculations", course: "Irrigation Systems", date: "Feb 3, 2026", attendees: 15, recordingUrl: "#" },
 ];
 
 const TeacherLiveClasses = () => {
-  const [sessions, setSessions] = useState(DEMO_SESSIONS);
+  const [sessions, setSessions] = useState<Session[]>([]);
   const [showModal, setShowModal] = useState(false);
-  const [form, setForm] = useState({ title: "", course: "Crop Science 101", date: "", time: "", duration: "60 min" });
+  const [form, setForm] = useState({ title: "", unit_id: "", date: "", time: "", duration: "60 min" });
   const [loading, setLoading] = useState(true);
+  const [units, setUnits] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetchSessions = async () => {
+    const fetchData = async () => {
       try {
-        const res = await api.get("/teacher/live-classes");
-        if (res.data?.length) setSessions(res.data);
+        const [sessionsRes, unitsRes] = await Promise.all([
+          api.get("/lecturer/live-classes"),
+          api.get("/lecturer/units")
+        ]);
+        setSessions(sessionsRes.data || []);
+        setUnits(unitsRes.data || []);
+        if (unitsRes.data?.length) {
+          setForm(prev => ({ ...prev, unit_id: unitsRes.data[0].id }));
+        }
       } catch (err) {
-        console.error("fetchSessions error:", err);
+        console.error("fetchData error:", err);
       } finally {
         setLoading(false);
       }
     };
-    fetchSessions();
+    fetchData();
   }, []);
 
   const upcoming = sessions.filter(s => !s.isLive);
@@ -50,19 +59,13 @@ const TeacherLiveClasses = () => {
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await api.post("/teacher/live-classes", form);
+      const res = await api.post("/lecturer/live-classes", form);
       setSessions(prev => [...prev, res.data]);
       toast.success("Live class scheduled!");
+      setShowModal(false);
     } catch {
-      // optimistic fallback
-      const session: Session = {
-        id: `s${Date.now()}`, ...form, attendees: 0,
-        maxStudents: 30, isLive: false,
-      };
-      setSessions(prev => [...prev, session]);
-      toast.success("Live class scheduled!");
+      toast.error("Failed to schedule live class");
     }
-    setShowModal(false);
   };
 
   return (
@@ -102,7 +105,7 @@ const TeacherLiveClasses = () => {
               <div key={s.id} className="tlc-session-card">
                 <div className="tlc-session-top">
                   <div className="tlc-live-badge"><div className="tlc-live-dot" /> LIVE</div>
-                  <div className="tlc-session-course">{s.course}</div>
+                  <div className="tlc-session-course">{s.units?.title || s.course}</div>
                   <div className="tlc-session-title">{s.title}</div>
                   <div className="tlc-session-time"><Clock size={13} /> {s.time} · {s.duration}</div>
                 </div>
@@ -111,7 +114,13 @@ const TeacherLiveClasses = () => {
                     <div className="tlc-info-row"><Users size={14} /> {s.attendees} / {s.maxStudents} attending</div>
                   </div>
                   <div className="tlc-session-actions">
-                    <button className="td-btn td-btn-primary" style={{ flex: 1 }}><Play size={14} /> Join Session</button>
+                    <button 
+                      className="td-btn td-btn-primary" 
+                      style={{ flex: 1 }}
+                      onClick={() => s.liveUrl && window.open(s.liveUrl, '_blank')}
+                    >
+                      <Play size={14} /> Join Session
+                    </button>
                   </div>
                 </div>
               </div>
@@ -135,7 +144,7 @@ const TeacherLiveClasses = () => {
             {upcoming.map(s => (
               <div key={s.id} className="tlc-session-card">
                 <div className="tlc-session-top">
-                  <div className="tlc-session-course">{s.course}</div>
+                  <div className="tlc-session-course">{s.units?.title || s.course}</div>
                   <div className="tlc-session-title">{s.title}</div>
                   <div className="tlc-session-time"><Calendar size={13} /> {s.date} · {s.time}</div>
                 </div>
@@ -145,10 +154,22 @@ const TeacherLiveClasses = () => {
                     <div className="tlc-info-row"><Users size={14} /> {s.maxStudents} students enrolled</div>
                   </div>
                   <div className="tlc-session-actions">
-                    <button className="td-btn td-btn-outline" style={{ flex: 1 }}>
+                    <button 
+                      className="td-btn td-btn-outline" 
+                      style={{ flex: 1 }}
+                      onClick={() => {
+                        if (s.liveUrl) {
+                          navigator.clipboard.writeText(s.liveUrl);
+                          toast.success("Link copied!");
+                        }
+                      }}
+                    >
                       <Link size={13} /> Copy Link
                     </button>
-                    <button className="td-btn td-btn-primary td-btn-sm">
+                    <button 
+                      className="td-btn td-btn-primary td-btn-sm"
+                      onClick={() => s.liveUrl && window.open(s.liveUrl, '_blank')}
+                    >
                       <Play size={13} /> Start
                     </button>
                   </div>
@@ -167,7 +188,7 @@ const TeacherLiveClasses = () => {
             <div className="tlc-past-icon"><SquarePlay size={18} /></div>
             <div className="tlc-past-info">
               <div className="tlc-past-title">{s.title}</div>
-              <div className="tlc-past-meta">{s.course} · {s.date} · {s.attendees} attended</div>
+              <div className="tlc-past-meta">{s.units?.title || s.course} · {s.date} · {s.attendees} attended</div>
             </div>
             <a href={s.recordingUrl} className="td-btn td-btn-outline td-btn-sm">
               <Video size={13} /> Watch
@@ -191,12 +212,10 @@ const TeacherLiveClasses = () => {
                   <input className="td-input" required placeholder="e.g. Week 3 Q&A"
                     value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} />
                 </div>
-                <div className="td-form-group">
-                  <label className="td-label">Course</label>
-                  <select className="td-select" value={form.course} onChange={e => setForm({ ...form, course: e.target.value })}>
-                    <option>Crop Science 101</option>
-                    <option>Soil Health & Nutrition</option>
-                    <option>Irrigation Systems</option>
+                 <div className="td-form-group">
+                  <label className="td-label">Unit</label>
+                  <select className="td-select" value={form.unit_id} onChange={e => setForm({ ...form, unit_id: e.target.value })}>
+                    {units.map(u => <option key={u.id} value={u.id}>{u.title}</option>)}
                   </select>
                 </div>
                 <div className="td-form-row">

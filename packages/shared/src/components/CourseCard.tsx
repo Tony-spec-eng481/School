@@ -20,9 +20,10 @@ interface CourseCardProps {
   viewMode?: 'student' | 'teacher' | 'admin';
   onEdit?: (id: string) => void;
   onDelete?: (id: string) => void;
+  onManage?: (id: string) => void;
 }
 
-const CourseCard: React.FC<CourseCardProps> = ({ course, viewMode = 'student' }) => {
+const CourseCard: React.FC<CourseCardProps> = ({ course, viewMode = 'student', onManage }) => {
   const {
     id,
     title,
@@ -35,14 +36,14 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, viewMode = 'student' })
 
   return (
     <div className="course-card-component">
-      <div className="course-card-image-wrap">
+      {/* <div className="course-card-image-wrap">
         <img 
           src={thumbnail || '/api/placeholder/400/225'} 
           alt={title} 
           className="course-card-image"
         />
         {category && <span className="course-card-badge">{category}</span>}
-      </div>
+      </div> */}
       
       <div className="course-card-body">
         <h3 className="course-card-title">{title}</h3>
@@ -67,16 +68,20 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, viewMode = 'student' })
           )}
           
           {viewMode === 'teacher' && (
-             <Link to={`/teacher/courses/${id}`} className="course-card-btn">
+             <button 
+              onClick={() => onManage?.(id)}
+              className="course-card-btn"
+              style={{ width: '100%', border: 'none', cursor: 'pointer' }}
+            >
               Manage Course
-            </Link>
+            </button>
           )}
 
-          {viewMode === 'admin' && (
+          {/* {viewMode === 'admin' && (
              <Link to={`/admin/courses/${id}`} className="course-card-btn">
               System Review
             </Link>
-          )}
+          )} */}
         </div>
       </div>
     </div>

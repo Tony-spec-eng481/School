@@ -7,7 +7,7 @@ import { Search, Filter, BookOpen, Clock, Users, Star } from "lucide-react";
 import "@elearning/shared/styles/pages/CourseList.css";
 import '@elearning/shared/styles/pages/Homepage.css'
 
-const CourseList = () => {
+const CourseList = () => {    
   const [courses, setCourses] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,7 +16,7 @@ const CourseList = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await api.get("/courses");
+        const response = await api.get("/courses");  
         setCourses(response.data);
       } catch (error) {
         console.error("Error fetching courses:", error);
@@ -43,15 +43,15 @@ const CourseList = () => {
   ];
 
   // Calculate stats
-  const totalCourses = courses.length;
-  const totalStudents = courses.reduce(
-    (acc, course) => acc + (course.enrolledStudents || 0),
-    0,
-  );
-  const avgRating = (
-    courses.reduce((acc, course) => acc + (course.rating || 0), 0) /
-    totalCourses
-  ).toFixed(1);
+  // const totalCourses = courses.length;
+  // const totalStudents = courses.reduce(
+  //   (acc, course) => acc + (course.enrolledStudents || 0),
+  //   0,
+  // );
+  // const avgRating = (
+  //   courses.reduce((acc, course) => acc + (course.rating || 0), 0) /
+  //   totalCourses
+  // ).toFixed(1);
 
   return (
     <div className="course-list-page">
@@ -76,7 +76,7 @@ const CourseList = () => {
             </p>
           </div>
 
-          <div className="course-stats">
+          {/* <div className="course-stats">
             <div className="stat-item">
               <div className="stat-value">{totalCourses}+</div>
               <div className="stat-label">Courses</div>
@@ -89,7 +89,7 @@ const CourseList = () => {
               <div className="stat-value">{avgRating}</div>
               <div className="stat-label">Avg Rating</div>
             </div>
-          </div>
+          </div> */}
 
           <div className="search-section">
             <div className="search-wrapper">
