@@ -3,15 +3,27 @@ import { axiosInstance as api } from "@elearning/shared";
 import { Save, X, Layers, BookOpen, Tag, Archive } from "lucide-react";
 import toast from "react-hot-toast";
 import "@elearning/shared/styles/AdminDashboard/CourseEditModal.css";
-
+interface Department {
+  id: string;
+  name: string;
+  short_code?: string;
+  description?: string;
+}
+interface Course {
+  id: string;
+  title: string;
+  department_id?: string;
+  status?: string;
+  tags?: string[];
+}
 interface Props {
-  course: any;
+  course: Course;
   onClose: () => void;
   onSuccess: () => void;
 }
 
 const CourseEditModal = ({ course, onClose, onSuccess }: Props) => {
-  const [departments, setDepartments] = useState<any[]>([]);
+  const [departments, setDepartments] = useState<Department[]>([]);
   const [formData, setFormData] = useState({
     title: course.title || "",
     department_id: course.department_id || "",
@@ -31,7 +43,7 @@ const CourseEditModal = ({ course, onClose, onSuccess }: Props) => {
         ...formData,
         tags: formData.tags
           .split(",")
-          .map((t) => t.trim())
+          .map((t: string) => t.trim())
           .filter(Boolean),
       });
 

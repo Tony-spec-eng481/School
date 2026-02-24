@@ -2,15 +2,21 @@ import { useEffect, useState } from "react";
 import "../styles/Department.css";
 import { axiosInstance as api } from "@elearning/shared";
 
+interface Department {
+  id: string;
+  name: string;
+  description?: string;
+  short_code?: string;
+} 
 
 export default function Departments() {
-  const [departments, setDepartments] = useState([]);
+  const [departments, setDepartments] = useState<Department[]>([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [shortCode, setShortCode] = useState("");
-  const [editingId, setEditingId] = useState(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
 
   // Fetch all departments
@@ -65,7 +71,7 @@ export default function Departments() {
   };
 
   // Edit department
-  const handleEdit = (dept) => {
+  const handleEdit = (dept: Department) => {
     setName(dept.name);
     setDescription(dept.description || "");
     setShortCode(dept.short_code || "");

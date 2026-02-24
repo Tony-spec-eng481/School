@@ -1,11 +1,12 @@
 import axios from 'axios';
 
 // const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:5000";
-const API_URL = "http://localhost:5000";
+// const API_URL = "http://localhost:5000";
+const API_URL = "https://trespics-school.onrender.com";
 const api = axios.create({
   baseURL: `${API_URL}/api`, // Uses local in dev, Render in production
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "application/json",   
   },
 });
 

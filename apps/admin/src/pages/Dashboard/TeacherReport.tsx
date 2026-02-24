@@ -38,9 +38,9 @@ const TeacherReport = () => {
   const [teacher, setTeacher] = useState<TeacherReportType | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchTeacher();
-  }, [id]);
+ useEffect(() => {
+   if (id) fetchTeacher();
+ }, [id]);
 
   const fetchTeacher = async () => {
     try {
@@ -69,13 +69,14 @@ const TeacherReport = () => {
         <div className="error-state">
           <p>No teacher found</p>
           <button onClick={() => navigate(-1)} className="back-button">
-            Go Back
+            Go Back   
           </button>
         </div>
       </div>
     );
 
   const details = teacher.teacherReport?.details;
+  const subjects = details?.subjects ?? [];
 
   return (
     <div className="teacher-report-container">
@@ -188,13 +189,13 @@ const TeacherReport = () => {
         </div>
 
         {/* Subjects */}
-        {details?.subjects?.length > 0 && (
+        {subjects.length > 0 && (
           <div className="subjects-section">
             <h3>
               <Award size={20} /> Subjects Taught
             </h3>
             <div className="subjects-list">
-              {details.subjects.map((subject, idx) => (
+              {subjects.map((subject, idx) => (
                 <span key={idx} className="subject-tag">
                   {subject}
                 </span>
