@@ -4,7 +4,8 @@ import { axiosInstance as api } from '@elearning/shared';
 import toast from 'react-hot-toast';
 import { AuthLayout } from '@elearning/shared';
 import { Eye, EyeOff } from 'lucide-react';
-import "../styles/Teacher.css"
+// import "../styles/Teacher.css"
+import "@elearning/shared/styles/auth/form.css";
 
 const TeacherRegister = () => {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ const TeacherRegister = () => {
         department_id: '',
         // national_id_number: ''
     });
-
+  
     // const [files, setFiles] = useState({
     //     nationalIdPhoto: null as File | null,
     //     profilePhoto: null as File | null

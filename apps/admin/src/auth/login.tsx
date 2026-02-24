@@ -6,7 +6,8 @@ import { axiosInstance as api } from '@elearning/shared';
 import toast from 'react-hot-toast';
 import { AuthLayout } from '@elearning/shared';
 import { Eye, EyeOff } from 'lucide-react';
-import "@elearning/shared/styles/auth/auth.css";
+import "@elearning/shared/styles/auth/form.css";
+
 const AdminLogin = () => {
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');

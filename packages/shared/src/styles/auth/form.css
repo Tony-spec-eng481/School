@@ -98,7 +98,7 @@ select.auth-input option {
     color: white;
     padding: 0.5rem;
 }
-
+   
 /* Labels for file inputs */
 .form-group-custom label {
     display: block;

@@ -5,7 +5,8 @@ import { axiosInstance as api } from '@elearning/shared';
 import toast from 'react-hot-toast';
 import { AuthLayout } from '@elearning/shared';
 import { Eye, EyeOff } from 'lucide-react';
-import "@elearning/shared/styles/auth/auth.css";
+// import '../styles/Student.css'
+import "@elearning/shared/styles/auth/form.css";
 
 const StudentRegister = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const StudentRegister = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  };    
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

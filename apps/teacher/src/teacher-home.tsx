@@ -27,7 +27,7 @@ const TeacherHome = () => {
         <div className="container teacher-hero-content">
           <span className="teacher-hero-badge">
             Join Our Teaching Community
-          </span>
+          </span>  
           <h1 className="teacher-hero-title">
             Empower the <span className="text-gradient">Next Generation</span>
           </h1>

@@ -26,21 +26,6 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, mode, onToggleMode })
 
           <h1 className="auth-headline">BUILD YOUR BRIGHT FUTURE</h1>
 
-          {/* <div className="auth-features">
-             <div className="auth-feature-item">
-                <BookOpen className="auth-feature-icon" />
-                <div className="auth-feature-text">EXPERT INSTRUCTORS</div>
-             </div>
-             <div className="auth-feature-item">
-                <Clock className="auth-feature-icon" />
-                <div className="auth-feature-text">FLEXIBLE LEARNING</div>
-             </div>
-             <div className="auth-feature-item">
-                <Lightbulb className="auth-feature-icon" />
-                <div className="auth-feature-text">INTERACTIVE COURSES</div>
-             </div>
-          </div> */}
-
           <div className="testimonial">
             <img
               src={Picture}
