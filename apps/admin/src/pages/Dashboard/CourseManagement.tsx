@@ -1,14 +1,13 @@
+// CourseManagement.tsx (with proper class usage)
+
 import { useEffect, useState } from "react";
-import { axiosInstance as api } from '@elearning/shared';
+import { useNavigate } from "react-router-dom";
+import { axiosInstance as api } from "@elearning/shared";
 import toast from "react-hot-toast";
-import {
-  Search,
-  Plus,
-  BookOpen,
-} from "lucide-react";
+import { Search, Plus, BookOpen } from "lucide-react";
 import CourseEditModal from "./CourseEditModal";
 import CourseAddModal from "./CourseAddModal";
-import { CourseCard } from '@elearning/shared';
+import { CourseCard } from "@elearning/shared";
 import "@elearning/shared/styles/AdminDashboard/CourseManagement.css";
 
 interface Course {
@@ -21,6 +20,7 @@ interface Course {
 }
 
 const CourseManagement = () => {
+  const navigate = useNavigate();
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -56,8 +56,12 @@ const CourseManagement = () => {
   };
 
   const handleEdit = (id: string) => {
-    const course = courses.find(c => c.id === id);
+    const course = courses.find((c) => c.id === id);
     if (course) setSelectedCourse(course);
+  };
+
+  const handleManage = (id: string) => {
+    navigate(`/dashboard/courses/${id}/units`);
   };
 
   const handleAddCourse = () => {
@@ -75,20 +79,12 @@ const CourseManagement = () => {
       course.description.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  };
-
   return (
     <div className="course-management">
       <div className="course-header">
         <div className="course-title-section">
           <h2>Course Management</h2>
-          <p>Manage your system's educational course</p>
+          <p>Manage your system's educational courses</p>
         </div>
 
         <div className="search-wrapper">
@@ -132,20 +128,23 @@ const CourseManagement = () => {
         ) : (
           filteredCourses.map((course) => (
             <div key={course.id} className="course-card-wrapper">
-              <CourseCard key={course.id} course={course} viewMode="admin" />
-              {/* Local Edit/Delete buttons */}
+              <CourseCard
+                course={course}
+                viewMode="teacher"
+                onManage={handleManage}
+              />
               <div className="local-card-actions">
                 <button
                   className="edit-btn"
-                  style={{ color: "white" }}
                   onClick={() => handleEdit(course.id)}
+                  data-tooltip="Edit course"
                 >
                   Edit
                 </button>
                 <button
                   className="delete-btn"
-                  style={{ color: "white" }}
                   onClick={() => handleDelete(course.id)}
+                  data-tooltip="Delete course"
                 >
                   Delete
                 </button>

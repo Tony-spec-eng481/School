@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { axiosInstance as api } from '@elearning/shared';
-import { Bell, Plus, Trash2, Calendar, Target, X, Send } from "lucide-react";
+import { Bell, Plus, Trash2, Calendar, Target, X, Send, MessageCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import "@elearning/shared/styles/AdminDashboard/Announcements.css";
 
@@ -109,12 +109,23 @@ const Announcements = () => {
               Broadcast news and updates to specific user groups.
             </p>
           </div>
-          <button
-            onClick={() => setShowModal(true)}
-            className="new-announcement-btn"
-          >
-            <Plus size={18} /> New Announcement
-          </button>
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <a 
+              href="https://chat.whatsapp.com/YOUR_INVITE_LINK_HERE" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="new-announcement-btn"
+              style={{ background: '#25D366', color: 'white', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}
+            >
+              <MessageCircle size={18} /> Join WhatsApp Group
+            </a>
+            <button
+              onClick={() => setShowModal(true)}
+              className="new-announcement-btn"
+            >
+              <Plus size={18} /> New Announcement
+            </button>
+          </div>
         </div>
 
         <div className="announcements-grid">

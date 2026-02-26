@@ -12,7 +12,7 @@ import {
 import toast from "react-hot-toast";
 import "@elearning/shared/styles/AdminDashboard/SupportCenter.css";
 
-interface Ticket {
+  interface Ticket {
   id: string;
   subject: string;
   message: string;

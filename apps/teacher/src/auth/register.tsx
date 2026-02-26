@@ -132,9 +132,9 @@ const TeacherRegister = () => {
                         required
                         style={{ color: formData.department_id ? 'white' : 'rgba(255,255,255,0.7)' }}
                     >
-                        <option value="" disabled style={{ color: 'black' }}>Select Department</option>
+                        <option value="" disabled style={{ color: 'white' }}>Select Department</option>
                         {departments.map((dept) => (
-                            <option key={dept.id} value={dept.id} style={{ color: 'black' }}>{dept.name}</option>
+                            <option key={dept.id} value={dept.id} style={{ color: 'white' }}>{dept.name}</option>
                         ))}
                     </select>
                 </div>

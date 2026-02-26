@@ -9,7 +9,7 @@ import {
   CheckCircle,
   AlertCircle,
 } from "lucide-react";
-import toast from "react-hot-toast";
+import toast from "react-hot-toast";    
 import "@elearning/shared/styles/AdminDashboard/SystemSettings.css";
 
 interface Setting {

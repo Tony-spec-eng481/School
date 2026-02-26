@@ -120,7 +120,7 @@ const StudentManagement = () => {
                 )
               }
               title={`Current filter: ${filter}`}
-            >
+            >  
               <Filter size={20} />
             </button>
           </div>

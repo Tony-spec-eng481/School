@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { studentApi } from '@elearning/shared';
+// StudentOverview.tsx
+import React, { useState, useEffect } from "react";
+import { studentApi } from "@elearning/shared";
 import {
   FiBookOpen,
   FiCheckCircle,
@@ -9,8 +10,11 @@ import {
   FiAward,
   FiBarChart2,
 } from "react-icons/fi";
+import "../styles/StudentOverview.css"; // Import the CSS file
+import { useAuth } from "@elearning/shared";
 
 const StudentOverview = () => {
+  const { user } = useAuth();
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -20,7 +24,7 @@ const StudentOverview = () => {
         const res = await studentApi.getStats();
         setStats(res.data);
       } catch (err) {
-        console.error('Error fetching student stats:', err);
+        console.error("Error fetching student stats:", err);
       } finally {
         setLoading(false);
       }
@@ -28,102 +32,174 @@ const StudentOverview = () => {
     fetchStats();
   }, []);
 
-  if (loading) return <div>Loading dashboard...</div>;
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p className="loading-text">Loading your dashboard...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="animate-fade-in">
+    <div className="student-overview animate-fade-in">
+      <div className="welcome-header">
+        <h1 className="welcome-title">
+          Welcome back, {user?.name || "Student"}!
+        </h1>
+        <p className="welcome-subtitle">
+          Track your progress and continue learning
+        </p>
+      </div>
+
       {/* Stats Cards */}
       <div className="stats-grid">
         <div className="stat-card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-            <div>
-              <span className="stat-card-label">Enrolled Courses</span>
-              <span className="stat-card-value">{stats?.enrolledCourses || 0}</span>
+          <div className="stat-card-header">
+            <div className="stat-card-content">
+              <span className="stat-card-label">Enrolled Units</span>
+              <span className="stat-card-value">
+                {stats?.enrolledUnits || 0}
+              </span>
             </div>
-            <div style={{ padding: '0.5rem', background: '#eff6ff', borderRadius: '0.5rem', color: '#3b82f6' }}>
+            <div className="stat-card-icon icon-blue">
               <FiBookOpen size={20} />
             </div>
           </div>
         </div>
 
         <div className="stat-card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-            <div>
+          <div className="stat-card-header">
+            <div className="stat-card-content">
               <span className="stat-card-label">Completed Lessons</span>
-              <span className="stat-card-value">{stats?.completedLessons || 0}</span>
+              <span className="stat-card-value">
+                {stats?.completedLessons || 0}
+              </span>
             </div>
-            <div style={{ padding: '0.5rem', background: '#f0fdf4', borderRadius: '0.5rem', color: '#22c55e' }}>
+            <div className="stat-card-icon icon-green">
               <FiCheckCircle size={20} />
             </div>
           </div>
         </div>
 
         <div className="stat-card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-            <div>
+          <div className="stat-card-header">
+            <div className="stat-card-content">
               <span className="stat-card-label">Learning Streak</span>
               <span className="stat-card-value">{stats?.streak || 0} days</span>
             </div>
-            <div style={{ padding: '0.5rem', background: '#fff7ed', borderRadius: '0.5rem', color: '#f97316' }}>
+            <div className="stat-card-icon icon-orange">
               <FiTrendingUp size={20} />
             </div>
           </div>
         </div>
 
         <div className="stat-card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-            <div>
+          <div className="stat-card-header">
+            <div className="stat-card-content">
               <span className="stat-card-label">Progress</span>
-              <span className="stat-card-value">{stats?.avgProgress || 0}%</span>
+              <span className="stat-card-value">
+                {stats?.avgProgress || 0}%
+              </span>
             </div>
-            <div style={{ padding: '0.5rem', background: '#f5f3ff', borderRadius: '0.5rem', color: '#8b5cf6' }}>
+            <div className="stat-card-icon icon-purple">
               <FiBarChart2 size={20} />
             </div>
           </div>
         </div>
 
         <div className="stat-card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-            <div>
+          <div className="stat-card-header">
+            <div className="stat-card-content">
               <span className="stat-card-label">Live Today</span>
-              <span className="stat-card-value">{stats?.liveClassesToday || 0}</span>
+              <span className="stat-card-value">
+                {stats?.liveClassesToday || 0}
+              </span>
             </div>
-            <div style={{ padding: '0.5rem', background: '#fff1f2', borderRadius: '0.5rem', color: '#e11d48' }}>
+            <div className="stat-card-icon icon-pink">
               <FiVideo size={20} />
             </div>
           </div>
         </div>
 
         <div className="stat-card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-            <div>
+          <div className="stat-card-header">
+            <div className="stat-card-content">
               <span className="stat-card-label">Certificates</span>
-              <span className="stat-card-value">{stats?.certificates || 0}</span>
+              <span className="stat-card-value">
+                {stats?.certificates || 0}
+              </span>
             </div>
-            <div style={{ padding: '0.5rem', background: '#fdf4ff', borderRadius: '0.5rem', color: '#a855f7' }}>
+            <div className="stat-card-icon icon-violet">
               <FiAward size={20} />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Placeholder for charts or recent activity */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem' }}>
-        <div style={{ background: 'white', padding: '1.5rem', borderRadius: '1rem', border: '1px solid var(--student-border)' }}>
-          <h3 style={{ marginBottom: '1rem' }}>Learning Progress</h3>
-          <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8' }}>
+      {/* Dashboard Grid */}
+      <div className="dashboard-grid">
+        <div className="dashboard-card">
+          <h3 className="card-title">Learning Progress</h3>
+          <div className="chart-placeholder">
             Chart visualization would go here
           </div>
         </div>
-        <div style={{ background: 'white', padding: '1.5rem', borderRadius: '1rem', border: '1px solid var(--student-border)' }}>
-          <h3 style={{ marginBottom: '1rem' }}>Upcoming Deadline</h3>
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', padding: '0.75rem', border: '1px solid #fee2e2', borderRadius: '0.5rem', background: '#fef2f2' }}>
-            <div style={{ padding: '0.5rem', background: '#ef4444', color: 'white', borderRadius: '0.25rem' }}>
-               <FiClock />
+
+        <div className="dashboard-card">
+          <h3 className="card-title">Upcoming Deadlines</h3>
+          <div className="deadline-item">
+            <div className="deadline-icon">
+              <FiClock size={20} />
             </div>
-            <div>
-              <p style={{ fontWeight: 600, fontSize: '0.875rem' }}>Assignment 1</p>
-              <p style={{ fontSize: '0.75rem', color: '#64748b' }}>Due: 2 days left</p>
+            <div className="deadline-content">
+              <p className="deadline-title">Assignment 1</p>
+              <div className="deadline-meta">
+                <span>Due: 2 days left</span>
+                <span className="deadline-badge">Urgent</span>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="deadline-item"
+            style={{
+              borderColor: "var(--orange-100)",
+              background: "var(--orange-50)",
+            }}
+          >
+            <div
+              className="deadline-icon"
+              style={{ background: "var(--orange-500)" }}
+            >
+              <FiClock size={20} />
+            </div>
+            <div className="deadline-content">
+              <p className="deadline-title">Quiz: Chapter 5</p>
+              <div className="deadline-meta">
+                <span>Due: 5 days left</span>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="deadline-item"
+            style={{
+              borderColor: "var(--green-100)",
+              background: "var(--green-50)",
+            }}
+          >
+            <div
+              className="deadline-icon"
+              style={{ background: "var(--green-500)" }}
+            >
+              <FiClock size={20} />
+            </div>
+            <div className="deadline-content">
+              <p className="deadline-title">Project Submission</p>
+              <div className="deadline-meta">
+                <span>Due: 7 days left</span>
+              </div>
             </div>
           </div>
         </div>

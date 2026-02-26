@@ -44,19 +44,45 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     initAuth();
   }, [token]);
 
-  const login = (newToken: string, newUser: User) => {
+  const login = React.useCallback((newToken: string, newUser: User) => {
     setToken(newToken);
     setUser(newUser);
     localStorage.setItem('token', newToken);
     localStorage.setItem('user', JSON.stringify(newUser));
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = React.useCallback(() => {
     setToken(null);
     setUser(null);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-  };
+  }, []);
+
+  // Idle timeout logic: 15 minutes
+  useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout>;
+    const INACTIVITY_LIMIT = 15 * 60 * 1000;
+
+    const handleInactivity = () => logout();
+
+    const resetTimer = () => {
+      clearTimeout(timeoutId);
+      if (token) {
+        timeoutId = setTimeout(handleInactivity, INACTIVITY_LIMIT);
+      }
+    };
+
+    if (token) {
+      resetTimer();
+      const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
+      events.forEach(event => window.addEventListener(event, resetTimer));
+
+      return () => {
+        clearTimeout(timeoutId);
+        events.forEach(event => window.removeEventListener(event, resetTimer));
+      };
+    }
+  }, [token, logout]);
 
   return (
     <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated: !!token, loading }}>

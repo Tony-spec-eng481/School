@@ -9,7 +9,7 @@ interface CourseProps {
   description: string;
   thumbnail?: string;
   category?: string;
-  lessons_count?: number;
+  lessons_count?: number;   
   students_count?: number;
   instructor_name?: string;
   is_published?: boolean;

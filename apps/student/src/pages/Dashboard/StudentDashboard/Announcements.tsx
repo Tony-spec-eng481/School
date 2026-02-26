@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { studentApi } from '@elearning/shared';
-import { FiBell, FiInfo, FiAlertCircle } from 'react-icons/fi';
+import { FiBell, FiInfo, FiAlertCircle, FiMessageCircle } from 'react-icons/fi';
 
 const Announcements = () => {
   const [announcements, setAnnouncements] = useState<any[]>([]);
@@ -24,9 +24,19 @@ const Announcements = () => {
 
   return (
     <div className="animate-fade-in">
-      <div style={{ marginBottom: '2rem' }}>
-        <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Announcements</h2>
-        <p style={{ color: '#64748b' }}>Stay updated with the latest news from your school and instructors.</p>
+      <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+        <div>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Announcements</h2>
+          <p style={{ color: '#64748b' }}>Stay updated with the latest news from your school and instructors.</p>
+        </div>
+        <a 
+          href="https://chat.whatsapp.com/YOUR_INVITE_LINK_HERE" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          style={{ background: '#25D366', color: 'white', padding: '0.75rem 1.25rem', borderRadius: '0.5rem', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', boxShadow: '0 4px 6px -1px rgba(37, 211, 102, 0.2)' }}
+        >
+          <FiMessageCircle size={18} /> Join WhatsApp Group
+        </a>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

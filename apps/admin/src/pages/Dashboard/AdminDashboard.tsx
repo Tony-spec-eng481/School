@@ -1,3 +1,5 @@
+// AdminDashboard.tsx (ensure classes match)
+
 import { useState } from "react";
 import {
   LayoutDashboard,
@@ -12,7 +14,7 @@ import {
   HelpCircle,
   Shield,
 } from "lucide-react";
-import { useAuth } from '@elearning/shared';
+import { useAuth } from "@elearning/shared";
 import StatsOverview from "./StatsOverview";
 import UserManagement from "./UserManagement";
 import CourseManagement from "./CourseManagement";
@@ -23,7 +25,7 @@ import ContentManagement from "./ContentManagement";
 import StudentManagement from "./StudentManagement";
 import Announcements from "./Announcements";
 import Departments from "./Departments";
-import "@elearning/shared/styles/AdminDashboard/AdminDashboard.css"; // Import the CSS file
+import "@elearning/shared/styles/AdminDashboard/AdminDashboard.css";
 
 const AdminDashboard = () => {
   const { user, logout } = useAuth();
@@ -33,7 +35,11 @@ const AdminDashboard = () => {
   const menuItems = [
     { id: "overview", label: "Dashboard", icon: <LayoutDashboard size={20} /> },
     { id: "users", label: "User Management", icon: <Users size={20} /> },
-    { id: "departments", label: "Departments Management",icon: <BookOpen />},
+    {
+      id: "departments",
+      label: "Departments Management",
+      icon: <BookOpen size={20} />,
+    },
     { id: "courses", label: "Course Management", icon: <BookOpen size={20} /> },
     { id: "content", label: "Content Approvals", icon: <Shield size={20} /> },
     // { id: "analytics", label: "Analytics", icon: <TrendingUp size={20} /> },
@@ -58,6 +64,7 @@ const AdminDashboard = () => {
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             className="toggle-sidebar"
+            aria-label="Toggle sidebar"
           >
             {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -69,6 +76,7 @@ const AdminDashboard = () => {
               key={item.id}
               onClick={() => setActiveTab(item.id)}
               className={`nav-item ${activeTab === item.id ? "active" : ""}`}
+              data-tooltip={!isSidebarOpen ? item.label : undefined}
             >
               <span className="nav-icon">{item.icon}</span>
               {isSidebarOpen && <span className="nav-label">{item.label}</span>}
@@ -80,7 +88,11 @@ const AdminDashboard = () => {
         </nav>
 
         <div className="logout-container">
-          <button onClick={logout} className="logout-button">
+          <button
+            onClick={logout}
+            className="logout-button"
+            data-tooltip={!isSidebarOpen ? "Logout" : undefined}
+          >
             <LogOut size={20} />
             {isSidebarOpen && <span>Logout</span>}
           </button>
@@ -94,24 +106,31 @@ const AdminDashboard = () => {
           <div className="header-title">
             <h1>
               {activeTab === "overview"
-                ? "Overview"
-                : activeTab.replace("-", " ")}
+                ? "Dashboard Overview"
+                : activeTab
+                    .split("-")
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(" ")}
             </h1>
-            <p className="welcome-text">Welcome back, {user?.name}</p>
+            <p className="welcome-text">
+              Welcome back, {user?.name || "Admin"}
+            </p>
           </div>
 
           <div className="header-actions">
-            <button className="notification-button">
+            <button className="notification-button" aria-label="Notifications">
               <Bell size={20} />
               <span className="notification-badge"></span>
             </button>
             <div className="header-divider"></div>
-            <div className="user-profile">
+            <div className="user-profile" tabIndex={0} role="button">
               <div className="user-info">
-                <p className="user-name">{user?.name}</p>
+                <p className="user-name">{user?.name || "Admin"}</p>
                 <p className="user-id">{user?.user_id || "ADMIN"}</p>
               </div>
-              <div className="user-avatar">{user?.name?.[0]}</div>
+              <div className="user-avatar">
+                {user?.name ? user.name.charAt(0).toUpperCase() : "A"}
+              </div>
             </div>
           </div>
         </header>
@@ -151,6 +170,14 @@ const AdminDashboard = () => {
           </div>
         </div>
       </main>
+
+      {/* Mobile Overlay */}
+      {!isSidebarOpen && window.innerWidth <= 1024 && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
     </div>
   );
 };

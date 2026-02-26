@@ -6,7 +6,7 @@ import {
   AlertCircle,
   TrendingUp,
   TrendingDown,
-} from "lucide-react";
+} from "lucide-react";  
 import { axiosInstance as api } from '@elearning/shared';
 import toast from "react-hot-toast";
 import "@elearning/shared/styles/AdminDashboard/StatsOverview.css"; // Import the CSS file
@@ -37,7 +37,7 @@ const StatCard: React.FC<StatCardProps> = ({
   color,
   trend,
   badge,
-}) => {
+}) => {     
   const getIconColor = () => {
     switch (color) {
       case "blue":

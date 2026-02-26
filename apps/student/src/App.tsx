@@ -15,8 +15,8 @@ import StudentRegister from './auth/register';
 // Dashboards
 import StudentDashboard from './pages/Dashboard/StudentDashboard/StudentDashboard';
 import StudentOverview from './pages/Dashboard/StudentDashboard/StudentOverview';
-import MyCourses from './pages/Dashboard/StudentDashboard/MyCourses';
-import CoursePlayer from './pages/Dashboard/StudentDashboard/CoursePlayer';
+import MyUnits from './pages/Dashboard/StudentDashboard/MyUnits';
+import UnitDetails from './pages/Dashboard/StudentDashboard/UnitDetails';
 import LiveClasses from './pages/Dashboard/StudentDashboard/LiveClasses';
 import Assignments from './pages/Dashboard/StudentDashboard/Assignments';
 import Support from './pages/Dashboard/StudentDashboard/Support';
@@ -24,7 +24,8 @@ import Announcements from './pages/Dashboard/StudentDashboard/Announcements';
 import Certificates from './pages/Dashboard/StudentDashboard/Certificates';
 import Settings from './pages/Dashboard/StudentDashboard/Settings';
 
-import LiveClassRoom from './pages/LiveClass/LiveClassRoom';
+// import LiveClassRoom from './pages/LiveClass/LiveClassRoom';
+import AgoraClass from './pages/LiveClass/AgoraClass';
 import CourseList from './pages/Courses/CourseList';
 
 const Unauthorized = () => <div className="text-2xl font-bold text-red-600 p-8 container">Unauthorized Access</div>;
@@ -51,8 +52,8 @@ function App() {
           <Route element={<ProtectedRoute allowedRoles={["student"]} />}>
             <Route path="/dashboard" element={<StudentDashboard />}>
               <Route index element={<StudentOverview />} />
-              <Route path="courses" element={<MyCourses />} />
-              <Route path="courses/:id" element={<CoursePlayer />} />
+              <Route path="units" element={<MyUnits />} />
+              <Route path="units/:id" element={<UnitDetails />} />
               <Route path="live-classes" element={<LiveClasses />} />
               <Route path="assignments" element={<Assignments />} />
               <Route path="announcements" element={<Announcements />} />
@@ -62,7 +63,8 @@ function App() {
               <Route path="progress" element={<StudentOverview />} />
             </Route>
 
-            <Route path="/live-classes/room" element={<LiveClassRoom />} />
+            {/* <Route path="/live-classes/room" element={<LiveClassRoom />} /> */}
+            <Route path="/live-classes/room/:channelName" element={<AgoraClass />} />
           </Route>
 
           {/* Fallback */}

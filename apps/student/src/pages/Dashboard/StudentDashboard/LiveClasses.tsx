@@ -1,6 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { studentApi } from '@elearning/shared';
-import { FiVideo, FiCalendar, FiClock, FiExternalLink } from 'react-icons/fi';
+// LiveClasses.tsx
+import React, { useState, useEffect } from "react";
+import { studentApi } from "@elearning/shared";
+import {
+  FiVideo,
+  FiCalendar,
+  FiClock,
+  FiExternalLink,
+  FiUsers,
+} from "react-icons/fi";
+import { Link } from "react-router-dom";
+import "../styles/LiveClasses.css"; // Import the CSS file
 
 const LiveClasses = () => {
   const [classes, setClasses] = useState<any[]>([]);
@@ -12,7 +21,7 @@ const LiveClasses = () => {
         const res = await studentApi.getLiveClasses();
         setClasses(res.data);
       } catch (err) {
-        console.error('Error fetching live classes:', err);
+        console.error("Error fetching live classes:", err);
       } finally {
         setLoading(false);
       }
@@ -20,66 +29,124 @@ const LiveClasses = () => {
     fetchLiveClasses();
   }, []);
 
-  if (loading) return <div>Loading live classes...</div>;
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p className="loading-text">Loading live classes...</p>
+      </div>
+    );
+  }
+
+  const liveCount = classes.filter((c) => c.status === "live").length;
+  const scheduledCount = classes.filter((c) => c.status === "scheduled").length;
 
   return (
-    <div className="animate-fade-in">
-      <div style={{ marginBottom: '2rem' }}>
-        <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Upcoming Live Classes</h2>
-        <p style={{ color: '#64748b' }}>Join your instructors for real-time learning sessions.</p>
+    <div className="live-classes-container animate-fade-in">
+      <div className="classes-header">
+        <h1 className="header-title">Live Classes</h1>
+        <p className="header-subtitle">
+          Join your instructors for real-time learning sessions.
+        </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
+      <div className="stats-row">
+        <div className="stat-badge live">
+          <span className="pulse-dot"></span>
+          {liveCount} Live {liveCount === 1 ? "Class" : "Classes"}
+        </div>
+        <div className="stat-badge">
+          <FiCalendar size={16} />
+          {scheduledCount} Scheduled
+        </div>
+        <div className="stat-badge">
+          <FiUsers size={16} />
+          {classes.length} Total
+        </div>
+      </div>
+
+      <div className="classes-grid">
         {classes.length > 0 ? (
-          classes.map(lc => (
-            <div key={lc.id} style={{ background: 'white', borderRadius: '1rem', border: '1px solid var(--student-border)', overflow: 'hidden' }}>
-              <div style={{ padding: '1.5rem' }}>
-                <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
-                  <span style={{ padding: '0.25rem 0.5rem', background: lc.status === 'live' ? '#fee2e2' : '#f1f5f9', color: lc.status === 'live' ? '#ef4444' : '#64748b', borderRadius: '0.25rem', fontSize: '0.75rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                    {lc.status === 'live' ? <><span style={{ width: 6, height: 6, borderRadius: '50%', background: '#ef4444' }}></span> LIVE NOW</> : 'SCHEDULED'}
+          classes.map((lc) => (
+            <div
+              key={lc.id}
+              className={`class-card ${lc.status === "live" ? "live" : ""}`}
+            >
+              <div className="card-content">
+                <div className="status-badges">
+                  <span
+                    className={`status-badge ${lc.status === "live" ? "live" : "scheduled"}`}
+                  >
+                    {lc.status === "live" ? (
+                      <>
+                        <span className="live-indicator"></span>
+                        LIVE NOW
+                      </>
+                    ) : (
+                      "SCHEDULED"
+                    )}
                   </span>
-                  <span style={{ padding: '0.25rem 0.5rem', background: '#e0f2fe', color: '#0284c7', borderRadius: '0.25rem', fontSize: '0.75rem', fontWeight: 600 }}>
-                    {lc.course || 'General'}
+                  <span className="status-badge unit">
+                    {lc.course || "General"}
                   </span>
-                </div>
-                
-                <h3 style={{ fontWeight: 700, fontSize: '1.125rem', marginBottom: '1rem' }}>{lc.title}</h3>
-                
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', color: '#64748b', fontSize: '0.875rem', marginBottom: '1.5rem' }}>
-                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                     <FiCalendar size={14} /> {new Date(lc.startTime).toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}
-                   </div>
-                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                     <FiClock size={14} /> {new Date(lc.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                   </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '1rem' }}>
-                  {lc.status === 'live' ? (
-                    <a 
-                      href={lc.liveUrl} 
-                      target="_blank" 
+                <h3 className="class-title">{lc.title}</h3>
+
+                <div className="class-details">
+                  <div className="detail-item">
+                    <FiCalendar />
+                    <span>
+                      {new Date(lc.startTime).toLocaleDateString(undefined, {
+                        weekday: "long",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </span>
+                  </div>
+                  <div className="detail-item">
+                    <FiClock />
+                    <span>
+                      {new Date(lc.startTime).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                      {lc.duration && (
+                        <>
+                          {" "}
+                          <strong>• {lc.duration} min</strong>
+                        </>
+                      )}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="action-buttons">
+                  {(lc.status === "live" || lc.status === "scheduled") &&
+                  lc.live_url ? (
+                    <Link
+                      to={`/live-classes/room/${lc.live_url}`}
+                      target="_blank"
                       rel="noopener noreferrer"
-                      style={{ flex: 1, textAlign: 'center', padding: '0.75rem', background: 'var(--student-primary)', color: 'white', borderRadius: '0.5rem', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                      className={`join-button ${lc.status === "live" ? "live" : "scheduled"}`}
                     >
-                      Join Class <FiExternalLink size={16} />
-                    </a>
+                      {lc.status === "live" ? "Join Class" : "Enter Class"}{" "}
+                      <FiVideo size={16} />
+                    </Link>
                   ) : (
-                    <button 
-                      disabled
-                      style={{ flex: 1, padding: '0.75rem', background: '#f1f5f9', color: '#94a3b8', borderRadius: '0.5rem', fontWeight: 600, border: 'none' }}
-                    >
+                    <button disabled className="disabled-button">
                       Not Started
                     </button>
                   )}
                   {lc.recordingUrl && (
-                    <a 
-                      href={lc.recordingUrl} 
-                      target="_blank" 
+                    <a
+                      href={lc.recordingUrl}
+                      target="_blank"
                       rel="noopener noreferrer"
-                      style={{ padding: '0.75rem', background: 'white', border: '1px solid var(--student-border)', borderRadius: '0.5rem', color: 'var(--student-text)' }}
+                      className="recording-button"
+                      data-tooltip="View Recording"
                     >
-                      Recording
+                      <FiExternalLink size={20} />
                     </a>
                   )}
                 </div>
@@ -87,9 +154,15 @@ const LiveClasses = () => {
             </div>
           ))
         ) : (
-          <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '4rem', background: 'white', borderRadius: '1rem', border: '1px dotted var(--student-border)' }}>
-             <FiVideo size={48} style={{ color: '#cbd5e1', marginBottom: '1rem' }} />
-             <p style={{ color: '#64748b' }}>No live classes scheduled at the moment.</p>
+          <div className="empty-state">
+            <div className="empty-icon-wrapper">
+              <FiVideo className="empty-icon" />
+            </div>
+            <h3>No Live Classes Scheduled</h3>
+            <p>
+              There are no live classes scheduled at the moment. Check back
+              later or explore your course materials in the meantime.
+            </p>
           </div>
         )}
       </div>

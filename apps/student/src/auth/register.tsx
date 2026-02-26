@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { axiosInstance as api } from '@elearning/shared';
 import toast from 'react-hot-toast';
@@ -11,6 +11,7 @@ import "@elearning/shared/styles/auth/form.css";
 const StudentRegister = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [courses, setCourses] = useState<any[]>([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({  
@@ -18,10 +19,22 @@ const StudentRegister = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    courseCode: '' // Specific to student
+    courseId: '' // Specific to student
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    const fetchCourses = async () => {
+        try {
+            const res = await api.get('/courses');
+            setCourses(res.data);
+        } catch (err) {
+            console.error("Failed to fetch courses", err);
+        }
+    };
+    fetchCourses();
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };    
 
@@ -39,7 +52,7 @@ const StudentRegister = () => {
         email: formData.email,
         password: formData.password,
         role: 'student',
-        courseCode: formData.courseCode
+        courseId: formData.courseId
       });
       toast.success('Registration successful! Please check your email to verify.');
       navigate('/auth/login');
@@ -76,15 +89,19 @@ const StudentRegister = () => {
           />
         </div>
         <div className="form-group-custom">
-            <input
-              type="text"
-              name="courseCode"
+            <select
+              name="courseId"
               className="auth-input"
-              value={formData.courseCode}
+              value={formData.courseId}
               onChange={handleChange}
-              placeholder="Course Code (e.g. ENG, MATH)"
               required
-            />
+              style={{ color: formData.courseId ? 'white' : 'rgba(255,255,255,0.7)' }}
+            >
+                <option value="" disabled style={{ color: 'white' }}>Select Course</option>
+                {courses.map((course) => (
+                    <option key={course.id} value={course.id} style={{ color: 'black' }}>{course.title} ({course.short_code})</option>
+                ))}
+            </select>
         </div>
         <div className="form-group-custom relative">
           <input

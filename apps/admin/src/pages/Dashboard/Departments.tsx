@@ -1,3 +1,5 @@
+// Departments.tsx (with proper class usage)
+
 import { useEffect, useState } from "react";
 import "../styles/Department.css";
 import { axiosInstance as api } from "@elearning/shared";
@@ -7,7 +9,7 @@ interface Department {
   name: string;
   description?: string;
   short_code?: string;
-} 
+}
 
 export default function Departments() {
   const [departments, setDepartments] = useState<Department[]>([]);
@@ -24,7 +26,7 @@ export default function Departments() {
     try {
       setLoading(true);
       setError(null);
-      const { data } = await api.get("/admin/departments"); // no localhost, shared instance handles baseURL
+      const { data } = await api.get("/admin/departments");
       setDepartments(data);
     } catch (err: any) {
       setError(err?.response?.data?.error || err.message);
@@ -33,6 +35,7 @@ export default function Departments() {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchDepartments();
   }, []);
@@ -148,29 +151,21 @@ export default function Departments() {
                 className="form-input"
               />
             </div>
+
             <div className="form-group">
               <textarea
                 placeholder="Enter description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="form-input"
-                rows={4} // adjust number of visible lines
+                rows={4}
               ></textarea>
             </div>
 
             <div className="form-actions">
               <button type="submit" className="btn btn-primary">
-                {editingId ? (
-                  <>
-                    <span className="btn-icon">✏️</span>
-                    Update Department
-                  </>
-                ) : (
-                  <>
-                    <span className="btn-icon">➕</span>
-                    Add Department
-                  </>
-                )}
+                <span className="btn-icon">{editingId ? "✏️" : "➕"}</span>
+                {editingId ? "Update Department" : "Add Department"}
               </button>
 
               {editingId && (
@@ -240,9 +235,9 @@ export default function Departments() {
                   <div className="card-header">
                     <div className="card-info">
                       <h3>{dept.name}</h3>
-                      {dept.short_code && <p>Code: {dept.short_code}</p>}
+                      {dept.short_code && <p>{dept.short_code}</p>}
                     </div>
-                    <div>{dept.description && <p>{dept.description}</p>}</div>
+                    {dept.description && <p>{dept.description}</p>}
                     <div className="card-actions">
                       <button
                         className="action-btn edit-btn"

@@ -1,3 +1,5 @@
+// UserManagement.tsx (updated with correct class names)
+
 import { useEffect, useState } from "react";
 import { axiosInstance as api } from "@elearning/shared";
 import toast from "react-hot-toast";
@@ -87,7 +89,6 @@ const UserManagement = () => {
     } else if (user.role === "student") {
       navigate(`/reports/student/${user.id}`);
     } else {
-      // optional: handle other roles or show a message
       console.warn("No report available for this role");
     }
   };
@@ -139,7 +140,7 @@ const UserManagement = () => {
         </div>
         <button
           onClick={() => setShowRegisterModal(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition flex items-center gap-2"
+          className="register-button"
         >
           <UserPlus size={18} />
           Register Staff
@@ -157,19 +158,20 @@ const UserManagement = () => {
               <th>Status</th>
               <th>Registered</th>
               <th className="text-right">Actions</th>
+              <th>Report</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={6} className="loading-state">
+                <td colSpan={8} className="loading-state">
                   <div className="loading-spinner"></div>
                   Loading users...
                 </td>
               </tr>
             ) : filteredUsers.length === 0 ? (
               <tr>
-                <td colSpan={6} className="empty-state">
+                <td colSpan={8} className="empty-state">
                   <UsersIcon className="empty-icon" size={48} />
                   <p>No users found</p>
                 </td>
@@ -180,27 +182,19 @@ const UserManagement = () => {
                   <td>
                     <div className="user-info">
                       <div className="user-avatar">
-                        <User size={18} />
+                        {user.name.charAt(0).toUpperCase()}
                       </div>
                       <div className="user-details">
-                        <span className="user-name" style={{ color: "white" }}>
-                          {user.name}
-                        </span>
-                        <span className="user-email" style={{ color: "white" }}>
-                          {user.email}
-                        </span>
+                        <span className="user-name">{user.name}</span>
+                        <span className="user-email">{user.email}</span>
                       </div>
                     </div>
                   </td>
                   <td>
-                    <span className="user-id" style={{ color: "white" }}>
-                      {getCustomId(user)}
-                    </span>
+                    <span className="user-id">{getCustomId(user)}</span>
                   </td>
                   <td>
-                    <span className="text-xs font-mono text-gray-500">
-                      {user.id}
-                    </span>
+                    <span className="text-xs font-mono">{user.id}</span>
                   </td>
                   <td>
                     <span className={`role-badge ${getRoleClass(user.role)}`}>
@@ -221,7 +215,7 @@ const UserManagement = () => {
                     )}
                   </td>
                   <td>
-                    <span className="user-date" style={{ color: "white" }}>
+                    <span className="user-date">
                       {new Date(user.created_at).toLocaleDateString("en-US", {
                         year: "numeric",
                         month: "short",
@@ -252,16 +246,14 @@ const UserManagement = () => {
                     </div>
                   </td>
                   <td>
-                    <div className="view-report">
-                      {(user.role === "teacher" || user.role === "student") && (
-                        <button
-                          onClick={() => handleViewReport(user)}
-                          className="report-button"
-                        >
-                          View Report
-                        </button>
-                      )}
-                    </div>
+                    {(user.role === "teacher" || user.role === "student") && (
+                      <button
+                        onClick={() => handleViewReport(user)}
+                        className="report-button"
+                      >
+                        View Report
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))

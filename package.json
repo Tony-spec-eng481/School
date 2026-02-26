@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@daily-co/daily-js": "^0.87.0",
+    "agora-rtc-sdk-ng": "^4.24.2",
     "axios": "^1.13.5",
     "lucide-react": "^0.574.0",
     "react": "^19.2.0",
