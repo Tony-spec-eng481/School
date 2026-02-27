@@ -37,7 +37,7 @@ const Contact = () => {
       <section className="quick-contact-section">
         <div className="container">
           <div className="quick-contact-grid">
-            <div className="contact-card">
+            {/* <div className="contact-card">
               <div className="contact-icon">📍</div>
               <h3>Visit Us</h3>
               <p>
@@ -48,15 +48,15 @@ const Contact = () => {
                 10101, Kenya
               </p>
               <span className="contact-card-footer">Main Campus</span>
-            </div>
+            </div> */}
 
             <div className="contact-card">
               <div className="contact-icon">📞</div>
               <h3>Call Us</h3>
               <p>
-                +254 (0) 20 123 4567
+                +254 770 428297
                 <br />
-                +254 (0) 720 123 456
+                +254 746 278212
               </p>
               <span className="contact-card-footer">Mon-Fri, 8am-6pm</span>
             </div>
@@ -65,14 +65,14 @@ const Contact = () => {
               <div className="contact-icon">✉️</div>
               <h3>Email Us</h3>
               <p>
-                info@trespicsschool.com
+                trespicskenya@gmail.com
                 <br />
-                support@trespicsschool.com
+                tonjame974@gmail.com
               </p>
               <span className="contact-card-footer">24/7 Support</span>
             </div>
 
-            <div className="contact-card">
+            {/* <div className="contact-card">
               <div className="contact-icon">💬</div>
               <h3>Live Chat</h3>
               <p>
@@ -81,7 +81,7 @@ const Contact = () => {
                 for instant assistance
               </p>
               <span className="contact-card-footer">Available 24/7</span>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -100,7 +100,7 @@ const Contact = () => {
           </div>
 
           <div className="methods-grid">
-            <div className="method-card">
+            {/* <div className="method-card">
               <div className="method-icon">
                 <span className="method-emoji">📱</span>
               </div>
@@ -112,7 +112,7 @@ const Contact = () => {
                 <span className="app-badge">App Store</span>
                 <span className="app-badge">Google Play</span>
               </div>
-            </div>
+            </div> */}
 
             <div className="method-card">
               <div className="method-icon">
@@ -126,11 +126,11 @@ const Contact = () => {
                 </div>
                 <div className="hour-item">
                   <span>Saturday</span>
-                  <span>9:00 AM - 2:00 PM</span>
+                  <span>CLosed</span>
                 </div>
                 <div className="hour-item">
                   <span>Sunday</span>
-                  <span>Closed</span>
+                  <span>9:00 AM - 4:00 PM</span>
                 </div>
               </div>
             </div>

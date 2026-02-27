@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { axiosInstance as api } from '@elearning/shared';
+import { axiosInstance as api } from "@elearning/shared";
 import toast from "react-hot-toast";
-import { AuthLayout } from '@elearning/shared';
+import { AuthLayout } from "@elearning/shared";
 import { Eye, EyeOff } from "lucide-react";
 import "@elearning/shared/styles/auth/form.css";
 
@@ -31,11 +31,11 @@ const AdminRegister = () => {
 
     setIsLoading(true);
     try {
-      await api.post("/auth/register", {
+      await api.post("/auth/register-staff", {
         name: formData.name,
         email: formData.email,
         password: formData.password,
-        role: "admin", // Admin role
+        role: "admin",
       });
       toast.success(
         "Admin Registration successful! Please check your email to verify.",
@@ -77,11 +77,11 @@ const AdminRegister = () => {
             required
           />
         </div>
-        <div className="form-group-custom relative">
+        <div className="form-group-custom password-field">
           <input
             type={showPassword ? "text" : "password"}
             name="password"
-            className="auth-input pr-10"
+            className="auth-input"
             value={formData.password}
             onChange={handleChange}
             placeholder="Password"
@@ -89,17 +89,17 @@ const AdminRegister = () => {
           />
           <button
             type="button"
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/70 hover:text-white"
+            className="password-toggle"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </button>
         </div>
-        <div className="form-group-custom relative">
+        <div className="form-group-custom password-field">
           <input
             type={showConfirmPassword ? "text" : "password"}
             name="confirmPassword"
-            className="auth-input pr-10"
+            className="auth-input"
             value={formData.confirmPassword}
             onChange={handleChange}
             placeholder="Confirm Password"
@@ -107,7 +107,7 @@ const AdminRegister = () => {
           />
           <button
             type="button"
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/70 hover:text-white"
+            className="password-toggle"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
           >
             {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -121,8 +121,8 @@ const AdminRegister = () => {
 
         <button type="submit" className="auth-submit-btn" disabled={isLoading}>
           {isLoading ? (
-            <span className="flex items-center justify-center gap-2">
-              <span className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></span>
+            <span className="loading-text">
+              <span className="spinner"></span>
               REGISTERING...
             </span>
           ) : (

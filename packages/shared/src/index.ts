@@ -10,6 +10,10 @@ export { studentApi } from './api/studentApi';
 export { default as AuthLayout } from './layouts/AuthLayout';
 export { default as MainLayout } from './layouts/MainLayout';
 
+// Pages
+export { default as ForgotPassword } from './pages/ForgotPassword';
+export { default as ResetPassword } from './pages/ResetPassword';
+
 // Components
 export { default as Navbar } from './components/Navbar';
 export { default as Footer } from './components/Footer';

@@ -35,12 +35,12 @@ const CourseList = () => {
         course.description.toLowerCase().includes(searchTerm.toLowerCase())),
   );
 
-  const filters = [
-    { id: "all", label: "All Courses" },
-    { id: "beginner", label: "Beginner" },
-    { id: "intermediate", label: "Intermediate" },
-    { id: "advanced", label: "Advanced" },
-  ];
+  // const filters = [
+  //   { id: "all", label: "All Courses" },
+  //   { id: "beginner", label: "Beginner" },
+  //   { id: "intermediate", label: "Intermediate" },
+  //   { id: "advanced", label: "Advanced" },
+  // ];
 
   // Calculate stats
   // const totalCourses = courses.length;
@@ -103,7 +103,7 @@ const CourseList = () => {
               />
             </div>
 
-            <div className="filter-section">
+            {/* <div className="filter-section">
               {filters.map((filter) => (
                 <button
                   key={filter.id}
@@ -114,7 +114,7 @@ const CourseList = () => {
                   {filter.label}
                 </button>
               ))}
-            </div>
+            </div> */}
           </div>
 
           {isLoading ? (

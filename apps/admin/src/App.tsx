@@ -6,6 +6,7 @@ import { AuthProvider, ProtectedRoute } from '@elearning/shared';
 // Pages
 import AdminLogin from './auth/login';
 import AdminRegister from './auth/register';
+import { ForgotPassword, ResetPassword } from '@elearning/shared';
 import AdminDashboard from './pages/Dashboard/AdminDashboard';
 import CourseUnits from './pages/Dashboard/CourseUnits';
 import TeacherReport from './pages/Dashboard/TeacherReport';
@@ -20,6 +21,8 @@ function App() {
         <Routes>
           <Route path="/auth/login" element={<AdminLogin />} />
           <Route path="/auth/register" element={<AdminRegister />} />
+          <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+          <Route path="/auth/reset-password" element={<ResetPassword />} />
 
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
             <Route path="/dashboard" element={<AdminDashboard />} />

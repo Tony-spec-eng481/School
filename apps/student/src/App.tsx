@@ -11,6 +11,7 @@ import Contact from './pages/Home/contact';
 // Auth Pages
 import StudentLogin from './auth/login';
 import StudentRegister from './auth/register';
+import { ForgotPassword, ResetPassword } from '@elearning/shared';
 
 // Dashboards
 import StudentDashboard from './pages/Dashboard/StudentDashboard/StudentDashboard';
@@ -46,7 +47,8 @@ function App() {
           {/* Authentication Routes */}
           <Route path="/auth/login" element={<StudentLogin />} />
           <Route path="/auth/register" element={<StudentRegister />} />
-          {/* Note: Forgot password and Reset password could be added here or shared */}
+          <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+          <Route path="/auth/reset-password" element={<ResetPassword />} />
 
           {/* Protected Routes - Student */}
           <Route element={<ProtectedRoute allowedRoles={["student"]} />}>

@@ -19,7 +19,7 @@ const TeacherHome = () => {
             </Link>
           </div>
         </div>
-      </nav>
+      </nav>   
 
       {/* Hero Section */}
       <section className="teacher-hero">
@@ -49,7 +49,7 @@ const TeacherHome = () => {
             </Link>
           </div>
 
-          <div className="teacher-stats">
+          {/* <div className="teacher-stats">
             <div className="stat-item">
               <span className="stat-number">500+</span>
               <span className="stat-label">Expert Teachers</span>
@@ -62,7 +62,7 @@ const TeacherHome = () => {
               <span className="stat-number">1000+</span>
               <span className="stat-label">Courses</span>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="teacher-hero-wave">

@@ -135,7 +135,7 @@
   max-width: 800px;
   padding: 100px 20px;
   text-align: center;
-  margin: 0 auto;
+  margin-top: -100px;
 }
 
 .teacher-hero-badge {
@@ -190,9 +190,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 32px;
+  padding: 12px;
   border-radius: 50px;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 1rem;
   text-decoration: none;
   cursor: pointer;
@@ -204,6 +204,7 @@
 .btn-primary {
   background: linear-gradient(135deg, var(--blue-500) 0%, var(--blue-700) 100%);
   color: var(--white);
+  max-width: 250px;
   box-shadow: var(--shadow-md);
 }
 

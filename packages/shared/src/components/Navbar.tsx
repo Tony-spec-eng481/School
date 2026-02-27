@@ -26,7 +26,7 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
-  // Close on resize
+  // Close on resize  
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) setIsOpen(false);

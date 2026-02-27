@@ -1,19 +1,24 @@
 
 import React from 'react';
 import '../styles/auth/Auth.css';
-import { BookOpen } from 'lucide-react'; // Assuming lucide-react is installed as seen in package.json
-// You can replace the image URL with a local asset if available
+import { BookOpen } from 'lucide-react';
 import Picture from '../assets/Picture1.jpg';
 
 interface AuthLayoutProps {
   children: React.ReactNode;
-  mode: 'login' | 'register';
+  mode: 'login' | 'register' | 'forgot-password' | 'reset-password';
   role: 'student' | 'teacher' | 'admin';
   onToggleMode: () => void;
 }
 
+const modeHeadings: Record<string, string> = {
+  'forgot-password': 'FORGOT PASSWORD',
+  'reset-password': 'RESET PASSWORD',
+};
+
 const AuthLayout: React.FC<AuthLayoutProps> = ({ children, mode, onToggleMode }) => {
-  
+  const isAuthFlow = mode === 'forgot-password' || mode === 'reset-password';
+
   return (
     <div className="auth-container">
       {/* Left Side - Branding */}
@@ -54,20 +59,26 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, mode, onToggleMode })
             <span>TRESPICS SCHOOL</span>
           </div>
 
-          <div className="auth-toggle">
-            <button
-              className={`auth-toggle-btn ${mode === "login" ? "active" : ""}`}
-              onClick={mode === "register" ? onToggleMode : undefined}
-            >
-              LOGIN
-            </button>
-            <button
-              className={`auth-toggle-btn ${mode === "register" ? "active" : ""}`}
-              onClick={mode === "login" ? onToggleMode : undefined}
-            >
-              REGISTER
-            </button>
-          </div>
+          {isAuthFlow ? (
+            <div className="auth-mode-heading">
+              <h2>{modeHeadings[mode]}</h2>
+            </div>
+          ) : (
+            <div className="auth-toggle">
+              <button
+                className={`auth-toggle-btn ${mode === "login" ? "active" : ""}`}
+                onClick={mode === "register" ? onToggleMode : undefined}
+              >
+                LOGIN
+              </button>
+              <button
+                className={`auth-toggle-btn ${mode === "register" ? "active" : ""}`}
+                onClick={mode === "login" ? onToggleMode : undefined}
+              >
+                REGISTER
+              </button>
+            </div>
+          )}
 
           <div className="w-full">{children}</div>
         </div>

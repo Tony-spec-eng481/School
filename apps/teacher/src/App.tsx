@@ -7,6 +7,7 @@ import { AuthProvider, ProtectedRoute } from '@elearning/shared';
 import TeacherHome from './teacher-home';
 import TeacherLogin from './auth/login';
 import TeacherRegister from './auth/register';
+import { ForgotPassword, ResetPassword } from '@elearning/shared';
 import TeacherDashboard from './pages/Dashboard/TeacherDashboard';
 import Overview from './pages/Dashboard/Overview';
 import StudentManagement from './pages/Dashboard/StudentManagement';
@@ -27,6 +28,8 @@ function App() {
           <Route path="/" element={<TeacherHome />} />
           <Route path="/auth/login" element={<TeacherLogin />} />
           <Route path="/auth/register" element={<TeacherRegister />} />
+          <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+          <Route path="/auth/reset-password" element={<ResetPassword />} />
 
           <Route element={<ProtectedRoute allowedRoles={["teacher"]} />}>
             <Route path="/dashboard" element={<TeacherDashboard />}>
