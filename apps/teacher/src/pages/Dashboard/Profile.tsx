@@ -16,7 +16,7 @@ interface TeacherProfile {
 }
 
 const Profile = () => {
-  const { user: authUser, login } = useAuth();
+  const { user: authUser, login, token } = useAuth();
   const [profile, setProfile] = useState<TeacherProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -108,8 +108,8 @@ const Profile = () => {
       const { data } = await axiosInstance.patch('/auth/update-profile', personalInfo);
       toast.success('Personal information updated');
       // Update the auth context so the navbar/header reflects new name
-      if (authUser && authUser.token) {
-        login(authUser.token, data.user);
+      if (authUser && token) {
+        login(token, data.user);
       }
     } catch (err: any) {
       toast.error(err.response?.data?.error || 'Failed to update personal info');
