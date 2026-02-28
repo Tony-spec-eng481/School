@@ -29,6 +29,8 @@ import Settings from './pages/Dashboard/StudentDashboard/Settings';
 import AgoraClass from './pages/LiveClass/AgoraClass';
 import CourseList from './pages/Courses/CourseList';
 
+import CourseDetails from './pages/Courses/CourseDetails';
+
 const Unauthorized = () => <div className="text-2xl font-bold text-red-600 p-8 container">Unauthorized Access</div>;
 
 function App() { 
@@ -43,6 +45,8 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/courses" element={<CourseList />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
+
+          <Route path="/courses/:id" element={<CourseDetails />} />
 
           {/* Authentication Routes */}
           <Route path="/auth/login" element={<StudentLogin />} />

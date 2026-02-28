@@ -31,27 +31,32 @@ const Home = () => {
       <section className="hero-section">
         <div className="hero-overlay"></div>
         <div className="container hero-content">
-          <div className="hero-badge animate-fade-in">
+          {/* <div className="hero-badge animate-fade-in">
             Welcome to the Future of Learning
-          </div>
-          <h1 className="hero-title animate-slide-up">
-            Unlock Your Potential with{" "}
-            <span className="text-gradient">Trespics School</span>
-          </h1>
-          <p className="hero-subtitle animate-slide-up delay-1">
-            Experience world-class education with our interactive e-learning
-            platform. Join students across the world learning from the best
-            teachers and achieving their academic goals.
-          </p>
-          <div className="hero-buttons animate-slide-up delay-2">
-            <Link
-              to="/auth/register"
-              className="btn btn-primary btn-lg"
-            >
+          </div> */}
+          <div>
+            <h1 className="hero-title animate-slide-up">
+              Unlock Your Potential with{" "}
+              <span className="text-gradient">Trespics School</span>
+            </h1>
+
+            <p className="hero-subtitle animate-slide-up delay-1">
+              Experience world-class education with our interactive e-learning
+              platform. Join students across the world learning from the best
+              teachers and achieving their academic goals.
+            </p>
+            <Link to="/auth/register" className="btn btn-primary btn-lg">
               Start Learning Today
               <span className="btn-icon">→</span>
             </Link>
           </div>
+
+          {/* <div className="hero-buttons animate-slide-up delay-2">
+            <Link to="/auth/register" className="btn btn-primary btn-lg">
+              Start Learning Today
+              <span className="btn-icon">→</span>
+            </Link>
+          </div> */}
         </div>
 
         <div className="hero-wave">
@@ -237,10 +242,7 @@ const Home = () => {
               live classes, and expert teachers.
             </p>
             <div className="cta-buttons">
-              <Link
-                to="/auth/register"
-                className="btn btn-primary btn-lg"
-              >
+              <Link to="/auth/register" className="btn btn-primary btn-lg">
                 Get Started Now
                 <span className="btn-icon">→</span>
               </Link>

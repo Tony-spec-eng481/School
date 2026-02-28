@@ -92,9 +92,14 @@ const StudentLogin = () => {
             "LOGIN"
           )}
         </button>
+        <div>
+          <Link to="/" className="auth-register-link">
+            Back Home
+          </Link>
+        </div>
       </form>
     </AuthLayout>
   );
-};
+};   
 
 export default StudentLogin;

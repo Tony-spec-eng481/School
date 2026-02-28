@@ -18,6 +18,7 @@ import Courses from './pages/Dashboard/Courses';
 import CourseUnits from './pages/Dashboard/CourseUnits';
 import Announcements from './pages/Dashboard/Announcements';
 import AgoraClass from './pages/Dashboard/AgoraClass';
+import Profile from './pages/Dashboard/Profile';
 
 function App() { 
   return (  
@@ -42,6 +43,7 @@ function App() {
               <Route path="live-classes" element={<LiveClasses />} />
               <Route path="live-classes/room/:channelName" element={<AgoraClass />} />
               <Route path="assignments" element={<Assignments />} />
+              <Route path="profile" element={<Profile />} />
               {/* Other nested routes will go here */}
             </Route>
           </Route>
