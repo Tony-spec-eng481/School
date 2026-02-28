@@ -418,7 +418,6 @@ body {
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
-  backdrop-filter: blur(2px);
   animation: fadeIn 0.3s ease;
 }
 

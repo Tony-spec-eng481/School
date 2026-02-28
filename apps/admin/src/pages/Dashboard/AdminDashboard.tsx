@@ -172,7 +172,7 @@ const AdminDashboard = () => {
       </main>
 
       {/* Mobile Overlay */}
-      {!isSidebarOpen && window.innerWidth <= 1024 && (
+      {isSidebarOpen && window.innerWidth <= 1024 && (
         <div
           className="sidebar-overlay"
           onClick={() => setIsSidebarOpen(false)}

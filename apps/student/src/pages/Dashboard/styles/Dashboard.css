@@ -266,7 +266,7 @@ body {
   top: 0;
   z-index: 100;
   box-shadow: var(--shadow-sm);
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
   background: rgba(255, 255, 255, 0.9);
 }
 
@@ -353,7 +353,6 @@ body {
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
-  backdrop-filter: blur(2px);
   animation: fadeIn 0.3s ease;
 }
 

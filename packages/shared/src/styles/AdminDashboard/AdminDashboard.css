@@ -81,10 +81,10 @@ body {
   display: flex;
   flex-direction: column;
 }
-
+/* 
 .admin-sidebar.collapsed {
   width: var(--sidebar-collapsed-width);
-}
+} */
 
 /* Sidebar Header */
 .sidebar-header {
@@ -240,7 +240,7 @@ body {
     transform: scale(1);
   }
   50% {
-    opacity: 0.5;
+    opacity: 0.5;    
     transform: scale(1.2);
   }
 }
@@ -668,12 +668,12 @@ body {
 /* Glass Morphism Effect */
 @media (min-width: 1200px) {
   .admin-sidebar {
-    backdrop-filter: blur(10px);
+    /* backdrop-filter: blur(10px); */
     background: linear-gradient(135deg, rgba(0, 18, 51, 0.95), rgba(0, 36, 102, 0.95));
   }
 
   .admin-header {
-    backdrop-filter: blur(10px);
+    /* backdrop-filter: blur(10px); */
     background: rgba(255, 255, 255, 0.9);
   }
 
@@ -789,6 +789,5 @@ body {
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
-  backdrop-filter: blur(2px);
   animation: fadeIn 0.3s ease;
 }
