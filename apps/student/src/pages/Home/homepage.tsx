@@ -51,25 +51,7 @@ const Home = () => {
               Start Learning Today
               <span className="btn-icon">→</span>
             </Link>
-            {/* <Link to="/teacher/home" className="btn btn-outline btn-lg">
-              Teacher Portal
-            </Link> */}
           </div>
-
-          {/* <div className="hero-stats animate-fade-in delay-3">
-            <div className="stat-item">
-              <span className="stat-number">10K+</span>
-              <span className="stat-label">Active Students</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-number">500+</span>
-              <span className="stat-label">Expert Teachers</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-number">1000+</span>
-              <span className="stat-label">Video Lessons</span>
-            </div>
-          </div> */}
         </div>
 
         <div className="hero-wave">
@@ -124,20 +106,6 @@ const Home = () => {
               </Link>
             </div>
 
-            {/* <div className="feature-card">
-              <div className="feature-icon bg-purple">
-                <span className="icon">🏆</span>
-              </div>
-              <h3>Expert Teachers</h3>
-              <p>
-                Learn from experienced educators dedicated to your success with
-                personalized attention.
-              </p>
-              <Link to="/teachers" className="feature-link">
-                Meet Our Teachers <span>→</span>
-              </Link>
-            </div> */}
-
             <div className="feature-card">
               <div className="feature-icon bg-orange">
                 <span className="icon">📊</span>
@@ -183,44 +151,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Popular Courses Section */}
-      {/* <section className="courses-section">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-badge">Popular Courses</span>
-            <h2 className="section-title">Most Enrolled Programs</h2>
-            <p className="section-subtitle">
-              Join thousands of students in these highly-rated courses
-            </p>
-          </div>
-
-          <div className="courses-grid">
-            {isLoading ? (
-               <div className="col-span-full flex justify-center py-12">
-                  <div className="w-10 h-10 border-4 border-blue-600/30 border-t-blue-600 rounded-full animate-spin"></div>
-               </div>
-            ) : (
-              <>
-                {courses.length > 0 ? (
-                  courses.map(course => (
-                    <CourseCard key={course.id} course={course} />
-                  ))
-                ) : (
-                  <p className="col-span-full text-center text-white/50">No courses available at the moment.</p>
-                )}
-              </>
-            )}
-          </div>
-
-          <div className="section-footer">
-            <Link to="/dashboard/courses" className="btn btn-primary">
-              Browse All Courses
-              <span className="btn-icon">→</span>
-            </Link>
-          </div>
-        </div>
-      </section> */}
-
       {/* Testimonials Section */}
       <section className="testimonials-section">
         <div className="container">
@@ -248,8 +178,8 @@ const Home = () => {
                   className="author-avatar"
                 />
                 <div>
-                  <h4>Sarah Johnson</h4>
-                  <p>Grade 10 Student</p>
+                  <h4>Tony James</h4>
+                  <p>Mobile Development Student</p>
                 </div>
               </div>
             </div>
@@ -268,8 +198,8 @@ const Home = () => {
                   className="author-avatar"
                 />
                 <div>
-                  <h4>Michael Chen</h4>
-                  <p>Grade 12 Student</p>
+                  <h4>Abigael Wairimu</h4>
+                  <p>Cloud Security Student</p>
                 </div>
               </div>
             </div>
@@ -288,7 +218,7 @@ const Home = () => {
                   className="author-avatar"
                 />
                 <div>
-                  <h4>Lisa Rodriguez</h4>
+                  <h4>Lisa Maryanne</h4>
                   <p>Parent</p>
                 </div>
               </div>

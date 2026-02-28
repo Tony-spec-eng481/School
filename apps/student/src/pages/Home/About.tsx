@@ -40,31 +40,31 @@ const About = () => {
             <div className="stat-card">
               <div className="stat-icon">🎓</div>
               <div className="stat-number" data-target="10000">
-                10K+
+                200+
               </div>
               <div className="stat-label">Active Students</div>
             </div>
             <div className="stat-card">
               <div className="stat-icon">👨‍🏫</div>
               <div className="stat-number" data-target="500">
-                500+
+                50+
               </div>
               <div className="stat-label">Expert Teachers</div>
             </div>
             <div className="stat-card">
               <div className="stat-icon">📚</div>
               <div className="stat-number" data-target="1000">
-                1000+
+                100+
               </div>
               <div className="stat-label">Courses</div>
             </div>
-            <div className="stat-card">
+            {/* <div className="stat-card">
               <div className="stat-icon">🏆</div>
               <div className="stat-number" data-target="50">
                 50+
               </div>
               <div className="stat-label">Awards</div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -85,9 +85,9 @@ const About = () => {
                 can thrive and reach their full potential.
               </p>
               <ul className="mission-list">
-                <li>✓ Quality education for all</li>
-                <li>✓ Innovation in teaching</li>
-                <li>✓ Student-centered approach</li>
+                <li> Quality education for all</li>
+                <li> Innovation in teaching</li>
+                <li> Student-centered approach</li>
               </ul>
             </div>
 
@@ -103,9 +103,9 @@ const About = () => {
                 everyone, everywhere.
               </p>
               <ul className="vision-list">
-                <li>✓ Global accessibility</li>
-                <li>✓ Lifelong learning</li>
-                <li>✓ Educational excellence</li>
+                <li> Global accessibility</li>
+                <li> Lifelong learning</li>
+                <li> Educational excellence</li>
               </ul>
             </div>
           </div>
@@ -121,7 +121,7 @@ const About = () => {
               <h2 className="section-title">The Trespics Story</h2>
               <div className="timeline">
                 <div className="timeline-item">
-                  <div className="timeline-year">2020</div>
+                  <div className="timeline-year">2025</div>
                   <div className="timeline-content">
                     <h3>The Beginning</h3>
                     <p>
@@ -133,7 +133,7 @@ const About = () => {
                 </div>
 
                 <div className="timeline-item">
-                  <div className="timeline-year">2022</div>
+                  <div className="timeline-year">2026</div>
                   <div className="timeline-content">
                     <h3>Rapid Growth</h3>
                     <p>
@@ -145,7 +145,7 @@ const About = () => {
                 </div>
 
                 <div className="timeline-item">
-                  <div className="timeline-year">2024</div>
+                  {/* <div className="timeline-year">2024</div>
                   <div className="timeline-content">
                     <h3>Global Recognition</h3>
                     <p>
@@ -153,7 +153,7 @@ const About = () => {
                       teachers. Recognized as one of the top e-learning
                       platforms.
                     </p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -252,7 +252,7 @@ const About = () => {
           <div className="team-grid">
             <div className="team-card">
               <div className="team-image">
-                <img src="/api/placeholder/400/400" alt="Dr. Sarah Johnson" />
+                <img src="/api/placeholder/400/400" alt="John Warui" />
                 <div className="team-social">
                   <a href="#" className="social-icon">
                     📧
@@ -266,11 +266,10 @@ const About = () => {
                 </div>
               </div>
               <div className="team-info">
-                <h3>Dr. Sarah Johnson</h3>
+                <h3>John Warui</h3>
                 <p className="team-position">Founder & CEO</p>
                 <p className="team-bio">
-                  20+ years in education technology, PhD in Educational
-                  Psychology
+                  Founder of the Trespics School
                 </p>
               </div>
             </div>
