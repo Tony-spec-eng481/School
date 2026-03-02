@@ -409,7 +409,7 @@ textarea.form-input {
 
 /* Department Card */
 .department-card {
-  background: linear-gradient(135deg, var(--white), var(--gray-50));
+  /* background: linear-gradient(135deg, var(--white), var(--gray-50)); */
   border: 1px solid var(--gray-200);
   border-radius: 1.25rem;
   padding: 1.25rem;

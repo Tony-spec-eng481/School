@@ -79,10 +79,10 @@ const About = () => {
               </div>
               <h2>Our Mission</h2>
               <p>
-                To empower students with knowledge and skills for the future
-                through innovative technology and expert guidance. We believe in
-                creating an inclusive learning environment where every student
-                can thrive and reach their full potential.
+                To equip students with future-ready knowledge and abilities
+                through cutting-edge technology and knowledgeable instruction.
+                Every student should be able to flourish and realize their full
+                potential in an inclusive learning environment.
               </p>
               <ul className="mission-list">
                 <li> Quality education for all</li>
@@ -97,10 +97,10 @@ const About = () => {
               </div>
               <h2>Our Vision</h2>
               <p>
-                To be a global leader in digital education, breaking down
-                barriers and creating opportunities for lifelong learning. We
-                envision a world where quality education is accessible to
-                everyone, everywhere.
+                To lead the world in digital education by removing obstacles and
+                fostering opportunities for lifelong learning. We see a world in
+                which everyone, everywhere, has access to high-quality
+                education.  
               </p>
               <ul className="vision-list">
                 <li> Global accessibility</li>
@@ -113,7 +113,7 @@ const About = () => {
       </section>
 
       {/* Our Story Section */}
-      <section className="story-section">
+      {/* <section className="story-section">
         <div className="container">
           <div className="story-grid">
             <div className="story-content animate-fade-in">
@@ -145,15 +145,6 @@ const About = () => {
                 </div>
 
                 <div className="timeline-item">
-                  {/* <div className="timeline-year">2024</div>
-                  <div className="timeline-content">
-                    <h3>Global Recognition</h3>
-                    <p>
-                      Now serving 10,000+ students globally with 500+ expert
-                      teachers. Recognized as one of the top e-learning
-                      platforms.
-                    </p>
-                  </div> */}
                 </div>
               </div>
             </div>
@@ -167,7 +158,7 @@ const About = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Values Section */}
       <section className="values-section">
@@ -268,9 +259,7 @@ const About = () => {
               <div className="team-info">
                 <h3>John Warui</h3>
                 <p className="team-position">Founder & CEO</p>
-                <p className="team-bio">
-                  Founder of the Trespics School
-                </p>
+                <p className="team-bio">Founder of the Trespics School</p>
               </div>
             </div>
 
@@ -335,10 +324,7 @@ const About = () => {
               School
             </p>
             <div className="cta-buttons">
-              <Link
-                to="/auth/register"
-                className="btn btn-primary btn-lg"
-              >
+              <Link to="/auth/register" className="btn btn-primary btn-lg">
                 Get Started Now
                 <span className="btn-icon">→</span>
               </Link>

@@ -1,5 +1,5 @@
 .course-card-component {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(31, 27, 27, 0.05);
   /* backdrop-filter: blur(10px); */
   border: 1px border rgba(255, 255, 255, 0.1);
   border-radius: 20px;
@@ -60,7 +60,7 @@
 }
 
 .course-card-title {
-  color: #ffffff;
+  color: #100f0f;
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 12px;
@@ -68,7 +68,7 @@
 }
 
 .course-card-description {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(19, 18, 18, 0.6);
   font-size: 0.9rem;
   line-height: 1.6;
   margin-bottom: 20px;
@@ -86,7 +86,7 @@
   display: flex;
   gap: 16px;
   margin-bottom: 20px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(15, 14, 14, 0.5);
   font-size: 0.85rem;
 }
 

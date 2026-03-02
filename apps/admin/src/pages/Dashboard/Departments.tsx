@@ -52,7 +52,7 @@ export default function Departments() {
         await api.put(`/admin/departments/${editingId}`, {
           name: name.trim(),
           description: description.trim(),
-          short_code: shortCode.trim(),
+          short_code: shortCode.trim(),     
         });
       } else {
         await api.post("/admin/departments", {
@@ -166,7 +166,7 @@ export default function Departments() {
               <button type="submit" className="btn btn-primary">
                 <span className="btn-icon">{editingId ? "✏️" : "➕"}</span>
                 {editingId ? "Update Department" : "Add Department"}
-              </button>
+              </button>   
 
               {editingId && (
                 <button

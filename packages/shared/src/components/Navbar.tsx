@@ -60,7 +60,7 @@ const Navbar = () => {
         <button
           className={`hamburger ${isOpen ? "hamburger-active" : ""}`}
           onClick={toggleMenu}
-          aria-label="Toggle menu"   
+          aria-label="Toggle menu"
         >
           <span className="hamburger-line"></span>
           <span className="hamburger-line"></span>
@@ -76,12 +76,18 @@ const Navbar = () => {
             <Link to="/about" className="nav-link" onClick={closeMenu}>
               About
             </Link>
-            <Link to="/courses" className="nav-link" onClick={closeMenu}>     
+            <Link to="/courses" className="nav-link" onClick={closeMenu}>
               Courses
             </Link>
             <Link to="/contact" className="nav-link" onClick={closeMenu}>
               Contact
             </Link>
+            {/* <Link to="/clubs" className="nav-link" onClick={closeMenu}>
+              Clubs
+            </Link>
+            <Link to="/library" className="nav-link" onClick={closeMenu}>
+              Library
+            </Link> */}
 
             <div className="nav-divider"></div>
 
@@ -100,7 +106,7 @@ const Navbar = () => {
                 className="nav-btn nav-btn-primary"
                 onClick={closeMenu}
               >
-                Register
+                Enroll Now
               </Link>
             </div>
           </div>

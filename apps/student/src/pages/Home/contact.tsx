@@ -320,11 +320,11 @@ const Contact = () => {
                 <h4>How can I access the portal?</h4>
                 <p>
                   Students receive login credentials upon enrollment. Contact
-                  support for help.
+                  support for help.  
                 </p>
               </div>
             </div>
-            <Link to="/faq" className="btn btn-outline">
+            <Link to="/faq" className="btn btn-outline" style={{color: "#333"}}>
               View All FAQs
             </Link>
           </div>
@@ -341,7 +341,7 @@ const Contact = () => {
               or concerns
             </p>
             <div className="cta-buttons">
-              <a href="tel:+254201234567" className="btn btn-primary btn-lg">
+              <a href="tel:+254746278212" className="btn btn-primary btn-lg">
                 <span className="btn-icon">📞</span>
                 Call Us Now
               </a>

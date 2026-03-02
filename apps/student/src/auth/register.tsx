@@ -161,7 +161,7 @@ const StudentRegister = () => {
               REGISTERING...
             </span>
           ) : (
-            "REGISTER"
+            "Enroll Now"
           )}
         </button>
       </form>

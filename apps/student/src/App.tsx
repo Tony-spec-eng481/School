@@ -7,6 +7,7 @@ import { AuthProvider, ProtectedRoute } from '@elearning/shared';
 import Home from './pages/Home/homepage';
 import About from './pages/Home/About';
 import Contact from './pages/Home/contact';
+import FAQs from './pages/Home/FAQs';
 
 // Auth Pages
 import StudentLogin from './auth/login';
@@ -45,6 +46,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/courses" element={<CourseList />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/faq" element={<FAQs />} />
 
           <Route path="/courses/:id" element={<CourseDetails />} />
 
