@@ -93,7 +93,7 @@ const Overview = () => {
         <div className="stat-card">
           <Layers className="stat-icon" />
           <div className="stat-value">{data?.totalPrograms || 0}</div>
-          <div className="stat-label">Programs</div>
+          <div className="stat-label">Courses</div>
         </div>
         <div className="stat-card">
           <Calendar className="stat-icon" />

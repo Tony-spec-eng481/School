@@ -13,7 +13,7 @@ const MyUnits = () => {
 
   useEffect(() => {
     const fetchUnits = async () => {
-      try {
+      try {    
         const res = await studentApi.getUnits();
         setUnits(res.data);
       } catch (err) {

@@ -12,7 +12,11 @@ import {
   FiEye,
 } from "react-icons/fi";
 import PlyrPlayer from "../../../components/PlyrPlayer";
-import toast from "react-hot-toast";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeSanitize from "rehype-sanitize";
+import rehypeRaw from "rehype-raw";
+import toast from "react-hot-toast";     
 import "../styles/UnitDetails.css"; // Import the CSS file
 
 const UnitDetails = () => {
@@ -51,7 +55,7 @@ const UnitDetails = () => {
     if (id) fetchUnit();
   }, [id]);
 
-  const handleNextTopic = async () => {
+  const handleNextTopic = async () => {    
     if (!currentTopicId || !unit?.topics) return;
 
     const currentIndex = unit.topics.findIndex(
@@ -79,7 +83,7 @@ const UnitDetails = () => {
       });
       toast.success("Topic completed!");
 
-      // Move to the next topic or show success if finished
+      // Move to the next topic or show success if finished    
       if (currentIndex < unit.topics.length - 1) {
         setCurrentTopicId(unit.topics[currentIndex + 1].id);
         // Scroll to top of the viewer if needed
@@ -126,7 +130,7 @@ const UnitDetails = () => {
   };
 
   return (
-    <div className="unit-details-container animate-fade-in">
+    <div className="unit-details-container ">
       {/* MAIN CONTENT AREA (LEFT SIDE) */}
       <div className="main-content-area">
         {/* Header Block */}
@@ -171,14 +175,14 @@ const UnitDetails = () => {
                 {currentTopic.notes_url || isUrl(currentTopic.notes) ? (
                   <div className="pdf-notes-container">
                     <div className="pdf-actions">
-                      <a
+                      {/* <a
                         href={currentTopic.notes_url || currentTopic.notes}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="pdf-btn"
                       >
                         <FiEye /> Read Online
-                      </a>
+                      </a> */}
                       <a
                         href={currentTopic.notes_url || currentTopic.notes}
                         download
@@ -197,10 +201,16 @@ const UnitDetails = () => {
                     />
                   </div>
                 ) : (
-                  <div
-                    className="notes-content"
-                    dangerouslySetInnerHTML={{ __html: currentTopic.notes }}
-                  />
+                  <div className="notes-content">
+                    <div className="notes-body">
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        rehypePlugins={[rehypeRaw, rehypeSanitize]}
+                      >
+                        {currentTopic.notes}
+                      </ReactMarkdown>
+                    </div>
+                  </div>
                 )}
               </div>
             )}

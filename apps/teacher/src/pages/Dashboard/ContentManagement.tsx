@@ -580,7 +580,7 @@ const ContentManagement = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="document">Upload Document (PDF/Word/Excel/PPT)</label>
+                <label htmlFor="document">Upload Document (PDF)</label>
                 <input
                   type="file"
                   id="document"
@@ -607,7 +607,7 @@ const ContentManagement = () => {
                 )}
               </div>
 
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label htmlFor="notes">Notes / Description</label>
                 <ReactQuill
                   theme="snow"
@@ -618,7 +618,7 @@ const ContentManagement = () => {
                   placeholder="Enter topic notes or description"
                   style={{ height: '300px', marginBottom: '50px' }}
                 />
-              </div>
+              </div> */}
 
 
               <div className="form-actions">
