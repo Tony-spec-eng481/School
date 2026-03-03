@@ -93,6 +93,14 @@ const StudentDashboard = () => {
             <span>My Units</span>
           </NavLink>
           <NavLink
+            to="/dashboard/courses"
+            className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
+            onClick={handleNavClick}
+          >
+            <FiBarChart2 size={18} />
+            <span>Courses</span>
+          </NavLink>
+          <NavLink
             to="/dashboard/live-classes"
             className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
             onClick={handleNavClick}

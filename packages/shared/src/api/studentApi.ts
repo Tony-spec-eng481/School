@@ -16,4 +16,6 @@ export const studentApi = {
   getTickets: () => api.get('/student/tickets'),
   createTicket: (data: { subject: string, message: string, priority?: string }) => 
     api.post('/student/tickets', data),
+  getAvailableCourses: () => api.get('/student/available-courses'),
+  enrollInCourse: (courseId: string) => api.post('/student/enroll', { courseId }),
 };

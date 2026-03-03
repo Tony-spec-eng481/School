@@ -25,6 +25,7 @@ import Support from './pages/Dashboard/StudentDashboard/Support';
 import Announcements from './pages/Dashboard/StudentDashboard/Announcements';
 import Certificates from './pages/Dashboard/StudentDashboard/Certificates';
 import Settings from './pages/Dashboard/StudentDashboard/Settings';
+import AvailableCourses from './pages/Dashboard/StudentDashboard/AvailableCourses';
 
 // import LiveClassRoom from './pages/LiveClass/LiveClassRoom';
 import AgoraClass from './pages/LiveClass/AgoraClass';
@@ -62,6 +63,7 @@ function App() {
               <Route index element={<StudentOverview />} />
               <Route path="units" element={<MyUnits />} />
               <Route path="units/:id" element={<UnitDetails />} />
+              <Route path="courses" element={<AvailableCourses />} />
               <Route path="live-classes" element={<LiveClasses />} />
               <Route path="assignments" element={<Assignments />} />
               <Route path="announcements" element={<Announcements />} />

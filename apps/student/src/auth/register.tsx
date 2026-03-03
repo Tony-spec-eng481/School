@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance as api } from "@elearning/shared";
 import toast from "react-hot-toast";
@@ -9,7 +9,6 @@ import "@elearning/shared/styles/auth/form.css";
 const StudentRegister = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [courses, setCourses] = useState<any[]>([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -17,20 +16,8 @@ const StudentRegister = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    courseId: "", // Specific to student
   });
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const res = await api.get("/courses");
-        setCourses(res.data);
-      } catch (err) {
-        console.error("Failed to fetch courses", err);
-      }
-    };
-    fetchCourses();
-  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -52,10 +39,9 @@ const StudentRegister = () => {
         email: formData.email,
         password: formData.password,
         role: "student",
-        courseId: formData.courseId,
       });
       toast.success(
-        "Registration successful! Please check your email to verify.",
+        "Registration successful! Please check your email to verify. Also use the Admission number that will be sent to your email for login",
       );
       navigate("/auth/login");
     } catch (error: any) {
@@ -93,24 +79,6 @@ const StudentRegister = () => {
             placeholder="Email Address"
             required
           />
-        </div>
-        <div className="form-group-custom">
-          <select
-            name="courseId"
-            className="auth-select"
-            value={formData.courseId}
-            onChange={handleChange}
-            required
-          >
-            <option value="" disabled>
-              Select Course
-            </option>
-            {courses.map((course) => (
-              <option key={course.id} value={course.id}>
-                {course.title} ({course.short_code})
-              </option>
-            ))}
-          </select>
         </div>
         <div className="form-group-custom password-field">
           <input
@@ -161,7 +129,7 @@ const StudentRegister = () => {
               REGISTERING...
             </span>
           ) : (
-            "Enroll Now"
+            "REGISTER"
           )}
         </button>
       </form>
