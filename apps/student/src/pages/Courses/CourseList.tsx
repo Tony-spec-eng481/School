@@ -30,7 +30,7 @@ const CourseList = () => {
 
   const filteredCourses = courses.filter(
     (course) =>
-      (activeFilter === "all" || course.level === activeFilter) &&
+      (activeFilter === "all" || course.difficulty === activeFilter) &&
       (course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         course.description.toLowerCase().includes(searchTerm.toLowerCase())),
   );
