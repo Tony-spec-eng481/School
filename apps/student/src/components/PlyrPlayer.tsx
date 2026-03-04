@@ -1,5 +1,5 @@
-import React from 'react';
 import { Plyr, type PlyrProps } from 'plyr-react';
+import { ClientOnly } from 'vite-react-ssg';
 import 'plyr-react/plyr.css';
 
 interface PlyrPlayerProps {
@@ -37,7 +37,11 @@ const PlyrPlayer: React.FC<PlyrPlayerProps> = ({ url, type, title }) => {
     },
   };
 
-  return <Plyr {...plyrProps} />;
+  return (
+    <ClientOnly>
+      {() => <Plyr {...plyrProps} />}
+    </ClientOnly>
+  );
 };
 
 export default PlyrPlayer;

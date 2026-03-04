@@ -1,13 +1,13 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { ViteReactSSG } from 'vite-react-ssg'
 import '@elearning/shared'; // This imports global styles
 import { HelmetProvider } from 'react-helmet-async';
-import App from './App.tsx'
+import App, { routes } from './App.tsx'
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <HelmetProvider>
-      <App />
-    </HelmetProvider>
-  </StrictMode>,
+export const createRoot = ViteReactSSG(
+  {
+    routes,
+  },
+  () => {
+    // Initial initialization logic here (e.g. data fetching)
+  }
 )

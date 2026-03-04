@@ -16,7 +16,7 @@ const schoolSchema = {
     "@type": "PostalAddress",
     "streetAddress": "Trespics Institute",
     "addressLocality": "Kirinyaga",
-    "addressRegion": "Kirinyaga",
+    "addressRegion": "Kirinyaga",   
     "postalCode": "10304",
     "addressCountry": "Kenya"
   },

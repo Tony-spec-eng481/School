@@ -15,12 +15,12 @@ interface SEOProps {
   twitterCard?: 'summary' | 'summary_large_image';
   noindex?: boolean;
   children?: React.ReactNode;
-}
+}  
 
 const SEO: React.FC<SEOProps> = ({
   title,
   description = "Official E-learning portal for our school system.",
-  keywords = "elearning, school, education, online learning, student portal, university, university portal, trespics, trespics institute, trespics school, trespics university, tech, technology",
+  keywords = "elearning, school, education, clubs, library, courses, online learning, student portal, university, university portal, trespics, trespics institute, trespics school, trespics university, tech, technology",
   author = "Trespics Institute",
   canonical,
   ogTitle,

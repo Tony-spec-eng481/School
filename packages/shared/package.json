@@ -9,18 +9,19 @@
     "build": "tsc"
   },
   "dependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
     "axios": "^1.13.5",
     "lucide-react": "^0.574.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "react-hot-toast": "^2.6.0",
     "react-icons": "^5.5.0",
-    "react-router-dom": "^7.13.0"
+    "react-router": "6.28.0",
+    "react-router-dom": "^6.28.0"
   },
-  "devDependencies": {  
+  "devDependencies": {
+    "@types/node": "^24.10.13",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "typescript": "~5.9.3",
-    "@types/node": "^24.10.13"
+    "typescript": "~5.9.3"
   }
 }

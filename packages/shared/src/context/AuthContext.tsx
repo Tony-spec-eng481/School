@@ -21,7 +21,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
+  const [token, setToken] = useState<string | null>(typeof window !== 'undefined' ? localStorage.getItem('token') : null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
           // Verify token or get user profile if needed
           // For now, we trust the local storage, but ideally we verify with backend
-          const storedUser = localStorage.getItem('user');
+          const storedUser = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
           if (storedUser) {
             setUser(JSON.parse(storedUser));
           }
@@ -47,15 +47,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = React.useCallback((newToken: string, newUser: User) => {
     setToken(newToken);
     setUser(newUser);
-    localStorage.setItem('token', newToken);
-    localStorage.setItem('user', JSON.stringify(newUser));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('token', newToken);
+      localStorage.setItem('user', JSON.stringify(newUser));
+    }
   }, []);
 
   const logout = React.useCallback(() => {
     setToken(null);
     setUser(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+    }
   }, []);
 
   // Idle timeout logic: 15 minutes
@@ -75,12 +79,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (token) {
       resetTimer();
       const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
-      events.forEach(event => window.addEventListener(event, resetTimer));
+      if (typeof window !== 'undefined') {
+        events.forEach(event => window.addEventListener(event, resetTimer));
 
-      return () => {
-        clearTimeout(timeoutId);
-        events.forEach(event => window.removeEventListener(event, resetTimer));
-      };
+        return () => {
+          clearTimeout(timeoutId);
+          events.forEach(event => window.removeEventListener(event, resetTimer));
+        };
+      }
     }
   }, [token, logout]);
 
