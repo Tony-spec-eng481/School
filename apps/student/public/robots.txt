@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Allow: /about
+Allow: /contact
+Allow: /courses
+Allow: /faq
+
+# Disallow auth and dashboard routes
+Disallow: /auth/
+Disallow: /dashboard/
+Disallow: /unauthorized
+
+Sitemap: https://www.trespicsinstitute.dev/sitemap.xml

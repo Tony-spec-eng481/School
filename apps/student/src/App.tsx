@@ -35,6 +35,8 @@ import CourseDetails from './pages/Courses/CourseDetails';
 
 const Unauthorized = () => <div className="text-2xl font-bold text-red-600 p-8 container">Unauthorized Access</div>;
 
+import { SEO } from '@elearning/shared';
+
 function App() { 
   return (
     <AuthProvider>
@@ -42,24 +44,24 @@ function App() {
         <Toaster position="top-right" />
         <Routes>
           {/* Public Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/courses" element={<CourseList />} />
+          <Route path="/" element={<><SEO title="Trespics Institute" description="Discover quality online learning at Trespics Institute. Join us today." /><Home /></>} />
+          <Route path="/about" element={<><SEO title="About Us" description="Learn more about our school system and our mission to provide quality education." /><About /></>} />
+          <Route path="/contact" element={<><SEO title="Contact Us" description="Get in touch with us for any inquiries or support." /><Contact /></>} />
+          <Route path="/courses" element={<><SEO title="Our Courses" description="Explore our wide range of courses designed for your success." /><CourseList /></>} />
           <Route path="/unauthorized" element={<Unauthorized />} />
-          <Route path="/faq" element={<FAQs />} />
+          <Route path="/faq" element={<><SEO title="FAQs" description="Frequently asked questions about our learning platform." /><FAQs /></>} />
 
           <Route path="/courses/:id" element={<CourseDetails />} />
 
           {/* Authentication Routes */}
-          <Route path="/auth/login" element={<StudentLogin />} />
-          <Route path="/auth/register" element={<StudentRegister />} />
-          <Route path="/auth/forgot-password" element={<ForgotPassword />} />
-          <Route path="/auth/reset-password" element={<ResetPassword />} />
+          <Route path="/auth/login" element={<><SEO title="Login" noindex /><StudentLogin /></>} />
+          <Route path="/auth/register" element={<><SEO title="Register" noindex /><StudentRegister /></>} />
+          <Route path="/auth/forgot-password" element={<><SEO title="Forgot Password" noindex /><ForgotPassword /></>} />
+          <Route path="/auth/reset-password" element={<><SEO title="Reset Password" noindex /><ResetPassword /></>} />
 
           {/* Protected Routes - Student */}
           <Route element={<ProtectedRoute allowedRoles={["student"]} />}>
-            <Route path="/dashboard" element={<StudentDashboard />}>
+            <Route path="/dashboard" element={<><SEO title="Student Dashboard" noindex /><StudentDashboard />  </>}>
               <Route index element={<StudentOverview />} />
               <Route path="units" element={<MyUnits />} />
               <Route path="units/:id" element={<UnitDetails />} />

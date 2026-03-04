@@ -1,10 +1,31 @@
 import { useState, useEffect } from "react";
-import { Navbar } from '@elearning/shared';
-import { Footer } from '@elearning/shared';
+import { Navbar, Footer, StructuredData } from '@elearning/shared';
 import { CourseCard } from '@elearning/shared';
 import { Link } from "react-router-dom";  
 import { axiosInstance as api } from '@elearning/shared';
 import "@elearning/shared/styles/pages/Homepage.css";
+
+const schoolSchema = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "Trespics School",
+  "url": "https://www.trespicsinstitute.dev/",
+  "logo": "https://www.trespicsinstitute.dev/logo.jpeg",
+  "description": "Unlock Your Potential with Trespics School. Experience world-class education with our interactive e-learning platform.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Trespics Institute",
+    "addressLocality": "Kirinyaga",
+    "addressRegion": "Kirinyaga",
+    "postalCode": "10304",
+    "addressCountry": "Kenya"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+254-770 428297",
+    "contactType": "customer service"
+  }
+};
 
 const Home = () => {   
   const [courses, setCourses] = useState<any[]>([]);
@@ -25,6 +46,7 @@ const Home = () => {
   }, []);
   return (
     <>
+      <StructuredData data={schoolSchema} />
       <Navbar />
 
       {/* Hero Section */}
@@ -181,6 +203,7 @@ const Home = () => {
                   src="/api/placeholder/60/60"
                   alt="Student"
                   className="author-avatar"
+                  loading="lazy"
                 />
                 <div>
                   <h4>Tony James</h4>

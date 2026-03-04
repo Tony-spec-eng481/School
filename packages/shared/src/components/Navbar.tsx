@@ -53,7 +53,6 @@ const Navbar = () => {
           <span className="logo-text">
             <span className="logo-tre">Tre</span>spics
           </span>
-          <span className="logo-dot">.</span>
         </Link>
 
         {/* Hamburger */}

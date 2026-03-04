@@ -20,6 +20,8 @@ export { default as Footer } from './components/Footer';
 export { default as CourseCard } from './components/CourseCard';
 export { default as Sidebar } from './components/Sidebar';
 export { default as VideoPlayer } from './components/VideoPlayer';
+export { default as SEO } from './components/SEO';
+export { default as StructuredData } from './components/StructuredData';
 
 // Styles
 import './styles/auth/style.css';

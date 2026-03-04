@@ -243,7 +243,7 @@ const About = () => {
           <div className="team-grid">
             <div className="team-card">
               <div className="team-image">
-                <img src="/api/placeholder/400/400" alt="John Warui" />
+                <img src="/api/placeholder/400/400" alt="John Warui" loading="lazy" />
                 <div className="team-social">
                   <a href="#" className="social-icon">
                     📧
@@ -265,7 +265,7 @@ const About = () => {
 
             <div className="team-card">
               <div className="team-image">
-                <img src="/api/placeholder/400/400" alt="Prof. Michael Chen" />
+                <img src="/api/placeholder/400/400" alt="Prof. Michael Chen" loading="lazy" />
                 <div className="team-social">
                   <a href="#" className="social-icon">
                     📧
@@ -289,7 +289,7 @@ const About = () => {
 
             <div className="team-card">
               <div className="team-image">
-                <img src="/api/placeholder/400/400" alt="Emily Rodriguez" />
+                <img src="/api/placeholder/400/400" alt="Emily Rodriguez" loading="lazy" />
                 <div className="team-social">
                   <a href="#" className="social-icon">
                     📧

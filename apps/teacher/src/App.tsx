@@ -20,20 +20,22 @@ import Announcements from './pages/Dashboard/Announcements';
 import AgoraClass from './pages/Dashboard/AgoraClass';
 import Profile from './pages/Dashboard/Profile';
 
+import { SEO } from '@elearning/shared';
+
 function App() { 
   return (  
     <AuthProvider>
       <Router>
         <Toaster position="top-right" />
         <Routes>
-          <Route path="/" element={<TeacherHome />} />
-          <Route path="/auth/login" element={<TeacherLogin />} />
-          <Route path="/auth/register" element={<TeacherRegister />} />
-          <Route path="/auth/forgot-password" element={<ForgotPassword />} />
-          <Route path="/auth/reset-password" element={<ResetPassword />} />
+          <Route path="/" element={<><SEO title="Teacher Portal" description="Manage your courses and interact with students on the Elimu Teacher Portal." /><TeacherHome /></>} />
+          <Route path="/auth/login" element={<><SEO title="Teacher Login" noindex /><TeacherLogin /></>} />
+          <Route path="/auth/register" element={<><SEO title="Teacher Register" noindex /><TeacherRegister /></>} />
+          <Route path="/auth/forgot-password" element={<><SEO title="Forgot Password" noindex /><ForgotPassword /></>} />
+          <Route path="/auth/reset-password" element={<><SEO title="Reset Password" noindex /><ResetPassword /></>} />
 
           <Route element={<ProtectedRoute allowedRoles={["teacher"]} />}>
-            <Route path="/dashboard" element={<TeacherDashboard />}>
+            <Route path="/dashboard" element={<><SEO title="Teacher Dashboard" noindex /><TeacherDashboard /></>}>
               <Route index element={<Overview />} />
               <Route path="students" element={<StudentManagement />} />
               <Route path="courses" element={<Courses />} />
