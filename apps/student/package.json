@@ -41,8 +41,18 @@
       "/contact",
       "/courses",
       "/faq",
+      "/auth/login",
+      "/auth/register",
       "/dashboard",
-      "/dashboard/live-classes"
+      "/dashboard/units",
+      "/dashboard/courses",
+      "/dashboard/live-classes",
+      "/dashboard/assignments",
+      "/dashboard/announcements",
+      "/dashboard/support",
+      "/dashboard/certificates",
+      "/dashboard/settings",
+      "/dashboard/progress"
     ]
   }
 }
