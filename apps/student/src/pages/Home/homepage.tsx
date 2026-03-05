@@ -8,24 +8,24 @@ import "@elearning/shared/styles/pages/Homepage.css";
 const schoolSchema = {
   "@context": "https://schema.org",
   "@type": "EducationalOrganization",
-  name: "Trespics School",
-  url: "https://www.trespicsinstitute.dev/",
+  name: "Trespics Institute",
+  url: "https://www.trespicsinstitute.dev",
   logo: "https://storage.googleapis.com/learn-multimedia/logo.jpeg",
   description:
-    "Unlock Your Potential with Trespics Institute. Experience world-class education with our interactive e-learning platform.",
+    "Unlock your potential with Trespics Institute. Experience world-class education with our interactive e-learning platform.",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Trespics Institute",
     addressLocality: "Kirinyaga",
-    addressRegion: "Kirinyaga",
+    addressRegion: "Kirinyaga County",
     postalCode: "10304",
-    addressCountry: "Kenya",
+    addressCountry: "KE",
   },
   contactPoint: {
     "@type": "ContactPoint",
-    telephone: "+254-770 428297",
+    telephone: "+254770428297",
     contactType: "customer service",
   },
+  sameAs: ["https://www.facebook.com/", "https://www.youtube.com/"],
 };
 
 const Home = () => {   

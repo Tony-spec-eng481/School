@@ -2,10 +2,55 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/jpeg" href="./logo.jpeg" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="/logo.jpeg" />
+
+    <!-- Viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student</title>
+
+    <!-- SEO Title -->
+    <title>Trespics Institute | Online Learning Platform</title>
+
+    <!-- SEO Description -->
+    <meta
+      name="description"
+      content="Unlock your potential with Trespics Institute. Experience world-class education with our interactive e-learning platform."
+    />
+
+    <!-- Open Graph (for social sharing) -->
+    <meta property="og:title" content="Trespics Institute" />
+    <meta property="og:description" content="Interactive e-learning platform offering professional courses." />
+    <meta property="og:image" content="https://storage.googleapis.com/learn-multimedia/logo.jpeg" />
+    <meta property="og:url" content="https://www.trespicsinstitute.dev/" />
+    <meta property="og:type" content="website" />
+
+    <!-- Structured Data (Organization Schema) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "Trespics Institute",
+      "url": "https://www.trespicsinstitute.dev/",
+      "logo": "https://storage.googleapis.com/learn-multimedia/logo.jpeg",
+      "description": "Unlock your potential with Trespics Institute. Experience world-class education with our interactive e-learning platform.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Kirinyaga",
+        "addressRegion": "Kirinyaga County",
+        "postalCode": "10304",
+        "addressCountry": "KE"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+254770428297",
+        "contactType": "customer service"
+      }
+    }
+    </script>
+
   </head>
+
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
