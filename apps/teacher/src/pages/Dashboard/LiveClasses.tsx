@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { axiosInstance } from "@elearning/shared";
 import toast from "react-hot-toast";
+import "../styles/LiveClassRoom.css";
 
 interface Unit {
   id: string;
@@ -101,7 +102,7 @@ const LiveClasses = () => {
   const openLiveClass = (url: string) => {
     window.open(
       `/dashboard/live-classes/room/${url}`,
-      "_blank",
+      // "_blank",
       "noopener,noreferrer",
     );
   };
