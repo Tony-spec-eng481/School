@@ -97,162 +97,159 @@ const LiveClasses = () => {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner">
+          <div className="spinner"></div>
+          <div className="loading-text">Loading classes...</div>
+        </div>
+      </div>
+    );
 
   const openLiveClass = (url: string) => {
     window.open(
       `/dashboard/live-classes/room/${url}`,
-      "_blank",
+      // "_blank",
       "noopener,noreferrer",
     );
   };
 
   return (
-    <div>
-      <div className="page-header">
-        <h1 className="page-title">Live Classes</h1>
-        <p className="page-subtitle">
-          Schedule and manage interaction sessions with students.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="card">
-          <h3 className="mb-4">Schedule New Class</h3>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label className="form-label">Title</label>
-              <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                className="form-control"
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">Unit</label>
-              <select
-                name="unit_id"
-                value={formData.unit_id}
-                onChange={handleChange}
-                className="form-control"
-                required
-              >
-                <option value="">Select unit</option>
-                {units.map((unit) => (
-                  <option key={unit.id} value={unit.id}>
-                    {unit.title} ({unit.short_code})
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div
-              className="form-group"
-              style={{ display: "flex", gap: "16px" }}
-            >
-              <div style={{ flex: 1 }}>
-                <label className="form-label">Start Time</label>
-                <input
-                  type="datetime-local"
-                  name="start_time"
-                  value={formData.start_time}
-                  onChange={handleChange}
-                  className="form-control"
-                  required
-                />
-              </div>
-              <div style={{ flex: 1 }}>
-                <label className="form-label">End Time</label>
-                <input
-                  type="datetime-local"
-                  name="end_time"
-                  value={formData.end_time}
-                  onChange={handleChange}
-                  className="form-control"
-                  required
-                />
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              className="btn-primary mt-4"
-              disabled={submitting}
-            >
-              {submitting ? "Scheduling…" : "Schedule Class"}
-            </button>
-          </form>
+    <div className="live-classes-container">
+      <div className="live-classes-wrapper">
+        <div className="page-header">
+          <h1 className="page-title">Live Classes</h1>
+          <p className="page-subtitle">
+            Schedule and manage interaction sessions with students.
+          </p>
         </div>
 
-        <div className="card">
-          <h3 className="mb-4">Upcoming Classes</h3>
-          {classes.length > 0 ? (
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "16px" }}
-            >
-              {classes.map((cls) => (
-                <div
-                  key={cls.id}
-                  style={{
-                    padding: "16px",
-                    border: "1px solid var(--border-color)",
-                    borderRadius: "8px",
-                  }}
+        <div className="grid grid-cols-2">
+          {/* Schedule Form Card */}
+          <div className="card">
+            <h3>Schedule New Class</h3>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label className="form-label">Title</label>
+                <input
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  className="form-control"
+                  placeholder="Enter class title"
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Unit</label>
+                <select
+                  name="unit_id"
+                  value={formData.unit_id}
+                  onChange={handleChange}
+                  className="form-control"
+                  required
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    <h4 style={{ fontWeight: 600, color: "var(--blue-800)" }}>
-                      {cls.title}
-                    </h4>
-                    <span
-                      style={{
-                        fontSize: "0.8rem",
-                        padding: "4px 8px",
-                        background: "var(--blue-100)",
-                        color: "var(--blue-600)",
-                        borderRadius: "4px",
-                      }}
-                    >
-                      {cls.status || "Scheduled"}
-                    </span>
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "0.9rem",
-                      color: "var(--text-muted)",
-                      marginBottom: "12px",
-                    }}
-                  >
-                    {new Date(cls.start_time).toLocaleString()} -{" "}
-                    {new Date(cls.end_time).toLocaleTimeString()}
-                  </div>
-                  {cls.live_url && (
-                    <button
-                      className="btn-primary"
-                      onClick={() => openLiveClass(cls.live_url)}
-                    >
-                      Join Class Link
-                    </button>
-                  )}
+                  <option value="">Select a unit</option>
+                  {units.map((unit) => (
+                    <option key={unit.id} value={unit.id}>
+                      {unit.title} ({unit.short_code})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="datetime-group">
+                <div className="form-group">
+                  <label className="form-label">Start Time</label>
+                  <input
+                    type="datetime-local"
+                    name="start_time"
+                    value={formData.start_time}
+                    onChange={handleChange}
+                    className="form-control"
+                    required
+                  />
                 </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-500">No upcoming classes.</p>
-          )}
+                <div className="form-group">
+                  <label className="form-label">End Time</label>
+                  <input
+                    type="datetime-local"
+                    name="end_time"
+                    value={formData.end_time}
+                    onChange={handleChange}
+                    className="form-control"
+                    required
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="btn-primary mt-4"
+                disabled={submitting}
+              >
+                {submitting ? "Scheduling..." : "Schedule Class"}
+              </button>
+            </form>
+          </div>
+
+          {/* Upcoming Classes Card */}
+          <div className="card">
+            <h3>Upcoming Classes</h3>
+            {classes.length > 0 ? (
+              <div className="classes-list">
+                {classes.map((cls) => (
+                  <div key={cls.id} className="class-item">
+                    <div className="class-header">
+                      <h4 className="class-title">{cls.title}</h4>
+                      <span className="class-badge">
+                        {cls.status || "Scheduled"}
+                      </span>
+                    </div>
+                    <div className="class-time">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
+                      </svg>
+                      {new Date(cls.start_time).toLocaleString()} -{" "}
+                      {new Date(cls.end_time).toLocaleTimeString()}
+                    </div>
+                    {cls.live_url && (
+                      <div className="class-actions">
+                        <button
+                          className="btn-primary"
+                          onClick={() => openLiveClass(cls.live_url)}
+                        >
+                          Join Class
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="empty-state">
+                <p>No upcoming classes scheduled.</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
   );
 };
+
 
 export default LiveClasses;

@@ -40,7 +40,8 @@ const LiveClasses = () => {
   const scheduledCount = classes.filter((c) => c.status === "scheduled").length;
 
   const openLiveClass = (url: string) => {
-    window.open(`/live-classes/room/${url}`, "_blank", "noopener,noreferrer");
+    window.open(`/live-classes/room/${url}`, // "_blank",
+      "noopener,noreferrer");
   };
 
   return (
