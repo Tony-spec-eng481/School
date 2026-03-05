@@ -40,7 +40,9 @@
       "/about",
       "/contact",
       "/courses",
-      "/faq"
+      "/faq",
+      "/dashboard",
+      "/dashboard/live-classes"
     ]
   }
 }

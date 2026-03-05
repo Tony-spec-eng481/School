@@ -23,7 +23,7 @@ const SEO: React.FC<SEOProps> = ({
   keywords = "elearning, school, education, clubs, library, courses, online learning, student portal, university, university portal, trespics, trespics institute, trespics school, trespics university, tech, technology",
   author = "Trespics Institute",
   canonical,
-  ogTitle,
+  ogTitle,    
   ogDescription,
   ogImage,
   ogUrl,
