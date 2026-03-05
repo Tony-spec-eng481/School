@@ -1,6 +1,5 @@
 
-import { Routes, Route, Navigate, type RouteObject, Outlet } from 'react-router-dom';
-import { ClientOnly } from 'vite-react-ssg';
+import { Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, ProtectedRoute } from '@elearning/shared';
 import { Analytics } from '@vercel/analytics/react';
@@ -27,66 +26,35 @@ const Profile = lazy(() => import('./pages/Dashboard/Profile'));
 
 import { SEO } from '@elearning/shared';
 
-export const routes: RouteObject[] = [
-  {
-    path: "/",
-    element: <App />,
-    children: [
-      {
-        index: true,
-        element: <><SEO title="Teacher Portal" description="Manage your courses and interact with students on the Elimu Teacher Portal." /><TeacherHome /></>
-      },
-      {
-        path: "auth/login",
-        element: <><SEO title="Teacher Login" noindex /><TeacherLogin /></>
-      },
-      {
-        path: "auth/register",
-        element: <><SEO title="Teacher Register" noindex /><TeacherRegister /></>
-      },
-      {
-        path: "auth/forgot-password",
-        element: <><SEO title="Forgot Password" noindex /><ForgotPassword /></>
-      },
-      {
-        path: "auth/reset-password",
-        element: <><SEO title="Reset Password" noindex /><ResetPassword /></>
-      },
-      {
-        element: <ProtectedRoute allowedRoles={["teacher"]} />,
-        children: [
-          {
-            path: "dashboard",
-            element: <><SEO title="Teacher Dashboard" noindex /><TeacherDashboard /></>,
-            children: [
-              { index: true, element: <Overview /> },
-              { path: "students", element: <StudentManagement /> },
-              { path: "courses", element: <Courses /> },
-              { path: "courses/:id/units", element: <CourseUnits /> },
-              { path: "content", element: <ContentManagement /> },
-              { path: "announcements", element: <Announcements /> },
-              { path: "live-classes", element: <LiveClasses /> },
-              { path: "live-classes/room/:channelName", element: <AgoraClass /> },
-              { path: "assignments", element: <Assignments /> },
-              { path: "profile", element: <Profile /> },
-            ]
-          }
-        ]
-      }
-    ]
-  }
-];
-
 function App() {
   return (
     <AuthProvider>
       <Toaster position="top-right" />
       <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
-        <Outlet />
+        <Routes>
+          <Route path="/" element={<><SEO title="Teacher Portal" description="Manage your courses and interact with students on the Elimu Teacher Portal." /><TeacherHome /></>} />
+          <Route path="/auth/login" element={<><SEO title="Teacher Login" noindex /><TeacherLogin /></>} />
+          <Route path="/auth/register" element={<><SEO title="Teacher Register" noindex /><TeacherRegister /></>} />
+          <Route path="/auth/forgot-password" element={<><SEO title="Forgot Password" noindex /><ForgotPassword /></>} />
+          <Route path="/auth/reset-password" element={<><SEO title="Reset Password" noindex /><ResetPassword /></>} />
+
+          <Route element={<ProtectedRoute allowedRoles={["teacher"]} />}>
+            <Route path="/dashboard" element={<><SEO title="Teacher Dashboard" noindex /><TeacherDashboard /></>}>
+              <Route index element={<Overview />} />
+              <Route path="students" element={<StudentManagement />} />
+              <Route path="courses" element={<Courses />} />
+              <Route path="courses/:id/units" element={<CourseUnits />} />
+              <Route path="content" element={<ContentManagement />} />
+              <Route path="announcements" element={<Announcements />} />
+              <Route path="live-classes" element={<LiveClasses />} />
+              <Route path="live-classes/room/:channelName" element={<AgoraClass />} />
+              <Route path="assignments" element={<Assignments />} />
+              <Route path="profile" element={<Profile />} />
+            </Route>
+          </Route>
+        </Routes>
       </Suspense>
-      <ClientOnly>
-        {() => <Analytics />}
-      </ClientOnly>
+      <Analytics />
     </AuthProvider>
   );  
 }

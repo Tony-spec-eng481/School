@@ -1,5 +1,4 @@
-import { Routes, Route, Navigate, type RouteObject, Outlet } from 'react-router-dom';
-import { ClientOnly } from 'vite-react-ssg';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, ProtectedRoute } from '@elearning/shared';
 import { Analytics } from '@vercel/analytics/react';
@@ -38,99 +37,45 @@ const Unauthorized = () => <div className="text-2xl font-bold text-red-600 p-8 c
 
 import { SEO } from '@elearning/shared';
 
-export const routes: RouteObject[] = [
-  {
-    path: "/",
-    element: <App />,
-    children: [
-      {
-        index: true,
-        element: <><SEO title="Trespics Institute" description="Discover quality online learning at Trespics Institute. Join us today." /><Home /></>
-      },
-      {
-        path: "about",
-        element: <><SEO title="About Us" description="Learn more about our school system and our mission to provide quality education." /><About /></>
-      },
-      {
-        path: "contact",
-        element: <><SEO title="Contact Us" description="Get in touch with us for any inquiries or support." /><Contact /></>
-      },
-      {
-        path: "courses",
-        element: <><SEO title="Our Courses" description="Explore our wide range of courses designed for your success." /><CourseList /></>
-      },
-      {
-        path: "unauthorized",
-        element: <Unauthorized />
-      },
-      {
-        path: "faq",
-        element: <><SEO title="FAQs" description="Frequently asked questions about our learning platform." /><FAQs /></>
-      },
-      {
-        path: "courses/:id",
-        element: <CourseDetails />
-      },
-      {
-        path: "auth/login",
-        element: <><SEO title="Login" noindex /><StudentLogin /></>
-      },
-      {
-        path: "auth/register",
-        element: <><SEO title="Register" noindex /><StudentRegister /></>
-      },
-      {
-        path: "auth/forgot-password",
-        element: <><SEO title="Forgot Password" noindex /><ForgotPassword /></>
-      },
-      {
-        path: "auth/reset-password",
-        element: <><SEO title="Reset Password" noindex /><ResetPassword /></>
-      },
-      {
-        element: <ProtectedRoute allowedRoles={["student"]} />,
-        children: [
-          {
-            path: "dashboard",
-            element: <><SEO title="Student Dashboard" noindex /><StudentDashboard /></>,
-            children: [
-              { index: true, element: <StudentOverview /> },
-              { path: "units", element: <MyUnits /> },
-              { path: "units/:id", element: <UnitDetails /> },
-              { path: "courses", element: <AvailableCourses /> },
-              { path: "live-classes", element: <LiveClasses /> },
-              { path: "assignments", element: <Assignments /> },
-              { path: "announcements", element: <Announcements /> },
-              { path: "support", element: <Support /> },
-              { path: "certificates", element: <Certificates /> },
-              { path: "settings", element: <Settings /> },
-              { path: "progress", element: <StudentOverview /> },
-            ]
-          },
-          {
-            path: "live-classes/room/:channelName",
-            element: <AgoraClass />
-          }
-        ]
-      },
-      {
-        path: "*",
-        element: <Navigate to="/" replace />
-      }
-    ]
-  }
-];
-
 function App() { 
   return (
     <AuthProvider>
       <Toaster position="top-right" />
       <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
-        <Outlet />
+        <Routes>
+          <Route path="/" element={<><SEO title="Trespics Institute" description="Discover quality online learning at Trespics Institute. Join us today." /><Home /></>} />
+          <Route path="/about" element={<><SEO title="About Us" description="Learn more about our school system and our mission to provide quality education." /><About /></>} />
+          <Route path="/contact" element={<><SEO title="Contact Us" description="Get in touch with us for any inquiries or support." /><Contact /></>} />
+          <Route path="/courses" element={<><SEO title="Our Courses" description="Explore our wide range of courses designed for your success." /><CourseList /></>} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/faq" element={<><SEO title="FAQs" description="Frequently asked questions about our learning platform." /><FAQs /></>} />
+          <Route path="/courses/:id" element={<CourseDetails />} />
+          <Route path="/auth/login" element={<><SEO title="Login" noindex /><StudentLogin /></>} />
+          <Route path="/auth/register" element={<><SEO title="Register" noindex /><StudentRegister /></>} />
+          <Route path="/auth/forgot-password" element={<><SEO title="Forgot Password" noindex /><ForgotPassword /></>} />
+          <Route path="/auth/reset-password" element={<><SEO title="Reset Password" noindex /><ResetPassword /></>} />
+
+          <Route element={<ProtectedRoute allowedRoles={["student"]} />}>
+            <Route path="/dashboard" element={<><SEO title="Student Dashboard" noindex /><StudentDashboard /></>}>
+              <Route index element={<StudentOverview />} />
+              <Route path="units" element={<MyUnits />} />
+              <Route path="units/:id" element={<UnitDetails />} />
+              <Route path="courses" element={<AvailableCourses />} />
+              <Route path="live-classes" element={<LiveClasses />} />
+              <Route path="assignments" element={<Assignments />} />
+              <Route path="announcements" element={<Announcements />} />
+              <Route path="support" element={<Support />} />
+              <Route path="certificates" element={<Certificates />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="progress" element={<StudentOverview />} />
+            </Route>
+            <Route path="/live-classes/room/:channelName" element={<AgoraClass />} />
+          </Route>
+
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </Suspense>
-      <ClientOnly>
-        {() => <Analytics />}
-      </ClientOnly>
+      <Analytics />
     </AuthProvider>
   );  
 }
