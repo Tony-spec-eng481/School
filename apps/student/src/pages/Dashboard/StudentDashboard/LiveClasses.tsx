@@ -1,4 +1,3 @@
-// LiveClasses.tsx
 import React, { useState, useEffect } from "react";
 import { studentApi } from "@elearning/shared";
 import {
@@ -8,8 +7,7 @@ import {
   FiExternalLink,
   FiUsers,
 } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import "../styles/LiveClasses.css"; // Import the CSS file
+import "../styles/LiveClasses.css";
 
 const LiveClasses = () => {
   const [classes, setClasses] = useState<any[]>([]);
@@ -40,6 +38,10 @@ const LiveClasses = () => {
 
   const liveCount = classes.filter((c) => c.status === "live").length;
   const scheduledCount = classes.filter((c) => c.status === "scheduled").length;
+
+  const openLiveClass = (url: string) => {
+    window.open(`/live-classes/room/${url}`, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <div className="live-classes-container animate-fade-in">
@@ -79,8 +81,8 @@ const LiveClasses = () => {
                   >
                     {lc.status === "live" ? (
                       <>
-                        <span className="live-indicator"></span>
-                        LIVE NOW
+                        {" "}
+                        <span className="live-indicator"></span> LIVE NOW{" "}
                       </>
                     ) : (
                       "SCHEDULED"
@@ -95,7 +97,7 @@ const LiveClasses = () => {
 
                 <div className="class-details">
                   <div className="detail-item">
-                    <FiCalendar />
+                    <FiCalendar />{" "}
                     <span>
                       {new Date(lc.startTime).toLocaleDateString(undefined, {
                         weekday: "long",
@@ -105,34 +107,27 @@ const LiveClasses = () => {
                     </span>
                   </div>
                   <div className="detail-item">
-                    <FiClock />
+                    <FiClock />{" "}
                     <span>
                       {new Date(lc.startTime).toLocaleTimeString([], {
                         hour: "2-digit",
                         minute: "2-digit",
-                      })}
-                      {lc.duration && (
-                        <>
-                          {" "}
-                          <strong>• {lc.duration} min</strong>
-                        </>
-                      )}
+                      })}{" "}
+                      {lc.duration && <> • {lc.duration} min</>}
                     </span>
                   </div>
                 </div>
-    
+
                 <div className="action-buttons">
                   {(lc.status === "live" || lc.status === "scheduled") &&
                   lc.live_url ? (
-                      <a
-                        href={`/live-classes/room/${lc.live_url}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`join-button ${lc.status === "live" ? "live" : "scheduled"}`}
-                      >
-                        {lc.status === "live" ? "Join Class" : "Enter Class"}{" "}
-                        <FiVideo size={16} />
-                    </a>
+                    <button
+                      className={`join-button ${lc.status === "live" ? "live" : "scheduled"}`}
+                      onClick={() => openLiveClass(lc.live_url)}
+                    >
+                      {lc.status === "live" ? "Join Class" : "Enter Class"}{" "}
+                      <FiVideo size={16} />
+                    </button>
                   ) : (
                     <button disabled className="disabled-button">
                       Not Started
@@ -161,7 +156,7 @@ const LiveClasses = () => {
             <h3>No Live Classes Scheduled</h3>
             <p>
               There are no live classes scheduled at the moment. Check back
-              later or explore your course materials in the meantime.
+              later or explore your course materials.
             </p>
           </div>
         )}

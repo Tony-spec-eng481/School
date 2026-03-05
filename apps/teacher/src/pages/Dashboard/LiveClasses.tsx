@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { axiosInstance } from '@elearning/shared';
-import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { axiosInstance } from "@elearning/shared";
+import toast from "react-hot-toast";
 
 interface Unit {
-  id: string; // lecturer_unit id
+  id: string;
   unit_id: string;
   title: string;
   short_code: string;
@@ -26,36 +25,33 @@ const LiveClasses = () => {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  // Form state
   const [formData, setFormData] = useState({
-    title: '',
-    unit_id: '',
-    start_time: '',
-    end_time: ''
+    title: "",
+    unit_id: "",
+    start_time: "",
+    end_time: "",
   });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [unitsRes, overviewRes] = await Promise.all([
-          axiosInstance.get('/lecturer/units'),
-          axiosInstance.get('/lecturer/overview') // Using overview to get upcoming classes as fallback
+          axiosInstance.get("/lecturer/units"),
+          axiosInstance.get("/lecturer/overview"),
         ]);
         setUnits(unitsRes.data);
         if (unitsRes.data.length > 0) {
-          setFormData(prev => ({ ...prev, unit_id: unitsRes.data[0].id }));
+          setFormData((prev) => ({ ...prev, unit_id: unitsRes.data[0].id }));
         }
-        
-        // Either fetch from a dedicated endpoint or from overview
+
         try {
-          const classesRes = await axiosInstance.get('/lecturer/live-classes');
+          const classesRes = await axiosInstance.get("/lecturer/live-classes");
           setClasses(classesRes.data);
         } catch (e) {
-          // Fallback to overview upcoming classes
           setClasses(overviewRes.data.upcomingClasses || []);
         }
       } catch (err: any) {
-        toast.error('Failed to load data');
+        toast.error("Failed to load data");
       } finally {
         setLoading(false);
       }
@@ -63,49 +59,36 @@ const LiveClasses = () => {
     fetchData();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleUnitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const unit = units.find(u => u.id === e.target.value);
-    if (unit) {
-      setFormData({ ...formData, unit_id: unit.id });
-    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      // The user's controller shows an endpoint that accepts courseId or unit_id.
-      // The lecturer controller uses unit_id, while the other snippet uses courseId.
-      // We'll pass both to be safe depending on which unified API is used.
-      const payload = {
-        title: formData.title,
-        unit_id: formData.unit_id,
-        // courseId: formData.unit_id,
-        start_time: new Date(formData.start_time).toISOString(),
-        end_time: new Date(formData.end_time).toISOString(),
-      };
-
       if (!formData.unit_id) {
         toast.error("Please select a unit");
         return;
       }
+      const payload = {
+        title: formData.title,
+        unit_id: formData.unit_id,
+        start_time: new Date(formData.start_time).toISOString(),
+        end_time: new Date(formData.end_time).toISOString(),
+      };
       await axiosInstance.post("/live-classes", payload);
       toast.success("Live class scheduled successfully!");
-
-      // Refresh
       const classesRes = await axiosInstance.get("/lecturer/live-classes");
       setClasses(classesRes.data);
-
-      setFormData((prev) => ({
-        ...prev,
+      setFormData({
         title: "",
+        unit_id: formData.unit_id,
         start_time: "",
         end_time: "",
-      }));
+      });
     } catch (err: any) {
       toast.error(err.response?.data?.error || "Failed to schedule class");
     } finally {
@@ -114,6 +97,14 @@ const LiveClasses = () => {
   };
 
   if (loading) return <div>Loading...</div>;
+
+  const openLiveClass = (url: string) => {
+    window.open(
+      `/dashboard/live-classes/room/${url}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+  };
 
   return (
     <div>
@@ -124,10 +115,7 @@ const LiveClasses = () => {
         </p>
       </div>
 
-      <div
-        className="grid grid-cols-1 lg:grid-cols-2 gap-6"
-        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}
-      >
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="card">
           <h3 className="mb-4">Schedule New Class</h3>
           <form onSubmit={handleSubmit}>
@@ -136,9 +124,9 @@ const LiveClasses = () => {
               <input
                 type="text"
                 name="title"
-                className="form-control"
                 value={formData.title}
                 onChange={handleChange}
+                className="form-control"
                 required
               />
             </div>
@@ -153,7 +141,6 @@ const LiveClasses = () => {
                 required
               >
                 <option value="">Select unit</option>
-
                 {units.map((unit) => (
                   <option key={unit.id} value={unit.id}>
                     {unit.title} ({unit.short_code})
@@ -171,9 +158,9 @@ const LiveClasses = () => {
                 <input
                   type="datetime-local"
                   name="start_time"
-                  className="form-control"
                   value={formData.start_time}
                   onChange={handleChange}
+                  className="form-control"
                   required
                 />
               </div>
@@ -182,9 +169,9 @@ const LiveClasses = () => {
                 <input
                   type="datetime-local"
                   name="end_time"
-                  className="form-control"
                   value={formData.end_time}
                   onChange={handleChange}
+                  className="form-control"
                   required
                 />
               </div>
@@ -206,9 +193,9 @@ const LiveClasses = () => {
             <div
               style={{ display: "flex", flexDirection: "column", gap: "16px" }}
             >
-              {classes.map((cls, idx) => (
+              {classes.map((cls) => (
                 <div
-                  key={idx}
+                  key={cls.id}
                   style={{
                     padding: "16px",
                     border: "1px solid var(--border-color)",
@@ -248,19 +235,12 @@ const LiveClasses = () => {
                     {new Date(cls.end_time).toLocaleTimeString()}
                   </div>
                   {cls.live_url && (
-                    <a
-                      href={`/dashboard/live-classes/room/${cls.live_url}`}
-                      target="_blank" // Opens in a new tab/window
-                      rel="noopener noreferrer" // Security best practice
+                    <button
                       className="btn-primary"
-                      style={{
-                        display: "inline-block",
-                        textDecoration: "none",
-                        fontSize: "0.85rem",
-                      }}
+                      onClick={() => openLiveClass(cls.live_url)}
                     >
                       Join Class Link
-                    </a>
+                    </button>
                   )}
                 </div>
               ))}
