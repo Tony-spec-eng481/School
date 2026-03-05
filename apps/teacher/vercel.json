@@ -5,7 +5,7 @@
     { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
     { "source": "/robots.txt", "destination": "/robots.txt" },
     { "source": "/(.*)", "destination": "/index.html" },
-    { "source": "/live-classes/room/(.*)", "destination": "/index.html" },
+    { "source": "/live-classes/room/(.*)", "destination": "/index.html" }
   ],
   "headers": [
     {
