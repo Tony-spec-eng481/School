@@ -248,8 +248,8 @@ const LiveClasses = () => {
                     {new Date(cls.end_time).toLocaleTimeString()}
                   </div>
                   {cls.live_url && (
-                    <Link
-                      to={`/dashboard/live-classes/room/${cls.live_url}`}
+                    <a
+                      href={`/#/dashboard/live-classes/room/${cls.live_url}`}
                       target="_blank" // Opens in a new tab/window
                       rel="noopener noreferrer" // Security best practice
                       className="btn-primary"
@@ -260,7 +260,7 @@ const LiveClasses = () => {
                       }}
                     >
                       Join Class Link
-                    </Link>
+                    </a>
                   )}
                 </div>
               ))}

@@ -120,19 +120,19 @@ const LiveClasses = () => {
                     </span>
                   </div>
                 </div>
-
+    
                 <div className="action-buttons">
                   {(lc.status === "live" || lc.status === "scheduled") &&
                   lc.live_url ? (
-                    <Link
-                      to={`/live-classes/room/${lc.live_url}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`join-button ${lc.status === "live" ? "live" : "scheduled"}`}
-                    >
-                      {lc.status === "live" ? "Join Class" : "Enter Class"}{" "}
-                      <FiVideo size={16} />
-                    </Link>
+                      <a
+                        href={`/#/live-classes/room/${lc.live_url}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`join-button ${lc.status === "live" ? "live" : "scheduled"}`}
+                      >
+                        {lc.status === "live" ? "Join Class" : "Enter Class"}{" "}
+                        <FiVideo size={16} />
+                    </a>
                   ) : (
                     <button disabled className="disabled-button">
                       Not Started
