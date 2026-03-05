@@ -10,16 +10,19 @@ const TeacherHome = () => {
       <nav className="teacher-navbar">
         <div className="teacher-navbar-container">
           <Link to="/" className="teacher-logo">
-            Trespics <span className="teacher-logo-highlight">Teachers</span>
+            Trespics Teachers
           </Link>
           <div className="teacher-nav-links">
-            <Link to="/" className="teacher-nav-link">
+            <Link
+              to="https://www.trespicsinstitute.dev/"
+              className="teacher-nav-link"
+            >
               <span className="nav-link-icon">🏠</span>
-              Back to School Home
+              Back to Student's Site
             </Link>
           </div>
         </div>
-      </nav>   
+      </nav>
 
       {/* Hero Section */}
       <section className="teacher-hero">
@@ -27,7 +30,7 @@ const TeacherHome = () => {
         <div className="container teacher-hero-content">
           <span className="teacher-hero-badge">
             Join Our Teaching Community
-          </span>  
+          </span>
           <h1 className="teacher-hero-title">
             Empower the <span className="text-gradient">Next Generation</span>
           </h1>
@@ -41,10 +44,7 @@ const TeacherHome = () => {
               Teacher Login
               <span className="btn-icon">→</span>
             </Link>
-            <Link
-              to="/auth/register"
-              className="btn btn-outline-light btn-lg"
-            >
+            <Link to="/auth/register" className="btn btn-outline-light btn-lg">
               Register as Teacher
             </Link>
           </div>
@@ -427,10 +427,7 @@ const TeacherHome = () => {
               Trespics
             </p>
             <div className="cta-buttons">
-              <Link
-                to="/auth/register"
-                className="btn btn-primary btn-lg"
-              >
+              <Link to="/auth/register" className="btn btn-primary btn-lg">
                 Become a Teacher Today
                 <span className="btn-icon">→</span>
               </Link>

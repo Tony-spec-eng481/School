@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
-import Navbar from "../../components/Navbar";
+// import Navbar from "../../components/Navbar";
 import { FiMenu, FiX } from "react-icons/fi";
 import "../styles/dashboard.css";
 
@@ -56,7 +56,7 @@ const TeacherDashboard = () => {
 
       {/* Main Content */}
       <main className="dashboard-main">
-        <Navbar onMenuClick={toggleSidebar} />
+        {/* <Navbar onMenuClick={toggleSidebar} /> */}
         <div className="dashboard-content">
           <Outlet />
         </div>

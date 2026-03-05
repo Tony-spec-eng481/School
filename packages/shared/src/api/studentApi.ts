@@ -7,7 +7,7 @@ export const studentApi = {
   getUnits: () => api.get('/student/units'),
   getUnitDetails: (unitId: string) => api.get(`/student/units/${unitId}`),
   getAssignments: () => api.get('/student/assignments'),
-  submitAssignment: (assignmentId: string, data: { file_url?: string, answer_text?: string }) => 
+  submitAssignment: (assignmentId: string, data: any) => 
     api.post(`/student/assignments/${assignmentId}/submit`, data),
   markTopicComplete: (data: { topicId: string, courseId: string }) => 
     api.post('/student/progress/mark-complete', data),

@@ -29,7 +29,7 @@ const Courses = () => {
         console.error(error);
       } finally {
         setLoading(false);
-      }
+      }    
     };
 
     fetchCourses();

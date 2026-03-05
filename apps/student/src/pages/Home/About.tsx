@@ -34,7 +34,7 @@ const About = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="stats-section">
+      {/* <section className="stats-section">
         <div className="container">
           <div className="stats-grid">
             <div className="stat-card">
@@ -58,16 +58,16 @@ const About = () => {
               </div>
               <div className="stat-label">Courses</div>
             </div>
-            {/* <div className="stat-card">
+            <div className="stat-card">
               <div className="stat-icon">🏆</div>
               <div className="stat-number" data-target="50">
                 50+
               </div>
               <div className="stat-label">Awards</div>
-            </div> */}
+            </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Mission & Vision Section */}
       <section className="mission-vision-section">
@@ -265,7 +265,7 @@ const About = () => {
 
             <div className="team-card">
               <div className="team-image">
-                <img src="/api/placeholder/400/400" alt="Prof. Michael Chen" loading="lazy" />
+                <img src="/api/placeholder/400/400" alt="Prof. Michael Njenga" loading="lazy" />
                 <div className="team-social">
                   <a href="#" className="social-icon">
                     📧
@@ -279,7 +279,7 @@ const About = () => {
                 </div>
               </div>
               <div className="team-info">
-                <h3>Prof. Michael Chen</h3>
+                <h3>Prof. Michael Njenga</h3>
                 <p className="team-position">Academic Director</p>
                 <p className="team-bio">
                   Former Dean of Education, curriculum development expert
@@ -289,7 +289,7 @@ const About = () => {
 
             <div className="team-card">
               <div className="team-image">
-                <img src="/api/placeholder/400/400" alt="Emily Rodriguez" loading="lazy" />
+                <img src="/api/placeholder/400/400" alt="Emily Johnson" loading="lazy" />
                 <div className="team-social">
                   <a href="#" className="social-icon">
                     📧
@@ -303,7 +303,7 @@ const About = () => {
                 </div>
               </div>
               <div className="team-info">
-                <h3>Emily Rodriguez</h3>
+                <h3>Emily Johnson</h3>
                 <p className="team-position">Head of Technology</p>
                 <p className="team-bio">
                   Innovative ed-tech specialist, former Google engineer

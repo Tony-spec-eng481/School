@@ -167,7 +167,7 @@ const UnitDetails = () => {
                 <PlyrPlayer url={currentTopic.video_url} type="video" />
               </div>
             )}
-
+    
             {/* 3) Notes Area */}
             {(currentTopic.notes || currentTopic.notes_url) && (
               <div className="notes-section">

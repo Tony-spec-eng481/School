@@ -16,20 +16,31 @@ import { useAuth } from "@elearning/shared";
 const StudentOverview = () => {
   const { user } = useAuth();
   const [stats, setStats] = useState<any>(null);
+  const [deadlines, setDeadlines] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchStats = async () => {
+    const fetchDashboardData = async () => {
       try {
-        const res = await studentApi.getStats();
-        setStats(res.data);
+        const [statsRes, assignmentsRes] = await Promise.all([
+          studentApi.getStats(),
+          studentApi.getAssignments()
+        ]);
+        setStats(statsRes.data);
+        
+        // Filter for upcoming deadlines (due date in future and not submitted)
+        const upcoming = assignmentsRes.data
+          .filter((a: any) => !a.submission && a.due_date && new Date(a.due_date) > new Date())
+          .sort((a: any, b: any) => new Date(a.due_date).getTime() - new Date(b.due_date).getTime())
+          .slice(0, 3);
+        setDeadlines(upcoming);
       } catch (err) {
-        console.error("Error fetching student stats:", err);
+        console.error("Error fetching dashboard data:", err);
       } finally {
         setLoading(false);
       }
     };
-    fetchStats();
+    fetchDashboardData();
   }, []);
 
   if (loading) {
@@ -85,11 +96,11 @@ const StudentOverview = () => {
         <div className="stat-card">
           <div className="stat-card-header">
             <div className="stat-card-content">
-              <span className="stat-card-label">Learning Streak</span>
-              <span className="stat-card-value">{stats?.streak || 0} days</span>
+              <span className="stat-card-label">Assignments</span>
+              <span className="stat-card-value">{stats?.pendingAssignments || 0} Pending</span>
             </div>
             <div className="stat-card-icon icon-orange">
-              <FiTrendingUp size={20} />
+              <FiClock size={20} />
             </div>
           </div>
         </div>
@@ -148,60 +159,36 @@ const StudentOverview = () => {
 
         <div className="dashboard-card">
           <h3 className="card-title">Upcoming Deadlines</h3>
-          <div className="deadline-item">
-            <div className="deadline-icon">
-              <FiClock size={20} />
-            </div>
-            <div className="deadline-content">
-              <p className="deadline-title">Assignment 1</p>
-              <div className="deadline-meta">
-                <span>Due: 2 days left</span>
-                <span className="deadline-badge">Urgent</span>
-              </div>
-            </div>
-          </div>
+          {deadlines.length > 0 ? (
+            deadlines.map((d) => {
+              const diffTime = new Date(d.due_date).getTime() - new Date().getTime();
+              const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+              const isUrgent = diffDays <= 2;
 
-          <div
-            className="deadline-item"
-            style={{
-              borderColor: "var(--orange-100)",
-              background: "var(--orange-50)",
-            }}
-          >
-            <div
-              className="deadline-icon"
-              style={{ background: "var(--orange-500)" }}
-            >
-              <FiClock size={20} />
+              return (
+                <div 
+                  key={d.id} 
+                  className="deadline-item"
+                  style={isUrgent ? { borderColor: "var(--red-100)", background: "var(--red-50)" } : {}}
+                >
+                  <div className="deadline-icon" style={isUrgent ? { background: "var(--red-500)" } : {}}>
+                    <FiClock size={20} />
+                  </div>
+                  <div className="deadline-content">
+                    <p className="deadline-title">{d.title}</p>
+                    <div className="deadline-meta">
+                      <span>Due: {diffDays} {diffDays === 1 ? 'day' : 'days'} left</span>
+                      {isUrgent && <span className="deadline-badge">Urgent</span>}
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <div className="empty-state-mini">
+              <p>No upcoming deadlines!</p>
             </div>
-            <div className="deadline-content">
-              <p className="deadline-title">Quiz: Chapter 5</p>
-              <div className="deadline-meta">
-                <span>Due: 5 days left</span>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="deadline-item"
-            style={{
-              borderColor: "var(--green-100)",
-              background: "var(--green-50)",
-            }}
-          >
-            <div
-              className="deadline-icon"
-              style={{ background: "var(--green-500)" }}
-            >
-              <FiClock size={20} />
-            </div>
-            <div className="deadline-content">
-              <p className="deadline-title">Project Submission</p>
-              <div className="deadline-meta">
-                <span>Due: 7 days left</span>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

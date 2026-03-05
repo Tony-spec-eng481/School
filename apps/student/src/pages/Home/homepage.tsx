@@ -11,7 +11,7 @@ const schoolSchema = {
   "name": "Trespics School",
   "url": "https://www.trespicsinstitute.dev/",
   "logo": "https://www.trespicsinstitute.dev/logo.jpeg",
-  "description": "Unlock Your Potential with Trespics School. Experience world-class education with our interactive e-learning platform.",
+  "description": "Unlock Your Potential with Trespics Institute. Experience world-class education with our interactive e-learning platform.",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Trespics Institute",
@@ -59,7 +59,7 @@ const Home = () => {
           <div>
             <h1 className="hero-title animate-slide-up">
               Unlock Your Potential with{" "}
-              <span className="text-gradient">Trespics School</span>
+              <span className="text-gradient">Trespics Institute</span>
             </h1>
 
             <p className="hero-subtitle animate-slide-up delay-1">
@@ -161,7 +161,7 @@ const Home = () => {
               </Link>
             </div>
 
-            <div className="feature-card">
+            {/* <div className="feature-card">
               <div className="feature-icon bg-teal">
                 <span className="icon">📱</span>
               </div>
@@ -173,7 +173,7 @@ const Home = () => {
               <Link to="/mobile-app" className="feature-link">
                 Download App <span>→</span>
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

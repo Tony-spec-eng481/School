@@ -8,7 +8,12 @@ import {
   FiUpload,
   FiCheckCircle,
   FiArrowLeft,
+  FiDownload,
 } from "react-icons/fi";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeSanitize from "rehype-sanitize";
+import rehypeRaw from "rehype-raw";
 import toast from "react-hot-toast";
 import "../styles/Assignments.css"; // Import the CSS file
 
@@ -17,7 +22,7 @@ const Assignments = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("active");
   const [selectedAssignment, setSelectedAssignment] = useState<any>(null);
-  const [fileUrl, setFileUrl] = useState("");
+  const [file, setFile] = useState<File | null>(null);
   const [answerText, setAnswerText] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
@@ -47,10 +52,11 @@ const Assignments = () => {
 
     setSubmitting(true);
     try {
-      await studentApi.submitAssignment(selectedAssignment.id, {
-        file_url: fileUrl,
-        answer_text: answerText,
-      });
+      const formData = new FormData();
+      if (file) formData.append("file", file);
+      if (answerText) formData.append("answer_text", answerText);
+
+      await studentApi.submitAssignment(selectedAssignment.id, formData);
       toast.success("Assignment submitted successfully");
 
       setAssignments((prev) =>
@@ -61,7 +67,7 @@ const Assignments = () => {
                 submission: {
                   status: "submitted",
                   submitted_at: new Date().toISOString(),
-                  file_url: fileUrl,
+                  file_url: file ? file.name : "",
                 },
               }
             : a,
@@ -69,7 +75,7 @@ const Assignments = () => {
       );
 
       setSelectedAssignment(null);
-      setFileUrl("");
+      setFile(null);
       setAnswerText("");
     } catch (err) {
       console.error("Submit error:", err);
@@ -120,7 +126,7 @@ const Assignments = () => {
         </div>
 
         <div className="content-area">
-          {selectedAssignment ? (
+          {selectedAssignment ? (   
             <div className="assignment-detail">
               <button
                 onClick={() => setSelectedAssignment(null)}
@@ -130,29 +136,53 @@ const Assignments = () => {
               </button>
 
               <h3 className="assignment-title">{selectedAssignment.title}</h3>
-              <div 
-                className="assignment-description"
-                dangerouslySetInnerHTML={{ __html: selectedAssignment.description }}
-              />
+              
+              <div className="assignment-meta-detail">
+                <span className="meta-item">
+                  <FiCalendar /> Uploaded: {new Date(selectedAssignment.created_at).toLocaleString()}
+                </span>
+                <span className="meta-item">
+                  <FiClock /> Deadline: {new Date(selectedAssignment.due_date).toLocaleString()}
+                </span>
+              </div>
+
+              <div className="markdown-content">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}  rehypePlugins={[rehypeRaw, rehypeSanitize]}>
+                  {selectedAssignment.description}
+                </ReactMarkdown>
+              </div>     
+
+              {selectedAssignment.file_url && (
+                <div className="assignment-attachment">
+                  <a 
+                    href={selectedAssignment.file_url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="attachment-link"
+                  >
+                    <FiDownload /> Download Assignment Document
+                  </a>
+                </div>
+              )}
 
 
               <div className="submission-form">
                 <h4 className="form-title">Submit Your Work</h4>
                 <form onSubmit={handleSubmit}>
                   <div className="form-group">
-                    <label className="form-label">Upload Document (URL)</label>
+                    <label className="form-label">Upload PDF Document</label>
                     <div className="input-wrapper">
                       <FiUpload />
                       <input
-                        type="text"
-                        placeholder="https://link-to-your-document.com"
-                        value={fileUrl}
-                        onChange={(e) => setFileUrl(e.target.value)}
+                        type="file"
+                        accept=".pdf"
+                        onChange={(e) => setFile(e.target.files?.[0] || null)}
                         className="form-input"
+                        id="document-upload"
                       />
                     </div>
                     <p className="input-hint">
-                      * Provide a link to your uploaded assignment/document.
+                      * Please upload your assignment as a PDF file.
                     </p>
                   </div>
 
@@ -169,7 +199,7 @@ const Assignments = () => {
 
                   <button
                     type="submit"
-                    disabled={submitting || (!fileUrl && !answerText)}
+                    disabled={submitting || (!file && !answerText)}
                     className="submit-button"
                   >
                     {submitting ? "Submitting..." : "Submit Assignment"}
@@ -186,14 +216,22 @@ const Assignments = () => {
                       <div className="assignment-info">
                         <h4>{a.title}</h4>
                         <p className="assignment-unit">
-                          Unit: {a.course || "Unknown"}
+                          Unit: {a.unit?.title || "Unknown"} ({a.unit?.short_code || "N/A"})
                         </p>
-                        {a.due_date && (
-                          <p className="assignment-due">
-                            <FiCalendar /> Due:{" "}
-                            {new Date(a.due_date).toLocaleDateString()}
-                          </p>
-                        )}
+                        <div className="assignment-dates">
+                          {a.created_at && (
+                            <p className="assignment-date-info">
+                              <FiUpload size={14} /> Uploaded:{" "}
+                              {new Date(a.created_at).toLocaleDateString()} {new Date(a.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </p>
+                          )}
+                          {a.due_date && (
+                            <p className="assignment-date-info due">
+                              <FiCalendar size={14} /> Deadline:{" "}
+                              {new Date(a.due_date).toLocaleDateString()} {new Date(a.due_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </p>
+                          )}
+                        </div>
                       </div>
                       <div>
                         {activeTab === "active" ? (
@@ -222,6 +260,59 @@ const Assignments = () => {
               )}
             </>
           )}
+        </div>
+      </div>
+
+      <div className="marks-section animate-fade-in">
+        <div className="section-header">
+          <h2 className="section-title">Your Assignment Marks</h2>
+          <p className="section-subtitle">Track your performance across all submitted and graded work.</p>
+        </div>
+        
+        <div className="marks-card">
+          <div className="table-wrapper">
+            <table className="marks-table">
+              <thead>
+                <tr>
+                  <th>Assignment Name</th>
+                  <th>Unit Name</th>
+                  <th>Status</th>
+                  <th>Marks Awarded</th>
+                </tr>
+              </thead>
+              <tbody>
+                {assignments.length > 0 ? (
+                  assignments.map((a) => {
+                    const isOverdue = a.due_date && new Date(a.due_date) < new Date();
+                    const status = a.submission 
+                      ? "Submitted" 
+                      : (isOverdue ? "Failed to submit" : "Not submitted");
+                    
+                    const marks = a.submission?.status === "marked" 
+                      ? `${a.submission.score} / 30` 
+                      : (a.submission ? "Pending" : "-");
+
+                    return (
+                      <tr key={a.id}>
+                        <td className="font-semibold">{a.title}</td>
+                        <td>{a.unit?.title || "N/A"}</td>
+                        <td>
+                          <span className={`status-pill ${status.toLowerCase().replace(/\s+/g, '-')}`}>
+                            {status}
+                          </span>
+                        </td>
+                        <td className="mark-value">{marks}</td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td colSpan={4} className="empty-row">No assignments found</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

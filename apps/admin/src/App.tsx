@@ -12,6 +12,7 @@ import CourseUnits from './pages/Dashboard/CourseUnits';
 import TeacherReport from './pages/Dashboard/TeacherReport';
 import StudentManagement from './pages/Dashboard/StudentManagement';
 import CourseManagement from './pages/Dashboard/CourseManagement';
+import Announcements from './pages/Dashboard/Announcements';
 
 function App() { 
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="/reports/teacher/:id" element={<TeacherReport />} />
             <Route path="/reports/student/:id" element={<StudentManagement />} />
             <Route path="/dashboard/courses" element={<CourseManagement />} />  
+            <Route path="/dashboard/announcements" element={<Announcements />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/auth/login" replace />} />

@@ -60,13 +60,13 @@ const CourseList = () => {
       <section className="course-hero">
         <div className="course-container">
           <div className="course-header">
-            <span className="course-badge">
+            {/* <span className="course-badge">
               <BookOpen
                 size={14}
                 style={{ marginRight: "6px", display: "inline" }}
               />
               EXPLORE KNOWLEDGE
-            </span>
+            </span> */}
             <h1>
               Courses We <span>Offer</span>
             </h1>

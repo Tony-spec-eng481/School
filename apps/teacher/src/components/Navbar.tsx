@@ -2,6 +2,7 @@
 import React from "react";
 import { useAuth } from "@elearning/shared";
 import { Bell, Menu } from "lucide-react";
+import "../pages/styles/Navbar.css"; // Add this import
 
 interface NavbarProps {
   onMenuClick: () => void;
@@ -12,7 +13,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
 
   return (
     <header className="dashboard-navbar">
-      <div className="navbar-left">
+      {/* <div className="navbar-left">
         <button
           className="navbar-menu-btn"
           onClick={onMenuClick}
@@ -23,13 +24,13 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
         <div className="navbar-search">
           <input type="text" placeholder="Search..." className="search-input" />
         </div>
-      </div>
+      </div> */}
 
       <div className="navbar-right">
-        <button className="notification-btn">
+        {/* <button className="notification-btn">
           <Bell size={20} />
           <span className="notification-badge">3</span>
-        </button>
+        </button> */}
         <div className="user-profile">
           <div className="user-info">
             <span className="user-name">{user?.name || "Teacher"}</span>

@@ -92,6 +92,9 @@ const TeacherLogin = () => {
             "LOGIN"
           )}
         </button>
+        <Link to="/" className="auth-forgot-link">
+          Back Home
+        </Link>
       </form>
     </AuthLayout>
   );

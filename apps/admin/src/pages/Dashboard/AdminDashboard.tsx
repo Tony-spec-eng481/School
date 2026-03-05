@@ -14,6 +14,7 @@ import {
   HelpCircle,
   Shield,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useAuth } from "@elearning/shared";
 import StatsOverview from "./StatsOverview";
 import UserManagement from "./UserManagement";
@@ -118,10 +119,15 @@ const AdminDashboard = () => {
           </div>
 
           <div className="header-actions">
-            <button className="notification-button" aria-label="Notifications">
-              <Bell size={20} />
-              <span className="notification-badge"></span>
-            </button>
+            {/* <Link to="/dashboard/announcements">
+              <button
+                className="notification-button"
+                aria-label="Notifications"
+              >
+                <Bell size={20} />
+                <span className="notification-badge"></span>
+              </button>
+            </Link> */}
             <div className="header-divider"></div>
             <div className="user-profile" tabIndex={0} role="button">
               <div className="user-info">

@@ -5,9 +5,6 @@ import axios from 'axios';
 const API_URL = "https://trespics-school.onrender.com";
 const api = axios.create({
   baseURL: `${API_URL}/api`, // Uses local in dev, Render in production
-  headers: {
-    "Content-Type": "application/json",   
-  },
 });
 
 // Add a request interceptor to attach the token
