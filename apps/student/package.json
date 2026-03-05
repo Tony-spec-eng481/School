@@ -42,17 +42,7 @@
       "/courses",
       "/faq",
       "/auth/login",
-      "/auth/register",
-      "/dashboard",
-      "/dashboard/units",
-      "/dashboard/courses",
-      "/dashboard/live-classes",
-      "/dashboard/assignments",
-      "/dashboard/announcements",
-      "/dashboard/support",
-      "/dashboard/certificates",
-      "/dashboard/settings",
-      "/dashboard/progress"
+      "/auth/register"
     ]
   }
 }

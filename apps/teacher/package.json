@@ -33,15 +33,10 @@
     "routes": [
       "/",
       "/auth/login",
-      "/auth/register",
-      "/dashboard",
-      "/dashboard/students",
-      "/dashboard/courses",
-      "/dashboard/content",
-      "/dashboard/announcements",
-      "/dashboard/live-classes",
-      "/dashboard/assignments",
-      "/dashboard/profile"
+      "/auth/register"
     ]
   }
 }
+
+
+

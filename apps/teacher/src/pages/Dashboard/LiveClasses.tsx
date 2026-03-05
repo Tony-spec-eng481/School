@@ -102,7 +102,7 @@ const LiveClasses = () => {
   const openLiveClass = (url: string) => {
     window.open(
       `/dashboard/live-classes/room/${url}`,
-      // "_blank",
+      "_blank",
       "noopener,noreferrer",
     );
   };
