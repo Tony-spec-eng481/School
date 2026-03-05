@@ -129,7 +129,7 @@ const Home = () => {
                 Interactive live sessions and high-quality recorded video
                 lessons available 24/7.
               </p>
-              <Link to="/live-classes/room" className="feature-link">
+              <Link to="/dashboard/live-classes" className="feature-link">
                 Join Live Class <span>→</span>
               </Link>
             </div>
