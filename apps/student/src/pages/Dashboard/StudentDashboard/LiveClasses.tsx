@@ -125,7 +125,7 @@ const LiveClasses = () => {
                   {(lc.status === "live" || lc.status === "scheduled") &&
                   lc.live_url ? (
                       <a
-                        href={`/#/live-classes/room/${lc.live_url}`}
+                        href={`/live-classes/room/${lc.live_url}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={`join-button ${lc.status === "live" ? "live" : "scheduled"}`}

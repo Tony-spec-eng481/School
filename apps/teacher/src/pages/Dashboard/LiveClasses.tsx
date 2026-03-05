@@ -249,7 +249,7 @@ const LiveClasses = () => {
                   </div>
                   {cls.live_url && (
                     <a
-                      href={`/#/dashboard/live-classes/room/${cls.live_url}`}
+                      href={`/dashboard/live-classes/room/${cls.live_url}`}
                       target="_blank" // Opens in a new tab/window
                       rel="noopener noreferrer" // Security best practice
                       className="btn-primary"
